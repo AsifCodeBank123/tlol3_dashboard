@@ -60,7 +60,7 @@ def render():
                 font-size:13px;
                 color:#222;
                 width: 100%;
-                height: 230px;
+                height: 260px;
                 box-shadow: 1px 1px 5px rgba(0,0,0,0.05);
                 text-align: center;
                 display: flex;

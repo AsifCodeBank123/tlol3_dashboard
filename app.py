@@ -12,11 +12,23 @@ st.set_page_config(page_title="TLOL3 Auction Hub", layout="wide")
 
 # Load banner image
 banner_path = os.path.join("assets", "banner.png")
+
 if os.path.exists(banner_path):
-    banner = Image.open(banner_path)
-    st.image(banner, use_container_width=True)
+    img = Image.open(banner_path)
+    st.image(img, use_container_width=True, output_format="PNG", caption="", clamp=True)
+    st.markdown(
+        """
+        <style>
+        img {
+            height: auto !important;
+            max-height: 220px;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 else:
-    st.warning("⚠️ Banner image not found. Make sure it's in the 'assets' folder.")
+    st.warning("Banner not found. Please add 'banner.png' to the assets folder.")
 
 
 st.sidebar.title("🏆 TLOL3 Dashboard")

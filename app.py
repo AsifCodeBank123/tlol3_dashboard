@@ -31,12 +31,43 @@ else:
     st.warning("Banner not found. Please add 'banner.png' to the assets folder.")
 
 
-st.sidebar.title("🏆 TLOL3 Dashboard")
-section = st.sidebar.radio("Go to section:", ["Home", "Auction", "TLOL3"])
+import streamlit as st
 
-if section == "Home":
+# Load local CSS
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+local_css("style.css")
+
+# Initialize default section
+if "active_section" not in st.session_state:
+    st.session_state.active_section = "Home"
+
+# --- Sidebar Navigation ---
+with st.sidebar:
+    st.markdown("### 🏆 TLOL3 Dashboard")
+
+    if st.button("🏠 Home"):
+        st.session_state.active_section = "Home"
+
+    if st.button("📅 TLOL3 --->"):
+        st.session_state.active_section = "TLOL3"
+
+    if st.button("💰 Auction Panel"):
+        st.session_state.active_section = "Auction"
+
+# --- Main Area Renderer ---
+if st.session_state.active_section == "Home":
     home.render()
-elif section == "Auction":
-    auction.render()
-elif section == "TLOL3":
+elif st.session_state.active_section == "TLOL3":
     tlol3.render()
+elif st.session_state.active_section == "Auction":
+    auction.render()
+
+# # Main page buttons
+# st.markdown("### Main Page Actions")
+# st.button("Start Auction")
+# st.button("View Team Stats")
+# st.button("Open Settings")
+# st.button("Generate Report")

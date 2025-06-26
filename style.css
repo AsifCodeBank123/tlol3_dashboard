@@ -1,0 +1,27 @@
+/* Sidebar buttons */
+section[data-testid="stSidebar"] div.stButton > button {
+    background-color: #f4a300;
+    width: 200px;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    margin: 6px 0;
+}
+
+section[data-testid="stSidebar"] div.stButton > button:hover {
+    background-color: #d48d00;
+}
+
+/* Main page buttons */
+div.stButton > button {
+    background-color: #3a6ea5;
+    width: 200px;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    margin: 6px 0;
+}
+
+div.stButton > button:hover {
+    background-color: #2f5b8c;
+}

@@ -1,6 +1,6 @@
 TLOL_SPORTS = [
     "Carrom", "Chess", "Cricket", "Foosball",
-    "Housie", "PS5", "Pen Fighting", "QPR cup activity", "Table Tennis"
+    "Housie", "PS5", "Pen Fighting",  "Table Tennis"
 ]
 
 # Map all CSV variations to clean labels
@@ -19,7 +19,7 @@ COLUMN_MAP = {
     "PS5 Volta": "PS5",
     "Pen Fighting": "Pen Fighting",
     "Pen Fighting Paticipation": "Pen Fighting",
-    "QPR cup activity": "QPR cup activity",
+    #"QPR cup activity": "QPR cup activity",
     "Table Tennis": "Table Tennis",
     "Table Tennis Singles": "Table Tennis",
     "Table Tennis Doubles": "Table Tennis",

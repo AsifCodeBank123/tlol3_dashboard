@@ -1,4 +1,7 @@
 import streamlit as st
+import plotly.express as px
+import pandas as pd
+
 from modules.data_loader import load_and_merge_scores
 from modules.avatar_utils import get_avatar_url
 from modules.tier_utils import assign_tiers
@@ -7,7 +10,8 @@ from modules.constants import TLOL_SPORTS
 def render():
     
     # ---------- TABS ---------- #
-    tab1, tab2 = st.tabs(["🏷️ Auction Preview", "📊 Raw Stats"])
+    tab1, tab2, tab3 = st.tabs(["🏷️ Auction Preview", "📊 Raw Stats", "📈 Insights & Breakdown"])
+
 
     # ---------- LOAD & PROCESS DATA ---------- #
     with st.spinner("Loading player data..."):
@@ -101,3 +105,63 @@ def render():
         display_cols = base_cols + sport_columns
 
         st.dataframe(df_players[display_cols], use_container_width=True, hide_index=True)
+
+        # ---------- TAB 3: INSIGHTS & BREAKDOWN ---------- #
+       
+    with tab3:
+        st.header("📈 Insights & Breakdown")
+       
+
+        # --- 1. Top 5 Overall Players --- #
+        st.subheader("🏆 Top 5 Players (Total Score)")
+        top5 = df_players[['Player', 'Total Score']].sort_values(by="Total Score", ascending=False).head(5)
+        fig_top5 = px.bar(
+            top5,
+            x="Player",
+            y="Total Score",
+            color="Total Score",
+            text="Total Score",
+            title="Top 5 Players"
+        )
+        st.plotly_chart(fig_top5, use_container_width=True)
+
+        # --- 2. Player-wise Sport Score Breakdown --- #
+        st.subheader("🥧 Player Score Distribution by Sport")
+
+        selected_player = st.selectbox("Select a player", df_players["Player"].unique())
+        player_row = df_players[df_players["Player"] == selected_player].iloc[0]
+        player_scores = {sport: player_row[sport] for sport in sport_columns if player_row[sport] > 0}
+
+        if player_scores:
+            df_player_sport = pd.DataFrame(player_scores.items(), columns=["Sport", "Score"])
+            fig_player_pie = px.pie(
+                df_player_sport,
+                names="Sport",
+                values="Score",
+                title=f"{selected_player}'s Score Distribution by Sport",
+                hole=0.3
+            )
+            st.plotly_chart(fig_player_pie, use_container_width=True)
+        else:
+            st.info(f"{selected_player} has no scored events.")
+
+        # --- 3. Top 5 Players in Each Sport --- #
+        st.subheader("🏅 Top 5 Players in Each Sport")
+
+        for sport in sport_columns:
+            st.markdown(f"#### 🏸 {sport}")
+            top5_sport = df_players[["Player", sport]].sort_values(by=sport, ascending=False).head(5)
+            top5_sport = top5_sport[top5_sport[sport] > 0]
+
+            if not top5_sport.empty:
+                fig_sport_bar = px.bar(
+                    top5_sport,
+                    x="Player",
+                    y=sport,
+                    color=sport,
+                    text=sport,
+                    title=f"Top 5 in {sport}"
+                )
+                st.plotly_chart(fig_sport_bar, use_container_width=True)
+            else:
+                st.write("No participants with non-zero scores in this sport.")

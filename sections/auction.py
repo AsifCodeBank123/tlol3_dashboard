@@ -82,7 +82,7 @@ def render():
                 <div>
                     <img src="{avatar_url}" width="60" style="border-radius:50%; margin-bottom:8px;" />
                     <div style="font-weight:bold; font-size:14px;">{player_row['Player']}</div>
-                    <div>Tier: <code>{player_row['Tier']}</code></div>
+                    <div><code>{player_row['Tier']}</code></div>
                     <div>Total Points: <strong>{int(player_row['Total Score'])}</strong></div>
                 </div>
                 <div style="font-size:13px; color:#444; margin-top:5px;">{sport_line}</div>

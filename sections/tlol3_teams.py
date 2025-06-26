@@ -25,7 +25,7 @@ def render():
 
     # Assign default colors (customize as needed)
     team_colors = {
-        "Team Captain": "#ff5733",
+        "Team Captain": "#a86f4c",
         "Team Thor": "#3385ff",
         "Team Stark": "#33cc99",
         "Team Panther": "#b2eb18",
@@ -36,7 +36,7 @@ def render():
 
     for idx, team in enumerate(team_names):
         with team_cols[idx]:
-            color = team_colors.get(team, "#555")
+            color = team_colors.get(team, "#4c65a8")
             captain = captains.get(team, "Unknown")
 
             st.markdown(f"""

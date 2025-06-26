@@ -18,7 +18,7 @@ def load_and_merge_scores(report_folder="reports"):
     # Remove unnamed columns and participation-type markers
     def clean_and_map(df):
         df = df.loc[:, ~df.columns.str.contains("^Unnamed")]
-        df = df.drop(columns=[col for col in df.columns if 'participation' in col.lower()], errors='ignore')
+        #df = df.drop(columns=[col for col in df.columns if 'participation' in col.lower()], errors='ignore')
         id_cols = ['Player', 'Gender']
         score_cols = [col for col in df.columns if col not in id_cols]
 

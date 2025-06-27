@@ -46,4 +46,13 @@ def load_and_merge_scores(report_folder="reports"):
     existing_sports = [sport for sport in TLOL_SPORTS if sport in final_df.columns]
     final_df.loc[:, 'Total Score'] = final_df[existing_sports].sum(axis=1)
 
+    # Merge back tier and availability info from original files
+    df1_info = df1[['Player', 'TLOL Auction Player Type', 'TLOL Availability']].copy()
+    df2_info = df2[['Player', 'TLOL Auction Player Type', 'TLOL Availability']].copy()
+    player_info = pd.concat([df1_info, df2_info], ignore_index=True)
+    player_info = player_info.drop_duplicates(subset='Player', keep='first')
+
+    final_df = final_df.merge(player_info, on='Player', how='left')
+
     return final_df
+

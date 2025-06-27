@@ -1,5 +1,5 @@
 import streamlit as st
-#st.set_page_config(page_title="TLOL3 Auction", layout="wide")
+st.set_page_config(page_title="TLOL3 Auction", layout="wide")
 import plotly.express as px
 import pandas as pd
 

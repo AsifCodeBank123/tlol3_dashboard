@@ -7,7 +7,9 @@ from modules.data_loader import load_and_merge_scores
 from modules.avatar_utils import get_avatar_url
 from modules.constants import TLOL_SPORTS
 
-st.markdown("""
+def render():
+
+    st.markdown("""
     <style>
     .player-card {
         background: linear-gradient(135deg, #f0f0f3, #dce0e6);
@@ -44,10 +46,6 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
-
-
-
-def render():
 
     # ---------- TABS ---------- #
     tab1, tab2, tab3 = st.tabs(["🏷️ Auction Preview", "📊 Raw Stats", "📈 Insights & Breakdown"])

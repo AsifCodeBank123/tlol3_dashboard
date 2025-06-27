@@ -66,9 +66,3 @@ elif st.session_state.active_section == "TLOL3":
 elif st.session_state.active_section == "Auction":
     auction.render()
 
-# # Main page buttons
-# st.markdown("### Main Page Actions")
-# st.button("Start Auction")
-# st.button("View Team Stats")
-# st.button("Open Settings")
-# st.button("Generate Report")

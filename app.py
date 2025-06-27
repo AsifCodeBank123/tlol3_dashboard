@@ -11,7 +11,7 @@ from PIL import Image
 st.set_page_config(page_title="TLOL3 Auction Hub", layout="wide")
 
 # Load banner image
-banner_path = os.path.join("assets", "banner.png")
+banner_path = os.path.join("assets", "banner2.png")
 
 if os.path.exists(banner_path):
     img = Image.open(banner_path)
@@ -21,7 +21,7 @@ if os.path.exists(banner_path):
         <style>
         img {
             height: auto !important;
-            max-height: 220px;
+            max-height: 140px;
         }
         </style>
         """,

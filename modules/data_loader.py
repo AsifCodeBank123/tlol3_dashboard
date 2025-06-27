@@ -1,7 +1,9 @@
+import streamlit as st
 import os
 import pandas as pd
 from modules.constants import COLUMN_MAP, TLOL_SPORTS
 
+@st.cache_data
 def load_and_merge_scores(report_folder="reports"):
     # Load files
     df1 = pd.read_csv(os.path.join(report_folder, "TLOL 1 Scores.csv"))

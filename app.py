@@ -2,14 +2,12 @@
 
 import streamlit as st
 # ---------- PAGE CONFIG ---------- #
-st.set_page_config(page_title="TLOL3 Auction Dashboard", layout="wide")
+st.set_page_config(page_title="TLOL3 Dashboard", layout="wide")
 
 from modules.constants import TLOL_SPORTS
 from sections import auction, tlol3, home  # add more as you create
 import os
 from PIL import Image
-
-
 
 # Load banner image
 banner_path = os.path.join("assets", "banner2.png")
@@ -32,8 +30,6 @@ else:
     st.warning("Banner not found. Please add 'banner.png' to the assets folder.")
 
 
-import streamlit as st
-
 # Load local CSS
 def local_css(file_name):
     with open(file_name) as f:
@@ -52,7 +48,7 @@ with st.sidebar:
     if st.button("🏠 Home"):
         st.session_state.active_section = "Home"
 
-    if st.button("📅 TLOL3 --->"):
+    if st.button("📅 TLOL3 Arena"):
         st.session_state.active_section = "TLOL3"
 
     if st.button("💰 Auction Panel"):

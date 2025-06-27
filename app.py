@@ -2,10 +2,10 @@
 
 import streamlit as st
 # ---------- PAGE CONFIG ---------- #
-st.set_page_config(page_title="TLOL3 Dashboard", layout="wide")
+st.set_page_config(page_title="TLOL3 Auction Tool", layout="wide")
 
-from modules.constants import TLOL_SPORTS
-from sections import auction, tlol3, home  # add more as you create
+
+from sections import auction, tlol3, home , auction_live # add more as you create
 import os
 from PIL import Image
 
@@ -48,17 +48,22 @@ with st.sidebar:
     if st.button("🏠 Home"):
         st.session_state.active_section = "Home"
 
-    if st.button("📅 TLOL3 Arena"):
-        st.session_state.active_section = "TLOL3"
+    # if st.button("📅 TLOL3 Arena"):
+    #     st.session_state.active_section = "TLOL3"
 
     if st.button("💰 Auction Panel"):
         st.session_state.active_section = "Auction"
 
+    if st.button("💰 Live Auction"):
+        st.session_state.active_section = "Live Auction"
+
 # --- Main Area Renderer ---
 if st.session_state.active_section == "Home":
     home.render()
-elif st.session_state.active_section == "TLOL3":
-    tlol3.render()
+# elif st.session_state.active_section == "TLOL3":
+#     tlol3.render()
 elif st.session_state.active_section == "Auction":
     auction.render()
+elif st.session_state.active_section == "Live Auction":
+    auction_live.render()
 

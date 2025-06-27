@@ -83,7 +83,7 @@ def render():
             if key in st.session_state:
                 del st.session_state[key]
         st.success("Auction has been reset.")
-        st.experimental_rerun()
+        st.rerun()
 
     if "auction_index" not in st.session_state:
         st.session_state.auction_index = 0

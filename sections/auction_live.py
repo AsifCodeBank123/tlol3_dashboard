@@ -11,8 +11,10 @@ from modules.constants import TLOL_SPORTS
 def render():
     BASE_PRICES = {"Icon": 200, "Lead": 100, "Rest": 50}
     TEAM_NAMES = ["Team Jay", "Team Blessen", "Team Lalit", "Team Somansh"]
-    TEAM_BUDGET = 1000
-    COUNTDOWN_DURATION = 30  # in seconds
+    TEAM_BUDGET = 10000
+    MAX_TEAM_SIZE = 14
+    MAX_ICON_COUNT = 1
+    COUNTDOWN_DURATION = 60
 
     # CSS Styling
     st.markdown("""
@@ -83,7 +85,7 @@ def render():
             if key in st.session_state:
                 del st.session_state[key]
         st.success("Auction has been reset.")
-        st.experimental_rerun()
+        st.rerun()
 
     if "auction_index" not in st.session_state:
         st.session_state.auction_index = 0
@@ -145,6 +147,9 @@ def render():
     with col_left:
         st.markdown("<div class='auction-container'>", unsafe_allow_html=True)
 
+        top_sports = sorted([(sport, player.get(sport, 0)) for sport in TLOL_SPORTS], key=lambda x: -x[1])
+        top_skills = ", ".join([s[0] for s in top_sports if s[1] > 0][:2]) or "N/A"
+
         st.markdown(f"""
         <div class='player-card'>
             <h3>👤 {player['Player']} ({player['Tier']})</h3>
@@ -153,7 +158,8 @@ def render():
                 🔢 <b>Total Score:</b> {int(player['Total Score'])}<br>
                 💰 <b>Base Price:</b> ${base_price}<br>
                 🧍 <b>Gender:</b> {player['Gender']}<br>
-                🟢 <b>Availability:</b> {player.get("TLOL Availability", "")}
+                🟢 <b>Availability:</b> {player.get("TLOL Availability", "")}<br>
+                🏅 <b>Expertise:</b> {top_skills}
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -161,48 +167,89 @@ def render():
         st.markdown("<div class='controls-wrapper'>", unsafe_allow_html=True)
         selected_team = st.radio("Assign to Team:", TEAM_NAMES, key=f"team_{st.session_state.auction_index}", horizontal=True)
 
-        # Countdown Timer
-        time_elapsed = time.time() - st.session_state.start_time
-        time_remaining = max(0, COUNTDOWN_DURATION - int(time_elapsed))
-        st.markdown(f"<div class='timer-box'>⏳ Time left: {time_remaining} seconds</div>", unsafe_allow_html=True)
+        bid_price = None  # Define default
+
+        if st.session_state.team_budgets[selected_team] >= base_price:
+            bid_price = st.number_input(
+                "💵 Enter Bid Price",
+                min_value=base_price,
+                max_value=st.session_state.team_budgets[selected_team],
+                step=10,
+                value=base_price,
+                key=f"bid_{st.session_state.auction_index}"
+            )
+        else:
+            st.error(f"{selected_team} does not have enough budget (${st.session_state.team_budgets[selected_team]}) to bid on this player.")
+
+        remaining_time = COUNTDOWN_DURATION - int(time.time() - st.session_state.start_time)
+        if remaining_time < 0:
+            remaining_time = 0
 
         st.markdown("<div class='button-row'>", unsafe_allow_html=True)
-        if st.button("💰 Sold", key=f"sold_{st.session_state.auction_index}"):
-            if st.session_state.team_budgets[selected_team] >= base_price:
-                st.session_state.auction_results[selected_team].append({
-                    "Player": player["Player"],
-                    "Tier": player["Tier"],
-                    "Base Price": base_price,
-                    "Total Score": int(player["Total Score"]),
-                })
-                st.session_state.team_budgets[selected_team] -= base_price
+        #elapsed = int(time.time() - st.session_state.start_time)
+        st.markdown(f"<div class='timer-box'>⏱️ Time: {remaining_time} seconds</div>", unsafe_allow_html=True)
+
+        col_a, col_b = st.columns([1, 1])
+        with col_a:
+            if st.button("💰 Sold", key=f"sold_{st.session_state.auction_index}"):
+                team_players = st.session_state.auction_results[selected_team]
+                icon_count = sum(1 for p in team_players if p["Tier"] == "Icon")
+                female_count = sum(1 for p in team_players if p["Gender"] == "F")
+                if len(team_players) >= MAX_TEAM_SIZE:
+                    st.warning(f"{selected_team} already has {MAX_TEAM_SIZE} players.")
+                elif player["Tier"] == "Icon" and icon_count >= MAX_ICON_COUNT:
+                    st.warning(f"{selected_team} already has an Icon player.")
+                else:
+                    st.session_state.auction_results[selected_team].append({
+                        "Player": player["Player"],
+                        "Tier": player["Tier"],
+                        "Bid Price": bid_price,
+                        "Total Score": int(player["Total Score"]),
+                        "Gender": player["Gender"]
+                    })
+                    st.session_state.team_budgets[selected_team] -= bid_price
+                    st.session_state.auction_index += 1
+                    st.session_state.start_time = time.time()
+                    st.rerun()
+
+        with col_b:
+            if st.button("⏭️ Skip", key=f"skip_{st.session_state.auction_index}"):
+                st.session_state.skipped_players.append(player)
                 st.session_state.auction_index += 1
                 st.session_state.start_time = time.time()
                 st.rerun()
-            else:
-                st.error(f"{selected_team} does not have enough budget! Remaining: ${st.session_state.team_budgets[selected_team]}")
-
-        if st.button("⏭️ Skip", key=f"skip_{st.session_state.auction_index}"):
-            st.session_state.skipped_players.append(player)
-            st.session_state.auction_index += 1
-            st.session_state.start_time = time.time()
-            st.rerun()
         st.markdown("</div></div>", unsafe_allow_html=True)
 
-        with st.expander("📊 Player Score Breakdown"):
-            for sport in TLOL_SPORTS:
-                if sport in player and player[sport] > 0:
-                    st.markdown(f"- **{sport}**: {int(player[sport])} pts")
+        # with st.expander("📊 Player Score Breakdown"):
+        #     for sport in TLOL_SPORTS:
+        #         if sport in player and player[sport] > 0:
+        #             st.markdown(f"- **{sport}**: {int(player[sport])} pts")
 
     with col_right:
         st.markdown("### 📋 Teams & Budgets")
+
+        # Summary above team boxes
+        total_players = len(st.session_state.auction_queue + st.session_state.skipped_players)
+        sold_players = sum(len(p) for p in st.session_state.auction_results.values())
+        remaining_players = total_players - sold_players
+        st.markdown(f"<div class='summary-box'>👥 Players Left: {remaining_players} | ✅ Sold: {sold_players}</div>", unsafe_allow_html=True)
+
         st.markdown("<div class='team-grid'>", unsafe_allow_html=True)
         for team in TEAM_NAMES:
+            players = st.session_state.auction_results[team]
+            icon_count = sum(1 for p in players if p["Tier"] == "Icon")
+            female_count = sum(1 for p in players if p["Gender"] == "F")
+            unmet_notes = []
+            if icon_count == 0:
+                unmet_notes.append("🚫 Icon Missing")
+            if female_count == 0:
+                unmet_notes.append("❗ No Female")
+            unmet_text = "<br>" + "<br>".join(unmet_notes) if unmet_notes else ""
             st.markdown(f"""
                 <div class='team-box'>
                     <b>{team}</b><br>
                     💰 ${st.session_state.team_budgets[team]}<br>
-                    {'<br>'.join(f'- {p["Player"]} (${p["Base Price"]})' for p in st.session_state.auction_results[team])}
+                    {'<br>'.join(f'- {p["Player"]} (${p["Bid Price"]})' for p in players)}{unmet_text}
                 </div>
             """, unsafe_allow_html=True)
         st.markdown("</div>", unsafe_allow_html=True)

@@ -11,7 +11,7 @@ def render():
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         #st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown("<h1 style='text-align:center;'>🌟 Welcome to TLOL3!</h1>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align:center;'>🌟 Welcome to TLOL3!</h2>", unsafe_allow_html=True)
         st.markdown("<p style='text-align:center; font-size:18px;'>Get ready for the ultimate showdown of skills, spirit, and sportsmanship!</p>", unsafe_allow_html=True)
         st.markdown("<br>", unsafe_allow_html=True)
 

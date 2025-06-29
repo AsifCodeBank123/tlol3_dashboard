@@ -5,7 +5,8 @@ import streamlit as st
 st.set_page_config(page_title="TLOL3 Auction Tool", layout="wide")
 
 
-from sections import auction, tlol3, home , auction_live # add more as you create
+from sections import players_stats
+from sections import tlol3, home , auction_live # add more as you create
 import os
 from PIL import Image
 
@@ -51,8 +52,8 @@ with st.sidebar:
     # if st.button("📅 TLOL3 Arena"):
     #     st.session_state.active_section = "TLOL3"
 
-    if st.button("💰 Auction Panel"):
-        st.session_state.active_section = "Auction"
+    if st.button("🎯 Players Stats"):
+        st.session_state.active_section = "Players Stats"
 
     if st.button("💰 Live Auction"):
         st.session_state.active_section = "Live Auction"
@@ -62,8 +63,8 @@ if st.session_state.active_section == "Home":
     home.render()
 # elif st.session_state.active_section == "TLOL3":
 #     tlol3.render()
-elif st.session_state.active_section == "Auction":
-    auction.render()
+elif st.session_state.active_section == "Players Stats":
+    players_stats.render()
 elif st.session_state.active_section == "Live Auction":
     auction_live.render()
 

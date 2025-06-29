@@ -2,6 +2,7 @@
 
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 import random
 import time
 from modules.data_loader import load_and_merge_scores
@@ -9,10 +10,30 @@ from modules.avatar_utils import get_avatar_url
 from modules.constants import TLOL_SPORTS
 
 def render():
+    SECRET_CODE = "tlol3-access"
+
+    if "auction_access" not in st.session_state:
+        st.session_state.auction_access = False
+
+    if not st.session_state.auction_access:
+        st.title("🔐 Restricted Access")
+        st.warning("You do not have access to the live auction panel.")
+        code = st.text_input("Enter access code to continue:", type="password")
+        if code == SECRET_CODE:
+            st.session_state.auction_access = True
+            st.rerun()
+        return
+    
     BASE_PRICES = {"Icon": 200, "Lead": 100, "Rest": 50}
     TEAM_NAMES = ["Team Jay", "Team Blessen", "Team Lalit", "Team Somansh"]
+    CAPTAINS = {
+        "Blessen Thomas": "Team Blessen",
+        "Jay Jagad": "Team Jay",
+        "Somansh Datta": "Team Somansh",
+        "Lalit Chavan": "Team Lalit"
+    }
     TEAM_BUDGET = 10000
-    MAX_TEAM_SIZE = 14
+    MAX_TEAM_SIZE = 15
     MAX_ICON_COUNT = 1
     COUNTDOWN_DURATION = 60
 
@@ -108,6 +129,23 @@ def render():
         df_all["Tier"] = df_all["TLOL Auction Player Type"].astype(str).str.strip().str.capitalize()
         df_all = df_all[df_all["Tier"].isin(["Icon", "Lead", "Rest"])]
         df_all["Total Score"] = df_all[[col for col in df_all.columns if col in TLOL_SPORTS]].sum(axis=1)
+
+        # Assign captains directly
+        for player_name, team_name in CAPTAINS.items():
+            player_row = df_all[df_all["Player"] == player_name]
+            if not player_row.empty:
+                captain = player_row.iloc[0].to_dict()
+                captain["Player"] += " (C)"
+                st.session_state.auction_results[team_name].append({
+                    "Player": captain["Player"],
+                    "Tier": captain["Tier"],
+                    "Bid Price": 0,
+                    "Total Score": int(captain["Total Score"]),
+                    "Gender": captain["Gender"]
+                })
+
+        # Remove captains from the auction pool
+        df_all = df_all[~df_all["Player"].isin(CAPTAINS.keys())]
 
         tier_order = {"Icon": 0, "Lead": 1, "Rest": 2}
         df_all["TierOrder"] = df_all["Tier"].map(tier_order)
@@ -226,30 +264,44 @@ def render():
         #             st.markdown(f"- **{sport}**: {int(player[sport])} pts")
 
     with col_right:
-        st.markdown("### 📋 Teams & Budgets")
 
-        # Summary above team boxes
-        total_players = len(st.session_state.auction_queue + st.session_state.skipped_players)
-        sold_players = sum(len(p) for p in st.session_state.auction_results.values())
-        remaining_players = total_players - sold_players
-        st.markdown(f"<div class='summary-box'>👥 Players Left: {remaining_players} | ✅ Sold: {sold_players}</div>", unsafe_allow_html=True)
+        players_left = len(full_queue) - st.session_state.auction_index
+        players_sold = sum(len(players) for players in st.session_state.auction_results.values())
+        st.markdown(f"""
+            <div class='summary-counts'>
+                🔢 Players Left: <b>{players_left}</b> &nbsp;&nbsp;&nbsp; ✅ Sold: <b>{players_sold}</b>
+            </div>
+        """, unsafe_allow_html=True)
 
-        st.markdown("<div class='team-grid'>", unsafe_allow_html=True)
-        for team in TEAM_NAMES:
-            players = st.session_state.auction_results[team]
-            icon_count = sum(1 for p in players if p["Tier"] == "Icon")
-            female_count = sum(1 for p in players if p["Gender"] == "F")
-            unmet_notes = []
-            if icon_count == 0:
-                unmet_notes.append("🚫 Icon Missing")
-            if female_count == 0:
-                unmet_notes.append("❗ No Female")
-            unmet_text = "<br>" + "<br>".join(unmet_notes) if unmet_notes else ""
+        # Player performance bar chart
+        chart_data = {sport: player[sport] for sport in TLOL_SPORTS if sport in player and player[sport] > 0}
+        if chart_data:
+            df_chart = pd.DataFrame(chart_data.items(), columns=["Sport", "Points"])
+            st.plotly_chart(px.bar(df_chart, x="Sport", y="Points", color="Points", text="Points"), use_container_width=True)
+
+
+    # ⏬ Show team budget summary at bottom
+    st.markdown("---")
+    st.subheader("📋 Teams & Budgets")
+
+    cols = st.columns(len(TEAM_NAMES))
+    for idx, team in enumerate(TEAM_NAMES):
+        players = st.session_state.auction_results[team]
+        icon_count = sum(1 for p in players if p["Tier"] == "Icon")
+        female_count = sum(1 for p in players if p["Gender"] == "F")
+        unmet_notes = []
+        if icon_count == 0:
+            unmet_notes.append("🚫 Icon Missing")
+        if female_count == 0:
+            unmet_notes.append("❗ No Female")
+        unmet_text = "<br>" + "<br>".join(unmet_notes) if unmet_notes else ""
+
+        with cols[idx]:
             st.markdown(f"""
                 <div class='team-box'>
                     <b>{team}</b><br>
                     💰 ${st.session_state.team_budgets[team]}<br>
-                    {'<br>'.join(f'- {p["Player"]} (${p["Bid Price"]})' for p in players)}{unmet_text}
+                    {'<br>'.join(f'<b style="color:red;">{p["Player"]}</b> (${p.get("Bid Price", 0)})' if "(C)" in p["Player"] else f'{p["Player"]} (${p.get("Bid Price", 0)})' for p in players)}
+                    {unmet_text}
                 </div>
             """, unsafe_allow_html=True)
-        st.markdown("</div>", unsafe_allow_html=True)

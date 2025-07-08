@@ -22,25 +22,69 @@ section[data-testid="stSidebar"] div.stButton > button:active {
     color: white !important;
 }
 
-/* Main page buttons (reuse style but different theme if desired) */
+/* --- Custom Bollywood Buttons from Uiverse --- */
 div.stButton > button {
-    background-color: #3a6ea5;
-    width: 200px;
-    color: white !important;
-    font-weight: bold;
-    border-radius: 8px;
-    margin: 6px 0;
-    transition: all 0.2s ease;
-    border: none;
+  --bg: #d32f2f; /* deep red for Bollywood drama */
+  --text-color: #fff;
+  position: relative;
+  width: 200px;
+  border: none;
+  background: var(--bg);
+  color: var(--text-color);
+  padding: 1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: 0.2s;
+  border-radius: 5px;
+  opacity: 0.9;
+  letter-spacing: 1px;
+  box-shadow: #ef7575 0px 7px 2px, #000 0px 8px 5px;
 }
 
 div.stButton > button:hover {
-    background-color: #2f5b8c;
-    transform: scale(1.03);
+  opacity: 1.2;
 }
 
 div.stButton > button:active {
-    background-color: #274e78;
-    transform: scale(0.98);
-    color: white !important;
+  top: 4px;
+  box-shadow: #552a2a 0px 3px 2px, #000 0px 3px 5px;
 }
+
+/* --- Home Page Background --- */
+.stApp {
+    background-image: url("assets/curtain.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Optional white overlay for readability */
+.stApp::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(255, 255, 255, 0.4); /* adjust transparency */
+    z-index: -1;
+}
+
+/* Home Title Styling */
+.home-title {
+    text-align: center;
+    font-size: 48px;
+    color: #000;
+    font-weight: bold;
+    margin-top: 50px;
+}
+
+.home-subtitle {
+    text-align: center;
+    font-size: 22px;
+    color: #222;
+    margin-bottom: 30px;
+}
+
+
+
+

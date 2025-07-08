@@ -20,9 +20,21 @@ ROUND_EMOJIS = {
 
 
 def load_seeded_pairs(sport):
-    df = pd.read_excel("reports/seeded_teams.xlsx", sheet_name=sport)
-    df.columns = df.columns.str.strip().str.lower()
-    return df
+    try:
+        st.write(f"🔍 Attempting to load sheet: '{sport}' from seeded_teams.xlsx")
+        df = pd.read_excel("reports/seeded_teams.xlsx", sheet_name=sport)
+        df.columns = df.columns.str.strip().str.lower()
+        return df
+    except FileNotFoundError:
+        st.error("❌ The file 'reports/seeded_teams.xlsx' was not found.")
+        raise
+    except ValueError as ve:
+        st.error(f"❌ Sheet '{sport}' not found in the Excel file. Check sheet names.")
+        raise
+    except Exception as e:
+        st.error(f"❌ Unexpected error while loading seeded data for '{sport}': {e}")
+        raise
+
 
 def avoid_same_team_pairing(entities, total_required_pairs=None):
     valid_pairs = [

@@ -153,7 +153,7 @@ def reset_fixtures():
 
 @st.cache_data
 def generate_fixtures_globally(sport):
-    seeded_df = load_seeded_pairs()
+    seeded_df = load_seeded_pairs(sport)
     return generate_fixtures_for_sport(sport, seeded_df)
 
 def render_sport_fixtures(sport):

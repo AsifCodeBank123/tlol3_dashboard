@@ -18,22 +18,16 @@ ROUND_EMOJIS = {
     "Final": "🏆"
 }
 
+with st.spinner(f"Loading fixture data for {SPORTS}..."):
+    df = pd.read_excel("reports/seeded_teams.xlsx", sheet_name=SPORTS)
+
+@st.cache_data
+def load_excel_once():
+    return pd.read_excel("reports/seeded_teams.xlsx", sheet_name=None)  # loads all sheets as dict
 
 def load_seeded_pairs(sport):
-    try:
-        st.write(f"🔍 Attempting to load sheet: '{sport}' from seeded_teams.xlsx")
-        df = pd.read_excel("reports/seeded_teams.xlsx", sheet_name=sport)
-        df.columns = df.columns.str.strip().str.lower()
-        return df
-    except FileNotFoundError:
-        st.error("❌ The file 'reports/seeded_teams.xlsx' was not found.")
-        raise
-    except ValueError as ve:
-        st.error(f"❌ Sheet '{sport}' not found in the Excel file. Check sheet names.")
-        raise
-    except Exception as e:
-        st.error(f"❌ Unexpected error while loading seeded data for '{sport}': {e}")
-        raise
+    sheets = load_excel_once()
+    return sheets[sport]
 
 
 def avoid_same_team_pairing(entities, total_required_pairs=None):
@@ -163,7 +157,7 @@ def reset_fixtures():
         st.session_state.pop(f"fixtures_{sport}_matches", None)
         st.session_state.pop(f"fixtures_{sport}_knockouts", None)
 
-#@st.cache_data
+@st.cache_data
 def generate_fixtures_globally(sport):
     seeded_df = load_seeded_pairs(sport)
     return generate_fixtures_for_sport(sport, seeded_df)

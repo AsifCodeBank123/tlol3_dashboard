@@ -9,7 +9,7 @@ import random
 def get_avatar_url(name, gender):
     if gender == "M":
         seed = random.choice(HERO_MALE) + name.replace(" ", "")
-        style = "fun-emoji"  # or 'pixel-art'
+        style = "croodles-neutral"  # or 'pixel-art'
     elif gender == "F":
         seed = random.choice(HERO_FEMALE) + name.replace(" ", "")
         style = "adventurer"  # or 'big-ears'

@@ -25,12 +25,12 @@ def render():
         return
     
     BASE_PRICES = {"Icon": 200, "Lead": 100, "Rest": 50}
-    TEAM_NAMES = ["Team Jay", "Team Blessen", "Team Lalit", "Team Somansh"]
+    TEAM_NAMES = ["Team GG", "Team RR", "Team DD", "Team BB"]
     CAPTAINS = {
-        "Blessen Thomas": "Team Blessen",
-        "Jay Jagad": "Team Jay",
-        "Somansh Datta": "Team Somansh",
-        "Lalit Chavan": "Team Lalit"
+        "Blessen Thomas": "Team RR",
+        "Jay Jagad": "Team GG",
+        "Somansh Datta": "Team BB",
+        "Lalit Chavan": "Team DD"
     }
     TEAM_BUDGET = 10000
     MAX_TEAM_SIZE = 15

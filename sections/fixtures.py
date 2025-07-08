@@ -8,7 +8,7 @@ import base64
 from itertools import combinations
 
 # Constants
-SPORTS = ["Foosball", "Carrom", "Chess"]
+SPORTS = ["Foosball", "Carrom", "Chess", "Table Tennis" ,"Badminton"]
 
 ROUND_EMOJIS = {
     "Super 32": "🔶",
@@ -26,18 +26,9 @@ def load_excel_once():
     return pd.read_excel("reports/seeded_teams.xlsx", sheet_name=None)  # loads all sheets as dict
 
 def load_seeded_pairs(sport):
-    try:
-        xls = pd.ExcelFile("reports/seeded_teams.xlsx")
-        if sport not in xls.sheet_names:
-            st.error(f"❌ Sheet '{sport}' not found. Available sheets: {xls.sheet_names}")
-            raise ValueError("Sheet not found")
-        df = pd.read_excel(xls, sheet_name=sport)
-        df.columns = df.columns.str.strip().str.lower()
-        return df
-    except Exception as e:
-        st.error(f"❌ Failed to load seeded data for {sport}: {e}")
-        raise
-
+    df = pd.read_excel("reports/seeded_teams.xlsx", sheet_name=sport)
+    df.columns = df.columns.str.strip().str.lower()
+    return df
 
 
 def avoid_same_team_pairing(entities, total_required_pairs=None):
@@ -66,6 +57,26 @@ def avoid_same_team_pairing(entities, total_required_pairs=None):
     return result
 
 
+def strict_fair_pairing(group_winners, qualified):
+    random.shuffle(group_winners)
+    random.shuffle(qualified)
+
+    pairs = []
+    used_q = set()
+
+    for gw in group_winners:
+        for q in qualified:
+            if q['team name'] != gw['team name'] and q['label'] not in used_q:
+                pairs.append((gw, q))
+                used_q.add(q['label'])
+                break
+
+    remaining = [q for q in qualified if q['label'] not in used_q]
+    while len(pairs) < len(group_winners) and remaining:
+        pairs.append((group_winners[len(pairs)], remaining.pop()))
+
+    return pairs
+
 
 def generate_knockout(matches, round_names):
     knockout_structure = {round_name: [] for round_name in round_names}
@@ -89,6 +100,7 @@ def generate_fixtures_for_sport(sport, seeded_df):
     sport = sport.lower()
 
     if sport == "chess":
+        seeded_df['seed'] = seeded_df['seed'].astype(int)
         players = seeded_df[['player', 'team name', 'seed']].dropna().to_dict('records')
         seed1 = [p for p in players if p['seed'] == 1]
         seed2 = [p for p in players if p['seed'] == 2]
@@ -106,35 +118,35 @@ def generate_fixtures_for_sport(sport, seeded_df):
                 'team 2': p2['team name'], 'players 2': (p2['player'],)
             })
 
-        qualified = seed1 + seed2
-        random.shuffle(qualified)
         group_winner_labels = [f"Winner Match {i + 1} (Seed 3)" for i in range(len(group_pairs))]
 
+        if isinstance(seed1, pd.DataFrame):
+            seed1 = seed1.to_dict('records')
+
+        if isinstance(seed2, pd.DataFrame):
+            seed1 = seed2.to_dict('records')
+
+        
+        random.shuffle(seed1)
+        random.shuffle(seed2)
+        interleaved = [val for pair in zip(seed1, seed2) for val in pair]
         super32_raw = [
             {'team name': q['team name'], 'player': q['player'], 'label': f"{q['team name']} (Seed {q['seed']})\n({q['player']})"}
-            for q in qualified[:len(group_pairs)]
+            for q in interleaved[:len(group_pairs)]
         ]
 
         super32_pairs = avoid_same_team_pairing([
-            {'team name': label, 'player': label} for label in group_winner_labels + [p['label'] for p in super32_raw]
+            {'team name': label, 'label': label} for label in group_winner_labels + [p['label'] for p in super32_raw]
         ])
 
-        super32_matches = [(i + 1, pair[0]['team name'], pair[1]['team name']) for i, pair in enumerate(super32_pairs)]
+        super32_matches = [(i + 1, pair[0]['label'], pair[1]['label']) for i, pair in enumerate(super32_pairs)]
 
         knockout = generate_knockout(super32_matches, ["Super 16", "Quarter Finals", "Semi Finals", "Final"])
         return group_stage_matches, {"Super 32": super32_matches, **knockout}
 
-    elif sport in ["foosball", "carrom"]:
+    elif sport in ["foosball", "carrom", "table tennis","badminton"]:
         df = seeded_df.copy()
-        expected_cols = ['player 1', 'player 2', 'team name', 'seed']
-        if not all(col in df.columns for col in expected_cols):
-            st.error(f"❌ Missing columns in {sport} sheet. Required: {expected_cols}")
-            st.write("Found columns:", list(df.columns))
-            return [], {}
-
         df['pair'] = list(zip(df['player 1'], df['player 2']))
-    
-
         seed1 = df[df['seed'] == 1]
         seed2 = df[df['seed'] == 2]
         seed3 = df[df['seed'] == 3]
@@ -154,16 +166,46 @@ def generate_fixtures_for_sport(sport, seeded_df):
             })
 
         winners = [f"Winner Match {i + 1} (Seed 3)" for i in range(len(group_pairs))]
-        qualified = pd.concat([seed1, seed2]).sample(n=len(group_pairs)).reset_index(drop=True)
-        qualified_labels = [
-            f"{row['team name']} (Seed {row['seed']})\n({row['player 1']} & {row['player 2']})"
-            for _, row in qualified.iterrows()
+        seed1 = seed1.to_dict('records') if isinstance(seed1, pd.DataFrame) else seed1
+        seed2 = seed2.to_dict('records') if isinstance(seed2, pd.DataFrame) else seed2
+
+        random.shuffle(seed1)
+        random.shuffle(seed2)
+        interleaved = [val for pair in zip(seed1, seed2) for val in pair]
+        qualified = interleaved[:len(group_pairs)]
+
+        qualified_label_objs = [
+            {
+                'team name': row['team name'],
+                'label': f"{row['team name']} (Seed {row['seed']})\n({row['player 1']} & {row['player 2']})"
+            }
+            for row in qualified
         ]
 
-        combined = [{'team name': a} for a in winners + qualified_labels]
-        super16_pairs = avoid_same_team_pairing(combined)
 
-        super16_matches = [(i + 1, p1['team name'], p2['team name']) for i, (p1, p2) in enumerate(super16_pairs)]
+        # Split into top/bottom halves for fair seeding
+        half = len(qualified) // 2
+        top_qualified = qualified[:half]
+        bottom_qualified = qualified[half:]
+
+
+        group_label_objs = [{'team name': f"Winner Match {i + 1}", 'label': winners[i]} for i in range(len(winners))]
+        top_group_winners = group_label_objs[:half]
+        bottom_group_winners = group_label_objs[half:]
+
+        # Pair each group separately
+        top_pairs = strict_fair_pairing(top_group_winners, [
+            {'team name': q['team name'], 'label': f"{q['team name']} (Seed {q['seed']})\n({q['player 1']} & {q['player 2']})"}
+            for q in top_qualified
+        ])
+        bottom_pairs = strict_fair_pairing(bottom_group_winners, [
+            {'team name': q['team name'], 'label': f"{q['team name']} (Seed {q['seed']})\n({q['player 1']} & {q['player 2']})"}
+            for q in bottom_qualified
+        ])
+
+        super16_pairs = top_pairs + bottom_pairs
+        super16_matches = [(i + 1, p1['label'], p2['label']) for i, (p1, p2) in enumerate(super16_pairs)]
+
 
         knockout = generate_knockout(super16_matches, ["Quarter Finals", "Semi Finals", "Final"])
         return group_stage_matches, {"Super 16": super16_matches, **knockout}

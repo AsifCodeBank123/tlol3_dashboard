@@ -160,7 +160,7 @@ def render_sport_fixtures(sport):
     seeded_df = load_seeded_pairs(sport)
 
     if f"fixtures_{sport}_matches" not in st.session_state:
-        matches, knockouts = generate_fixtures_globally(sport, seeded_df)
+        matches, knockouts = generate_fixtures_globally(sport)
         st.session_state[f"fixtures_{sport}_matches"] = matches
         st.session_state[f"fixtures_{sport}_knockouts"] = knockouts
 

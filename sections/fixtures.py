@@ -163,7 +163,7 @@ def reset_fixtures():
         st.session_state.pop(f"fixtures_{sport}_matches", None)
         st.session_state.pop(f"fixtures_{sport}_knockouts", None)
 
-@st.cache_data
+#@st.cache_data
 def generate_fixtures_globally(sport):
     seeded_df = load_seeded_pairs(sport)
     return generate_fixtures_for_sport(sport, seeded_df)

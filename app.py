@@ -10,6 +10,11 @@ from sections import tlol3, home , auction_live # add more as you create
 import os
 from PIL import Image
 
+import os
+st.write("📁 Current working directory:", os.getcwd())
+st.write("📄 File exists:", os.path.exists("reports/seeded_teams.xlsx"))
+
+
 # # Load banner image
 # banner_path = os.path.join("assets", "banner2.png")
 

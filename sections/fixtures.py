@@ -26,8 +26,18 @@ def load_excel_once():
     return pd.read_excel("reports/seeded_teams.xlsx", sheet_name=None)  # loads all sheets as dict
 
 def load_seeded_pairs(sport):
-    sheets = load_excel_once()
-    return sheets[sport]
+    try:
+        xls = pd.ExcelFile("reports/seeded_teams.xlsx")
+        if sport not in xls.sheet_names:
+            st.error(f"❌ Sheet '{sport}' not found. Available sheets: {xls.sheet_names}")
+            raise ValueError("Sheet not found")
+        df = pd.read_excel(xls, sheet_name=sport)
+        df.columns = df.columns.str.strip().str.lower()
+        return df
+    except Exception as e:
+        st.error(f"❌ Failed to load seeded data for {sport}: {e}")
+        raise
+
 
 
 def avoid_same_team_pairing(entities, total_required_pairs=None):
@@ -116,7 +126,15 @@ def generate_fixtures_for_sport(sport, seeded_df):
 
     elif sport in ["foosball", "carrom"]:
         df = seeded_df.copy()
+        expected_cols = ['player 1', 'player 2', 'team name', 'seed']
+        if not all(col in df.columns for col in expected_cols):
+            st.error(f"❌ Missing columns in {sport} sheet. Required: {expected_cols}")
+            st.write("Found columns:", list(df.columns))
+            return [], {}
+
         df['pair'] = list(zip(df['player 1'], df['player 2']))
+    
+
         seed1 = df[df['seed'] == 1]
         seed2 = df[df['seed'] == 2]
         seed3 = df[df['seed'] == 3]

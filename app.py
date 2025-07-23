@@ -11,6 +11,13 @@ import os
 from PIL import Image
 
 import os
+
+def load_global_styles():
+    style_path = "assets/style.css"
+    if os.path.exists(style_path):
+        with open(style_path) as f:
+            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
 # st.write("📁 Current working directory:", os.getcwd())
 # st.write("📄 File exists:", os.path.exists("reports/seeded_teams.xlsx"))
 

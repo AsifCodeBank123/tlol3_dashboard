@@ -233,13 +233,13 @@ def generate_fixtures_for_sport(sport, seeded_df):
     for _, row in seed1.iterrows():
         match_no = row.get("super_16_match_no") if not is_chess else row.get("super_32_match_no")
         if pd.notnull(match_no):
-            label = f"{row['team name']} (Seed 1)\n({row['player'] if is_chess else row['pair']})"
+            label = f"{row['team name']}\n({row['player'] if is_chess else row['pair']})"
             super_matches[int(match_no)][0] = label
 
     for _, row in seed2.iterrows():
         match_no = row.get("super_16_match_no") if not is_chess else row.get("super_32_match_no")
         if pd.notnull(match_no):
-            label = f"{row['team name']} (Seed 2)\n({row['player'] if is_chess else row['pair']})"
+            label = f"{row['team name']}\n({row['player'] if is_chess else row['pair']})"
             super_matches[int(match_no)][1] = label
 
     # Create group winner labels or placeholders
@@ -249,9 +249,9 @@ def generate_fixtures_for_sport(sport, seeded_df):
         result1 = str(p1.get("group_result", "")).strip().lower()
         result2 = str(p2.get("group_result", "")).strip().lower()
         if result1 == 'w':
-            label = f"{p1['team name']} (Seed 3)\n({p1['player'] if is_chess else p1['pair']})"
+            label = f"{p1['team name']}\n({p1['player'] if is_chess else p1['pair']})"
         elif result2 == 'w':
-            label = f"{p2['team name']} (Seed 3)\n({p2['player'] if is_chess else p2['pair']})"
+            label = f"{p2['team name']}\n({p2['player'] if is_chess else p2['pair']})"
         else:
             label = f"Winner Match {match_no} (Seed 3)"
         group_winner_labels.append(label)

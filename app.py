@@ -6,10 +6,7 @@ st.set_page_config(page_title="TLOL3 Fixtures and Leaderboards", layout="wide")
 
 
 from sections import players_stats, fixtures
-from sections import tlol3, home , auction_live # add more as you create
-import os
-from PIL import Image
-
+from sections import home , auction_live # add more as you create
 import os
 
 def load_global_styles():
@@ -17,31 +14,6 @@ def load_global_styles():
     if os.path.exists(style_path):
         with open(style_path) as f:
             st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
-# st.write("📁 Current working directory:", os.getcwd())
-# st.write("📄 File exists:", os.path.exists("reports/seeded_teams.xlsx"))
-
-
-# # Load banner image
-# banner_path = os.path.join("assets", "banner2.png")
-
-# if os.path.exists(banner_path):
-#     img = Image.open(banner_path)
-#     st.image(img, use_container_width=True, output_format="PNG", caption="", clamp=True)
-#     st.markdown(
-#         """
-#         <style>
-#         img {
-#             height: auto !important;
-#             max-height: 140px;
-#         }
-#         </style>
-#         """,
-#         unsafe_allow_html=True
-#     )
-# else:
-#     st.warning("Banner not found. Please add 'banner.png' to the assets folder.")
-
 
 # Load local CSS
 def local_css(file_name):

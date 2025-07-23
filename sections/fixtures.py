@@ -40,7 +40,8 @@ timestamp = get_excel_mtime()
 all_sheets = load_excel_once(timestamp) 
 
 def load_seeded_pairs(sport):
-    all_sheets = load_excel_once() # Use the cached function
+    timestamp = get_excel_mtime()
+    all_sheets = load_excel_once(timestamp) # Use the cached function
     df = all_sheets.get(sport)
     if df is None:
         st.error(f"Sheet for sport '{sport}' not found in 'seeded_teams.xlsx'. Please check the Excel file and sheet names.")

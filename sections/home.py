@@ -1,12 +1,11 @@
 import streamlit as st
 import os
-import pandas as pd
-from modules.constants import TLOL_SPORTS
+
 from modules.data_loader import load_and_merge_scores
 from modules.avatar_utils import get_avatar_url
-from PIL import Image
-from io import BytesIO
+
 import base64
+import streamlit.components.v1 as components
 
 def load_global_styles():
     style_path = "assets/style.css"
@@ -101,35 +100,37 @@ def render():
             with icon_cols[i % len(icon_cols)]:
                 img_url = get_avatar_url(row['Player'], row['Gender'])
 
-                st.markdown(f"""
-                    <div style='
-                        background: radial-gradient(circle at top left, #fff8e1, #ffe082);
-                        border-radius: 16px;
-                        padding: 16px;
-                        text-align: center;
-                        box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
-                        margin-bottom: 15px;
-                        transition: 0.3s ease;
-                        position: relative;
-                    '>
-                        <div style='
-                            width: 80px;
-                            height: 80px;
-                            margin: 0 auto 8px;
-                            border-radius: 50%;
-                            border: 3px solid #ffd600;
-                            padding: 3px;
-                            background-color: #fff;
-                        '>
-                            <img src="{img_url}" width="100%" style='border-radius:50%;'>
-                        </div>
+                components.html(f"""
+    <div style='
+        background: radial-gradient(circle at top left, #fff8e1, #ffe082);
+        border-radius: 16px;
+        padding: 16px;
+        text-align: center;
+        box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+        margin-bottom: 15px;
+        transition: 0.3s ease;
+        position: relative;
+        width: 100%;
+    '>
+        <div style='
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 8px;
+            border-radius: 50%;
+            border: 3px solid #ffd600;
+            padding: 3px;
+            background-color: #fff;
+        '>
+            <img src="{img_url}" width="100%" style='border-radius:50%;'>
+        </div>
 
-                        <div style='font-weight: 700; font-size: 14.5px; color: #3e3e3e;'>{row['Player']}</div>
-                        <div style='font-size: 13px; color: #6d4c41;'>
-                            Total Points: <span style='font-weight:700;'>{int(row['Total Score'])}</span>
-                        </div>
-                    </div>
-                """, unsafe_allow_html=True)
+        <div style='font-weight: 700; font-size: 14.5px; color: #3e3e3e;'>{row['Player']}</div>
+        <div style='font-size: 13px; color: #6d4c41;'>
+            Total Points: <span style='font-weight:700;'>{int(row['Total Score'])}</span>
+        </div>
+    </div>
+""", height=230)
+
     else:
         st.info("No icon players found.")
 

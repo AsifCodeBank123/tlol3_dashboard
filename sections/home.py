@@ -53,7 +53,7 @@ def render():
                 🎬 TCOE League of Legends 3
             </h1>
             <marquee scrollamount="8" direction="left" style='
-                font-family: "Rock Salt","Brush Script MT",cursive;
+                font-family: "Dancing Script","Great Vibes",cursive;
                 font-size: 22px;
                 color: #fffbe7;
                 background: rgba(0,0,0,0.45);
@@ -137,43 +137,67 @@ def render():
 
 
 
-# --- Captains Section (to be inserted in home.py) ---
+    # --- Captains Section (Redesigned) ---
 
     st.markdown("""
     <style>
-    .captain-card {
-        background-color: #fff8e1;
-        border-radius: 13px;
-        padding: 17px 8px 11px 8px;
+    .captain-section-title {
+        color: #e65100;
         text-align: center;
-        box-shadow: 0 3px 16px rgba(251,181,67,0.13);
-        margin: 13px 5px 15px 5px;
-        min-height: 225px;
+        font-size: 28px;
+        font-weight: 700;
+        font-family: 'Segoe UI', 'Roboto', sans-serif;
+        margin-top: 10px;
+        margin-bottom: 25px;
     }
+
+    .captain-card {
+        background: linear-gradient(to bottom right, #fff3e0, #ffe0b2);
+        border-radius: 18px;
+        padding: 16px 10px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(255, 152, 0, 0.2);
+        margin: 10px 8px;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        min-height: 250px;
+    }
+    .captain-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 6px 18px rgba(255, 152, 0, 0.3);
+    }
+
     .captain-card img {
         border-radius: 50%;
-        width: 92px;
-        height: 92px;
+        width: 90px;
+        height: 90px;
         object-fit: cover;
-        margin-bottom: 10px;
-        box-shadow: 0 2px 22px rgba(255,186,86,0.16);
+        margin-bottom: 12px;
+        border: 3px solid #ffb74d;
+        box-shadow: 0 3px 8px rgba(255, 193, 7, 0.3);
     }
-    .captain-name {
-        font-weight: bold;
-        font-size: 17px;
-        color: #b3741b;
-        margin-bottom: 2px;
-    }
-    .team-name {
-        color: #f57c00;
-        font-size: 14px;
-        font-style: italic;
-        margin-bottom: 2px;
-    }
-    </style>
-""", unsafe_allow_html=True)
-    st.markdown("<h3 style='color:#ff6f00; text-align:center;'>🎬 Hamare Kaptaans</h3>", unsafe_allow_html=True)
 
+    .captain-name {
+        font-weight: 700;
+        font-size: 18px;
+        color: #6d4c41;
+        font-family: 'Segoe UI', 'Roboto', sans-serif;
+        margin-bottom: 4px;
+    }
+
+    /* New - more specific and scoped */
+.captain-card .team-name {
+    color: #ef6c00 !important;
+    font-size: 20px;
+    font-style: italic;
+    font-family: 'Caveat', cursive;
+}
+    </style>
+    """, unsafe_allow_html=True)
+
+    # Section Title
+    st.markdown("<div class='captain-section-title'>🎬 Hamare Kaptaans</div>", unsafe_allow_html=True)
+
+    # Captain Data
     captains = [
         {"team": "Gully Gang", "captain": "Jay Jagad", "img": "assets/gg_captain.jpg"},
         {"team": "Badshah Blasters", "captain": "Somansh Datta", "img": "assets/bb_captain.jpg"},
@@ -181,15 +205,17 @@ def render():
         {"team": "Dabangg Dynamos", "captain": "Lalit Chavan", "img": "assets/dd_captain.jpg"},
     ]
 
+    # Display in Columns
     cols = st.columns(len(captains))
     for i, cap in enumerate(captains):
         with cols[i]:
             img_base64 = get_base64_image(cap["img"])
             st.markdown(f"""
             <div class='captain-card'>
-                <img src="{img_base64}" />
+                <img src="{img_base64}" alt="Captain Photo"/>
                 <div class='captain-name'>{cap['captain']}</div>
                 <div class='team-name'>{cap['team']}</div>
             </div>
             """, unsafe_allow_html=True)
+
 

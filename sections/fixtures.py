@@ -209,6 +209,11 @@ def generate_fixtures_for_sport(sport, seeded_df):
             'team 2': team2, 'players 2': players2
         })
 
+        match_stage = "Super 16" if not is_chess else "Super 32"
+        match_no_col = match_stage.lower().replace(" ", "_") + "_match_no"
+        result_col = match_stage.lower().replace(" ", "_") + "_result"
+
+
         # Assign group match number once
         for p in [p1, p2]:
             id_col = 'player' if is_chess else 'pair'

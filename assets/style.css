@@ -1,0 +1,481 @@
+/* ======== Card Base ======== */
+.match-card {
+  border-radius: 20px;
+  background: linear-gradient(120deg, #ffe9f2 50%, #e3f8ff 100%);
+  border: 1.5px solid #eed1da;
+  box-shadow: 0 4px 20px 0 rgba(205, 160, 206, 0.11),
+              0 1.5px 0px 0 #ead8e3;
+  padding: 22px 24px 20px 24px;
+  margin: 18px 0 28px 0;
+  transition: box-shadow 0.22s, background 0.22s, transform 0.19s;
+  position: relative;
+  height: 270px;
+  border-left: 5px solid transparent;
+}
+
+/* ======== Card Hover (Glow/Lift) ======== */
+.match-card:hover {
+  box-shadow: 0 6px 42px 0 #ef68c8cc, 0 2.5px 0px 0 #b0f0ff;
+  background: linear-gradient(120deg, #fdd1e8 40%, #b6f0fa 100%);
+  transform: translateY(-5px) scale(1.018);
+  z-index: 10;
+}
+
+/* ======== Team Content ======== */
+.team-box {
+  flex: 1;
+  text-align: center;
+}
+.team-box img {
+  width: 60px;
+  margin-bottom: 7px;
+  border-radius: 13px;
+  box-shadow: 0 2px 12px rgba(240, 236, 236, 0.944);
+}
+.team-name {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #140ce7;
+  transition: color 0.18s;
+}
+.player-names {
+  font-size: 13px;
+  color: #64648a;
+}
+.team-abbr {
+  margin-top: 5px;
+  font-size: 13.5px;
+  color: #005d75;
+}
+
+/* ======== Versus ======== */
+.match-versus {
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 4;
+  text-align: center;
+}
+
+/* ======== Card Title ======== */
+.match-title {
+  text-align: center;
+  font-weight: 800;
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #672056;
+  letter-spacing: 1px;
+  transition: color 0.18s;
+}
+
+/* ======== Team Outcome Indicators ======== */
+.team-winner {
+  border-left-color: #2ecc71;
+}
+.team-loser {
+  border-left-color: #e74c3c;
+}
+
+/* ======== Tournament Bracket Visualization ======== */
+.bracket-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+  overflow-x: auto;
+}
+.bracket-round {
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  margin: 0 10px;
+}
+.bracket-match {
+  background-color: white;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 40px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+.bracket-match::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -20px;
+  width: 20px;
+  height: 2px;
+  background-color: #ccc;
+}
+.bracket-round:last-child .bracket-match::after {
+  display: none;
+}
+.bracket-title {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #3498db;
+}
+
+/* ======== Dark Mode Styles ======== */
+@media (prefers-color-scheme: dark) {
+  .match-card {
+    background: linear-gradient(120deg, #ba996a 10%, #154044 100%);
+    border: 1.3px solid #18282d;
+    box-shadow: 0 3px 24px #191e1f8f;
+    color: #f8eadd;
+  }
+  .match-card:hover {
+    background: linear-gradient(120deg, #805879 41%, #197888 100%);
+    box-shadow: 0 6px 36px 0 #8ae4ff42, 0 1.5px 0px 0 #3d72a0;
+  }
+  .team-name, .match-title {
+    color: #ffe8b0 !important;
+    text-shadow: 0 1px 1.5px #37323a9f;
+  }
+  .player-names {
+    color: #dae74d !important;
+  }
+  .match-versus {
+    color: #ffd0f8 !important;
+  }
+  .team-abbr {
+    color: #00ff0d !important;
+  }
+  .bracket-match {
+    background-color: #2d3748;
+    color: #e2e8f0;
+  }
+  .bracket-match::after {
+    background-color: #4a5568;
+  }
+  .bracket-title {
+    color: #63b3ed;
+  }
+}
+
+/* ======== Button Styles ======== */
+div.stButton > button {
+  /* Voting-style button */
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-weight: 700;
+  background: linear-gradient(45deg, #43b690, #5796da);
+  color: #fff !important;
+  margin-top: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  transition: all 0.2s ease;
+}
+div.stButton > button:hover {
+  background: linear-gradient(45deg, #339877, #3c78c8);
+  transform: scale(1.03);
+}
+
+/* ======== Sidebar Button Styles ======== */
+section[data-testid="stSidebar"] button {
+  background: linear-gradient(90deg, #ff7849 30%, #ffc85a 100%);
+  color: #fff !important;
+  border: none;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 8px 18px;
+  margin-bottom: 10px;
+  margin-top: 6px;
+  box-shadow: 0 2px 10px rgba(170,102,51,0.08);
+  transition: background 0.22s;
+}
+section[data-testid="stSidebar"] button:hover {
+  background: linear-gradient(90deg, #f05b28 10%, #ffd36d 100%);
+  transform: scale(1.03);
+}
+section[data-testid="stSidebar"] button:active {
+  background: #eeaa68;
+  transform: scale(0.98);
+}
+
+/* ======== Marquee Styles ======== */
+marquee {
+  font-family: "Rock Salt", "Brush Script MT", cursive;
+  font-size: 22px;
+  letter-spacing: 1.3px;
+  color: #ffe883;
+  background: linear-gradient(87deg, rgba(255,194,36,0.22), rgba(244,131,24,0.08));
+  border-radius: 14px;
+  padding: 7px 0;
+  margin-bottom: 2px;
+  width: 98%;
+  display: block;
+  font-weight: 600;
+  box-shadow: 0 1px 10px #332a01, 0 2px 26px #fff7000b;
+}
+@media (prefers-color-scheme: dark){
+  marquee {
+    color:#fffdd0; background:rgba(42,42,42,0.31);
+  }
+}
+/* ======== Responsive Adjustments ======== */
+@media (max-width: 768px) {
+  .bracket-container {
+    flex-direction: column;
+  }
+  
+  .bracket-round {
+    margin-bottom: 30px;
+  }
+  
+  .bracket-match::after {
+    display: none;
+  }
+  
+  .match-teams {
+    flex-direction: column;
+  }
+  
+  .team {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .vs {
+    margin: 10px 0;
+  }
+  
+  .tournament-header h1 {
+    font-size: 2rem;
+  }
+}
+
+/* ======== Captains Section (Stylized) ======== */
+
+.captain-card {
+  background: radial-gradient(circle at top left, #fffde7, #ffe082);
+  border-radius: 24px;
+  padding: 20px 16px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(255, 111, 51, 0.2);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  margin: 12px 6px;
+  position: relative;
+}
+
+.captain-card:hover {
+  transform: scale(1.06);
+  box-shadow: 0 8px 26px rgba(255, 111, 51, 0.4);
+}
+
+.captain-card img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-bottom: 12px;
+  border: 3px solid #ffc107;
+  box-shadow: 0 4px 14px rgba(255, 213, 79, 0.4);
+}
+
+.captain-name {
+  font-size: 18px;
+  font-weight: 800;
+  color: #5d4037;
+  margin-bottom: 4px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.captain-card .team-name {
+  font-size: 16px;
+  color: #d84315;
+  font-style: italic;
+  font-family: 'Caveat', cursive;
+}
+
+/* ======== Teams at a Glance - Role-Based Cards ======== */
+/* ======== Shared Title Style (Kaptaans + Teams at a Glance) ======== */
+.shared-section-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 800;
+  font-family: 'Bebas Neue', 'Segoe UI', sans-serif;
+  letter-spacing: 1.5px;
+  margin: 30px 0 20px;
+  color: #fff9c4; /* Warm cream for dark backgrounds */
+  text-shadow: 1px 1px 2px #000000cc;
+  border-bottom: 2px solid black;
+  display: inline-block;
+  padding: 5px 15px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+}
+
+
+
+/* Icon - Royal Gold */
+.role-icon {
+  background: linear-gradient(135deg, #fffde7, #ffe57f);
+  border-left: 5px solid #fbc02d;
+  box-shadow: 0 2px 14px rgba(251, 192, 45, 0.35);
+}
+
+/* Lead - Vibrant Mint */
+.role-lead {
+  background: linear-gradient(135deg, #e6f9ec, #c8facc);
+  border-left: 5px solid #2e7d32;
+  box-shadow: 0 2px 14px rgba(76, 175, 80, 0.3);
+}
+
+/* Rest - Ice Blue */
+.role-rest {
+  background: linear-gradient(135deg, #e3f2fd, #d0e8ff);
+  border-left: 5px solid #0288d1;
+  box-shadow: 0 2px 14px rgba(33, 150, 243, 0.3);
+}
+
+.section-title {
+  font-weight: 800;
+  font-size: 14px;
+  margin-bottom: 8px;
+  letter-spacing: 0.7px;
+  color: #263238;
+  text-transform: uppercase;
+}
+
+.player-pill {
+  display: inline-block;
+  background: #ffffff;
+  color: #263238;
+  font-size: 13.5px;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 6px 13px;
+  margin: 4px 4px 6px 0;
+  border: 1px solid #c5d8e7;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+  transition: all 0.15s ease-in-out;
+}
+.player-pill:hover {
+  background: #f4fbff;
+  color: #0d47a1;
+}
+
+/* ======== Team Headers ======== */
+.team-glance-col h4 {
+  font-size: 21px;
+  font-weight: 900;
+  margin-bottom: 20px;  /* <-- increased for spacing */
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 12px;
+  display: inline-block;
+  background: linear-gradient(45deg, #fefcea, #f1da36);
+  color: #8e3700;
+  box-shadow: 0 3px 10px rgba(255, 213, 97, 0.2);
+}
+
+.role-block {
+  border-radius: 14px;
+  padding: 12px 12px 8px;
+  margin-top: 10px;       /* <-- added top spacing */
+  margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+
+
+/* ======== Team Themes ======== */
+.team-gully {
+  background: linear-gradient(135deg, #fdfbfb, #ebedee);
+  color: #222;
+  border-left: 4px solid #8e24aa;
+}
+
+.team-badshah {
+  background: linear-gradient(135deg, #ffebee, #ffcdd2);
+  color: #880e4f;
+  border-left: 4px solid #d81b60;
+}
+
+.team-rockstar {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  color: #0d47a1;
+  border-left: 4px solid #1e88e5;
+}
+
+.team-dabangg {
+  background: linear-gradient(135deg, #f1ffe7, #dcedc8);
+  color: #33691e;
+  border-left: 4px solid #689f38;
+}
+
+/* Compact Card for Top 3 */
+.compact-leaderboard-card {
+  background: linear-gradient(135deg, #4b2c5e, #0f2027);
+  color: #ffffff;
+  padding: 14px 18px;
+  margin-bottom: 14px;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+  position: relative;
+  transition: transform 0.2s ease-in-out;
+}
+
+.compact-leaderboard-card:hover {
+  transform: scale(1.02);
+}
+
+/* Compact Card for Ranks >= 4 */
+.compact-leaderboard-card-lower {
+  background: linear-gradient(135deg, #1a1a1a, #333333);
+  color: #ddd;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  border-radius: 14px;
+  border: 1px solid #555;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease-in-out;
+}
+
+.compact-leaderboard-card-lower:hover {
+  transform: scale(1.015);
+}
+
+.compact-player-name, .compact-team-name {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.compact-points {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffb74d;
+  margin-bottom: 10px;
+}
+
+.sport-block-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.mini-sport-block {
+  background: #222;
+  color: #fff;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  border: 1px solid #444;
+}
+
+.compact-rank-badge {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  background: #ffca28;
+  color: #000;
+  padding: 6px 12px;
+  font-weight: 700;
+  border-radius: 999px;
+  font-size: 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border: 1px solid black;
+}
+

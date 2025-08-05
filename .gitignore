@@ -1,0 +1,31 @@
+# Python Bytecode and Cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Virtual Environment
+venv/
+env/
+
+# GCP Service Account Key
+*.json
+
+# Jupyter Notebook checkpoints (if any)
+.ipynb_checkpoints/
+
+# Streamlit-specific
+.streamlit/config.toml
+
+# CSVs / sensitive reports (optional)
+*.csv
+*.xlsx
+
+# Cache or log files
+*.log
+
+# Ignore environment files
+.env

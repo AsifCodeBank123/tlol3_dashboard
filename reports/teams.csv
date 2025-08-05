@@ -1,15 +1,52 @@
-Team Name,Team Captain,Team Thor,Team Stark,Team Panther
-Team Captain,"D'silva, Wilfred","Devda, Kishansingh","Tank, Umesh","Menon, Pritesh"
-Player 1,Rachita Harit,Samiksha Prabhu,Nisha Saini,Umesh Gawade
-Player 2,Amitabh Singh,Bhaskar Patil,Nilesh Mulik,Avin Chorage
-Player 3,Pooja Nandoskar,Rahul Arjun,Sanket Patil,Ravi Chavan
-Player 4,Asif Khan,Vijay Sangale,Vijay Chinkate,Kshitij Wadankar
-Player 5,Vishal Shinde,Irshad Darji,Sanskar Bagwe,Prachi Dalvi
-Player 6,Kartik Nair,Mayur Pawar,Suraj Kamerkar,Avinash Gowda
-Player 7,Vishal Dubey,Bijal Gala,Johnson Thomas,Komal Panjwani
-Player 8,Dhananjay Kulkarni,Gayatri Zuting,Jincy Geevarghese,Rahul Pokharkar
-Player 9,Bishal Pandit,Pramod Patel,Jay Jagad,Lalit Chavan
-Player 10,Adnan Shaikh,Blessen Thomas,Bhagyashree Dhotre,Pratap Kumar
-Player 11,Amit Singh,Saurabh Mahadik,Kiran Padwal,Vibhuti Dabholkar
-Player 12,Hitesh Ghadigaonkar,Ankit Yadav,Somansh Datta,Pritam Paparkar
-Player 13,Esakki Shummugavel,Arijit Ghosh,Ravi Khanra,Arvind Arumuga Nainar
+Team Name,Player Name,Player Type,Gender,Table Tennis Participation,Table Tennis,Chess Participation,Chess,Carrom Participation,Carrom,Foosball Participation,Foosball,Badminton Participation,Badminton,Cricket,Bonus Card Point,Underdog Uprising Points
+Badshah Blasters,Wilfred Dsilva,Icon,Male,50,250,50,100,50,200,50,150,50,100,50,1000,0
+Badshah Blasters,Vishal Shinde,Rest,Male,50,100,,,,,,,,,,,
+Badshah Blasters,Saurabh Mahadik,Rest,Male,,,,,,,,,,,,,
+Badshah Blasters,Pritesh Menon,Lead,Male,,,,,,,,,,,,,
+Badshah Blasters,Samiksha Prabhu,Lead,Female,,,,,,,,,,,,,
+Badshah Blasters,Umesh Gawade,Lead,Male,,,,,,,,,,,,,
+Badshah Blasters,N Pratap Kumar,Rest,Male,,,,,,,,,,,,,
+Badshah Blasters,Vijay Chinkate,Rest,Male,,,,,,,,,,,,,
+Badshah Blasters,Pooja Nandoskar,Rest,Female,,,,,,,,,,,,,
+Badshah Blasters,Gayatri Zuting,Rest,Female,,,,,,,,,,,,,
+Badshah Blasters,Hitesh Ghadigaonkar,Rest,Male,,,,,,,,,,,,,
+Badshah Blasters,Somansh Datta,Captain,Male,,,,,,,,,,,,,
+Badshah Blasters,Kiran Padwal,Rest,Male,,,,,,,,,,,,,
+Dabangg Dynamos,Adnan Shaikh,Icon,Male,50,150,,,,,,,,,,,
+Dabangg Dynamos,Nilesh Sansare,Lead,Male,,,,,,,,,,,,,
+Dabangg Dynamos,Rachita Harit,Lead,Female,,,,,,,,,,,,,
+Dabangg Dynamos,Nilesh Mulik,Lead,Male,,,,,,,,,,,,,
+Dabangg Dynamos,Mayur Pawar,Rest,Male,,,,,,,,,,,,,
+Dabangg Dynamos,Bijal Gala,Rest,Female,,,,,,,,,,,,,
+Dabangg Dynamos,Sanskar Bagwe,Rest,Male,,,,,,,,,,,,,
+Dabangg Dynamos,Lalit Chavan,Captain,Male,,,,,,,,,,,,,
+Dabangg Dynamos,Ravi Khanra,Rest,Male,,,,,,,,,,,,,
+Dabangg Dynamos,Bishal Pandit,Rest,Male,,,,,,,,,,,,,
+Dabangg Dynamos,Arijit Ghosh,Rest,Male,,,,,,,,,,,,,
+Dabangg Dynamos,Amit Singh,Rest,Male,,,,,,,,,,,,,
+Gully Gang,Umesh Tank,Icon,Male,50,,50,100,,,,,,,,,
+Gully Gang,Bhaskar Patil,Lead,Male,,,,,,,,,,,,,
+Gully Gang,Rahul Arjun,Lead,Male,,,,,,,,,,,,,
+Gully Gang,Avinash Gowda,Rest,Male,,,,,,,,,,,,,
+Gully Gang,Rahul Pokharkar,Rest,Male,,,,,,,,,,,,,
+Gully Gang,Avin Chorage,Lead,Male,,,,,,,,,,,,,
+Gully Gang,Vijay Sangale,Rest,Male,,,,,,,,,,,,,
+Gully Gang,Jay Jagad,Captain,Male,,,,,,,,,,,,,
+Gully Gang,Bhagyashree Dhotre,Rest,Female,,,,,,,,,,,,,
+Gully Gang,Pramod Patel,Rest,Male,,,,,,,,,,,,,
+Gully Gang,Komal Panjwani,Rest,Female,,,,,,,,,,,,,
+Gully Gang,Pritam Paparkar,Rest,Male,,,,,,,,,,,,,
+Rockstar Rebels,Dhananjay Kulkarni,Icon,Male,,,,,,,,,,,,,
+Rockstar Rebels,Suraj Kamerkar,Rest,Male,,,,,,,,,,,,,
+Rockstar Rebels,Kishansingh Devda,Lead,Male,,,,,,,,,,,,,
+Rockstar Rebels,Vibhuti S Dabholkar,Rest,Female,,,,,,,,,,,,,
+Rockstar Rebels,Jincy Geevarghese,Rest,Female,,,,,,,,,,,,,
+Rockstar Rebels,Arvind Arumuga Nainar,Rest,Male,,,,,,,,,,,,,
+Rockstar Rebels,Johnson Thomas,Rest,Male,,,,,,,,,,,,,
+Rockstar Rebels,Ankit Yadav,Rest,Male,,,,,,,,,,,,,
+Rockstar Rebels,Irshad Darji,Rest,Male,,,,,,,,,,,,,
+Rockstar Rebels,Ravi Chavan,Lead,Male,,,,,,,,,,,,,
+Rockstar Rebels,Sanket Patil,Lead,Male,,,,,,,,,,,,,
+Rockstar Rebels,Asif Khan,Rest,Male,,,,,,,,,,,,,
+Rockstar Rebels,Esakki Shummugavel,Rest,Female,,,,,,,,,,,,,
+Rockstar Rebels,Blessen Thomas,Captain,Male,,,,,,,,,,,,,

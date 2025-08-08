@@ -35,6 +35,10 @@ def render():
             unsafe_allow_html=True,
         )
 
+    st.markdown("""
+<div class="live-ticker">🔥 Gully Gang Pair (C&D) beats Dabangg Dynamos Pair (A&B) in Tennis! | 🏓 Carrom Finals tonight at 7PM | MVP of the Day: Somansh Datta!</div>
+""", unsafe_allow_html=True)
+
   
 
     # Top-right "Leaderboard is Live" button
@@ -78,6 +82,7 @@ def render():
                 letter-spacing: 2px;'>
                 🎬 TCOE League of Legends 3
             </h1>
+            <!--
             <marquee scrollamount="8" direction="left" style='
                 font-family: "Dancing Script","Great Vibes",cursive;
                 font-size: 22px;
@@ -89,7 +94,7 @@ def render():
                 letter-spacing: 1.5px;
                 width:98%; display: block; margin-left:auto; margin-right:auto;'>
                 💥 Breaking: Welcome to TCOE League of Legends Season 3! Prepare for epic showdowns, iconic players & bollywood drama. Stay tuned for daily updates & team rankings! 🔥
-            </marquee>
+            </marquee> -->
             <p style='
                 font-family: "Brush Script MT", cursive;
                 font-size: 28px;
@@ -121,32 +126,31 @@ def render():
                 <img src="{img_base64}" alt="Captain Photo"/>
                 <div class='captain-name'>{cap['captain']}</div>
                 
+          
             </div>
             """, unsafe_allow_html=True)
     
 
+
+    # --- Role and Team Mappings ---
     role_class_map = {
-    "Icon": "role-icon",
-    "Lead": "role-lead",
-    "Rest": "role-rest"
+        "Icon": "role-icon",
+        "Lead": "role-lead",
+        "Rest": "role-rest"
     }
     role_emojis = {
         "Icon": "🌟",
         "Lead": "🧠",
         "Rest": "👤"
     }
-
-    team_css_map = {
-    "Gully Gang": "team-gully",
-    "Badshah Blasters": "team-badshah",
-    "Rockstar Rebels": "team-rockstar",
-    "Dabangg Dynamos": "team-dabangg"
-}
-
+   
+    # --- Section Divider ---
     st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
-    # --- Teams at a Glance ---
+
+    # --- Title ---
     st.markdown("<div class='shared-section-title'>👥 Teams at a Glance</div>", unsafe_allow_html=True)
 
+    # --- Load and Clean Data ---
     df_teams = pd.read_csv("reports/teams.csv")
     df_teams.columns = df_teams.columns.str.strip()
     df_teams.rename(columns={"Player Name": "Player", "Player Type": "Role"}, inplace=True)
@@ -154,22 +158,42 @@ def render():
         "icon": "Icon", "lead": "Lead", "rest": "Rest"
     }).fillna("Rest")
 
+    # --- Custom Team Order and Role Order ---
     team_order = ["Gully Gang", "Badshah Blasters", "Rockstar Rebels", "Dabangg Dynamos"]
     role_order = ["Icon", "Lead", "Rest"]
 
-    cols = st.columns(4, border=True)
-    for idx, team in enumerate(team_order):
-        with cols[idx]:
-            css_class = team_css_map.get(team, "")
-            st.markdown(f"<div class='team-glance-col'><h4 class='{css_class}'>{team}</h4>", unsafe_allow_html=True)
+    
+
+    for team in team_order:
+        captain_info = next((c for c in captains if c["team"] == team), {})
+        logo_base64 = get_base64_image(captain_info.get("img", ""))
+        expander_title = expander_title = f"🏀 {team.title()}"
+
+        with st.expander(expander_title, expanded=(team == team_order[0])):
+            # Inside: visible logo + styled team name
+            st.markdown(f"""
+                <div class="team-expander-header">
+                    <img src="{logo_base64}" class="team-logo"/>
+                    <span class="team-expander-title">{team}</span>
+                </div>
+               
+            """, unsafe_allow_html=True)
 
             for role in role_order:
-                players = df_teams[(df_teams["Team Name"] == team) & (df_teams["Role"] == role)]["Player"].tolist()
+                players = df_teams[
+                    (df_teams["Team Name"] == team) & (df_teams["Role"] == role)
+                ]["Player"].tolist()
                 if players:
                     role_class = role_class_map.get(role, "role-rest")
                     emoji = role_emojis.get(role, "")
                     section = f"<div class='role-block {role_class}'><div class='section-title'>{emoji} {role}</div>"
-                    section += "".join([f"<span class='player-pill'>{p}</span>" for p in players])
+                    section += "".join(
+                        [f"<span class='player-pill'>{p}</span>" for p in players]
+                    )
                     section += "</div>"
                     st.markdown(section, unsafe_allow_html=True)
+
             st.markdown("</div>", unsafe_allow_html=True)
+
+    
+

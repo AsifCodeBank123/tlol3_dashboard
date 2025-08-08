@@ -33,7 +33,7 @@ with st.sidebar:
     
     if st.button("🏠 Ghar Ho To Aisa (Home)"):
         st.session_state.active_section = "Ghar Ho To Aisa"
-    if st.button("🎯 Kismein Kitna Hai Dum (Leaderboard)"):
+    if st.button("🏋️‍♂️ Kismein Kitna Hai Dum (Leaderboard)"):
         st.session_state.active_section = "Kismein Kitna Hai Dum (Leaderboard)"
     if st.button("👫 Rab Ne Bana Di Jodi (Fixtures)"):
         st.session_state.active_section = "Rab Ne Bana Di Jodi"
@@ -48,7 +48,7 @@ try:
     if st.session_state.active_section == "Ghar Ho To Aisa":
         home.render()
     elif st.session_state.active_section == "Kismein Kitna Hai Dum (Leaderboard)":
-        st.title("👫 Kismein Kitna Hai Dum (Leaderboard)")
+        st.title("🏋️‍♂️ Kismein Kitna Hai Dum (Leaderboard)")
         leaderboard.render()
     elif st.session_state.active_section == "Rab Ne Bana Di Jodi":
         st.title("👫 Rab Ne Bana Di Jodi — Fixtures")

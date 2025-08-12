@@ -244,7 +244,8 @@ def render_leaderboard():
 
                 part_col = participation_column_map_norm.get(sport_norm)
                 if part_col and part_col in team_rows.columns:
-                    part_score = pd.to_numeric(team_rows[part_col].sum(), errors="coerce")
+                    part_score = pd.to_numeric(team_rows[part_col], errors="coerce").fillna(0).sum()
+            
                     sport_score += 0 if pd.isna(part_score) else int(part_score)
 
                 card += f"<div class='mini-sport-block'>{sport_pretty}: {sport_score}</div>"

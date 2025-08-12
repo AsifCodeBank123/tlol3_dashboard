@@ -239,7 +239,12 @@ def render_leaderboard():
 
             team_rows = df_teams[df_teams['team_name'] == team]
             for sport_pretty, sport_norm in zip(sport_columns_pretty, sport_columns_norm):
-                sport_score = pd.to_numeric(team_rows[sport_norm].sum() if sport_norm in team_rows.columns else 0, errors="coerce")
+                sport_score = (
+                   pd.to_numeric(team_rows[sport_norm], errors="coerce").fillna(0).sum()
+                   if sport_norm in team_rows.columns else 0
+                )
+                
+                
                 sport_score = 0 if pd.isna(sport_score) else int(sport_score)
 
                 part_col = participation_column_map_norm.get(sport_norm)

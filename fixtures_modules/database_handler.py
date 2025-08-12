@@ -4,20 +4,26 @@ from google.oauth2.service_account import Credentials
 import pandas as pd
 from fixtures_modules.constants import SPREADSHEET_ID
 import time
+import os
+import json
 
 # ✅ Google Sheets auth
 @st.cache_resource(ttl=300)
 def get_gsheet_connection():
     try:
-        creds = Credentials.from_service_account_file(
-            "data/gcp_service_account.json",
+        # Read JSON string from Streamlit secrets
+        json_str = st.secrets["GCP_SERVICE_ACCOUNT_JSON"]
+        creds_info = json.loads(json_str)  # Convert string to dict
+
+        creds = Credentials.from_service_account_info(
+            creds_info,
             scopes=["https://www.googleapis.com/auth/spreadsheets"]
         )
         return gspread.authorize(creds)
     except Exception as e:
         st.error(f"❌ Error connecting to Google Sheets: {e}")
         return None
-
+    
 @st.cache_data(ttl=300)  # Cache for 5 mins
 def load_sheet_as_df(sheet_name, spreadsheet_id=SPREADSHEET_ID):
     """Load a specific sheet from a given spreadsheet."""

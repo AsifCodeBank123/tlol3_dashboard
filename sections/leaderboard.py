@@ -29,7 +29,8 @@ def render_leaderboard():
 
     # Load team data
     df_teams = load_sheet_as_df("points", spreadsheet_id=SPREADSHEET_ID2)
-    df_teams.columns = df_teams.columns.str.strip().str.lower().str.replace(" ", "_")
+    df_teams.columns = df_teams.columns.map(str).str.strip().str.lower().str.replace(" ", "_")
+
     df_teams.fillna(0, inplace=True)
 
     #print("Columns in df_teams:", df_teams.columns.tolist())
@@ -167,18 +168,22 @@ def render_leaderboard():
             </div>
         """, unsafe_allow_html=True)
 
-        top_team_points = pd.to_numeric(df_teams_grouped['total_points'], errors="coerce").max()
+        # Calculate adjusted points for all teams first
+        df_teams_grouped["adjusted_points"] = (
+            pd.to_numeric(df_teams_grouped["total_points"], errors="coerce").fillna(0).astype(int)
+            + df_teams_grouped["team_name"].map(unsold_points).fillna(0).astype(int)
+            + df_teams_grouped["team_name"].map(bollywood_trivia_points).fillna(0).astype(int)
+        )
+
+        # Get the top team's adjusted points
+        top_team_points = df_teams_grouped["adjusted_points"].max()
+
+        # Then loop through teams
         for _, row in df_teams_grouped.iterrows():
-            rank = row['rank']
-            team = row['team_name']
-            base_points = pd.to_numeric(row['total_points'], errors="coerce")
-            base_points = 0 if pd.isna(base_points) else int(base_points)
-
-            points = base_points + unsold_points.get(team, 0) + bollywood_trivia_points.get(team, 0)
-
+            points = row["adjusted_points"]
             delta = top_team_points - points
             delta_text = "Top!" if delta == 0 else f"1st Rank Delta: {delta}"
-            logo_base64 = team_logos.get(team, "")
+            logo_base64 = team_logos.get(row["team_name"], "")
 
             if rank == 1:
                 card_class = "rank-glow-gold"

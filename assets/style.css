@@ -835,21 +835,22 @@ section[data-testid="stSidebar"] button:active {
     margin: 2px 0;
 }
 
-/* Leaderboard expander container */
+/* Leaderboard expander container - works for both light & dark modes */
 [data-testid="stExpander"] {
-    background: rgba(34, 14, 14, 0.533) !important; /* slightly transparent dark */
+    background: rgba(40, 17, 17, 0.308) !important;
     border-radius: 10px;
     border: 1px solid rgba(232, 224, 224, 0.922);
     box-shadow: 0px 3px 10px rgba(15, 0, 0, 0.751);
     overflow: hidden;
+    backdrop-filter: blur(4px) brightness(1.05); /* helps in light mode */
 }
 
 /* Expander header (title row) */
 [data-testid="stExpander"] > div:first-child {
-    background: rgba(60, 60, 60, 0.256) !important; /* dark with tiny transparency */
+    background: rgba(60, 60, 60, 0.256) !important;
     padding: 8px 14px;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.85); /* softer white for slight transparency */
+    color: #ffffff !important; /* always pure white */
     font-size: 16px;
     letter-spacing: 0.5px;
     transition: background 0.2s ease, color 0.2s ease;
@@ -858,6 +859,8 @@ section[data-testid="stSidebar"] button:active {
 /* Hover effect for header */
 [data-testid="stExpander"] > div:first-child:hover {
     background: rgba(205, 97, 54, 0.436) !important;
-    color: rgba(255, 215, 0, 0.9); /* gold-ish glow on hover */
+    color: rgba(255, 215, 0, 0.95) !important; /* gold glow */
 }
+
+
 

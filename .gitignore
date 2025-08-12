@@ -20,6 +20,9 @@ env/
 # Streamlit-specific
 .streamlit/config.toml
 
+# Streamlit-specific
+.streamlit/secrets.toml
+
 # CSVs / sensitive reports (optional)
 *.csv
 *.xlsx

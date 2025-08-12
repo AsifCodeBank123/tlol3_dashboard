@@ -92,14 +92,22 @@ def render_leaderboard():
     # 🎯 Individual Leaderboard
     with col1:
         with st.expander("🎯 Individual Leaderboard", expanded=False):
+            # Sort players by total_points (descending) and assign rank with ties
+            df_players['rank'] = (
+                df_players['total_points']
+                .rank(method='min', ascending=False)  # same score gets same rank
+                .astype(int)
+            )
+
+            # Then loop
             top_player_points = pd.to_numeric(df_players['total_points'], errors="coerce").max()
-            for _, row in df_players.iterrows():
+            for _, row in df_players.sort_values(by=['rank', 'player_name']).iterrows():
                 rank = row['rank']
                 player = row['player_name']
                 team = row['team_name']
-                points = pd.to_numeric(row['total_points'], errors="coerce")
-                points = 0 if pd.isna(points) else int(points)
+                points = int(row['total_points']) if pd.notna(row['total_points']) else 0
 
+                
                 delta = top_player_points - points
                 delta_text = "Top!" if delta == 0 else f"▲ {delta}"
 
@@ -175,14 +183,24 @@ def render_leaderboard():
             + df_teams_grouped["team_name"].map(bollywood_trivia_points).fillna(0).astype(int)
         )
 
-        # Get the top team's adjusted points
-        top_team_points = df_teams_grouped["adjusted_points"].max()
+        # Sort teams by adjusted_points and assign rank with ties
+        df_teams_grouped['rank'] = (
+            df_teams_grouped['adjusted_points']
+            .rank(method='min', ascending=False)
+            .astype(int)
+        )
 
-        # Then loop through teams
-        for _, row in df_teams_grouped.iterrows():
+        top_team_points = df_teams_grouped["adjusted_points"].max()
+        for _, row in df_teams_grouped.sort_values(by=['rank', 'team_name']).iterrows():
+            rank = row['rank']
+            team = row['team_name']
             points = row["adjusted_points"]
+
             delta = top_team_points - points
             delta_text = "Top!" if delta == 0 else f"1st Rank Delta: {delta}"
+
+  
+
             logo_base64 = team_logos.get(row["team_name"], "")
 
             if rank == 1:

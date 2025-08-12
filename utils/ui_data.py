@@ -7,9 +7,8 @@ from utils.html_blocks import build_card_html
 import hashlib
 
 def get_stable_hash(*args):
-    """Generate a short unique hash from given args."""
-    key = "_".join(map(str, args))
-    return hashlib.md5(key.encode()).hexdigest()[:6]
+    input_string = "_".join([str(arg) for arg in args])
+    return hashlib.md5(input_string.encode()).hexdigest()[:8]
 
 
 TEAM_LOGOS = {
@@ -58,8 +57,14 @@ def display_card(title, team1, players1, team2, players2,
     abbr1 = TEAM_ABBR.get(team1.strip().replace(" 🏆", "").replace(" 🦆", ""), team1[:2].upper())
     abbr2 = TEAM_ABBR.get(team2.strip().replace(" 🏆", "").replace(" 🦆", ""), team2[:2].upper())
 
+    def get_initials(players):
+        return ''.join([p.strip()[0].upper() for p in players if p.strip()])
+    
+    initials1 = get_initials(players1)
+    initials2 = get_initials(players2)
+
     # === Safe key hash ===
-    unique_hash = get_stable_hash(match_id, round_name, team1, team2, card_index)
+    unique_hash = get_stable_hash(match_id,round_name,team1 + initials1,team2 + initials2,card_index,title)
 
     vote_key = f"vote_{unique_hash}"
     team_votes_key = f"votes_{unique_hash}"
@@ -108,13 +113,18 @@ def display_card(title, team1, players1, team2, players2,
                 "Team": [abbr1, abbr2],
                 "Votes": [vote_counts[abbr1], vote_counts[abbr2]]
             })
-            bar_chart = alt.Chart(data).mark_bar().encode(
-                x=alt.X("Votes:Q", stack="zero"),
-                y=alt.Y("Team:N", sort="-x"),
-                color=alt.Color("Team:N", scale=alt.Scale(range=["#2196f3", "#e91e63"]))
-            ).properties(height=80)
 
-            st.altair_chart(bar_chart, use_container_width=True)
+            bar_chart = alt.Chart(data).mark_bar(size=40).encode(
+                x=alt.X("Votes:Q", title="Votes"),
+                y=alt.Y("Team:N", sort="-x", title=None),
+                color=alt.Color("Team:N", scale=alt.Scale(range=["#2196f3", "#e91e63"]))
+            ).properties(height=120)
+
+            if vote_counts[abbr1] == 0 and vote_counts[abbr2] == 0:
+                st.info("No votes yet. Be the first to support your team! 🎉")
+            else:
+                st.altair_chart(bar_chart, use_container_width=True)
+
 
         elif team1.strip().split()[0] == team2.strip().split()[0]:
             st.markdown(

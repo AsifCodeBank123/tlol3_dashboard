@@ -1,25 +1,28 @@
 /* ======== Card Base ======== */
 .match-card {
   border-radius: 20px;
-  background: linear-gradient(120deg, #ffe9f2 50%, #e3f8ff 100%);
-  border: 1.5px solid #eed1da;
-  box-shadow: 0 4px 20px 0 rgba(205, 160, 206, 0.11),
-              0 1.5px 0px 0 #ead8e3;
+  background: linear-gradient(120deg, #9b59b6 40%, #2980b9 100%);
+  border: 1.5px solid #8e44ad;
+  box-shadow: 0 4px 20px 0 rgba(155, 89, 182, 0.3),
+              0 1.5px 0px 0 #a56cc6;
   padding: 22px 24px 20px 24px;
   margin: 18px 0 28px 0;
-  transition: box-shadow 0.22s, background 0.22s, transform 0.19s;
+  transition: box-shadow 0.22s ease, background 0.22s ease, transform 0.19s ease;
   position: relative;
   height: 270px;
-  border-left: 5px solid transparent;
+  border-left: 5px solid #8e44ad;
+  color: white;
 }
 
 /* ======== Card Hover (Glow/Lift) ======== */
 .match-card:hover {
-  box-shadow: 0 6px 42px 0 #ef68c8cc, 0 2.5px 0px 0 #b0f0ff;
-  background: linear-gradient(120deg, #fdd1e8 40%, #b6f0fa 100%);
-  transform: translateY(-5px) scale(1.018);
+  box-shadow: 0 6px 30px 0 #9b59b6cc, 0 4px 15px 0 #2980b9cc;
+  background: linear-gradient(120deg, #8e44ad 40%, #3498db 100%);
+  transform: translateY(-6px) scale(1.02);
   z-index: 10;
+  cursor: pointer;
 }
+
 
 /* ======== Team Content ======== */
 .team-box {
@@ -152,6 +155,7 @@
   }
 }
 
+/* Side Bars */
 /* ======== Button Styles ======== */
 div.stButton > button {
   /* Voting-style button */
@@ -192,21 +196,6 @@ section[data-testid="stSidebar"] button:active {
   transform: scale(0.98);
 }
 
-/* ======== Marquee Styles ======== */
-marquee {
-  font-family: "Rock Salt", "Brush Script MT", cursive;
-  font-size: 22px;
-  letter-spacing: 1.3px;
-  color: #ffe883;
-  background: linear-gradient(87deg, rgba(255,194,36,0.22), rgba(244,131,24,0.08));
-  border-radius: 14px;
-  padding: 7px 0;
-  margin-bottom: 2px;
-  width: 98%;
-  display: block;
-  font-weight: 600;
-  box-shadow: 0 1px 10px #332a01, 0 2px 26px #fff7000b;
-}
 @media (prefers-color-scheme: dark){
   marquee {
     color:#fffdd0; background:rgba(42,42,42,0.31);
@@ -244,6 +233,8 @@ marquee {
   }
 }
 
+
+/* Home Page - Captain Section */
 /* ======== Captains Section (Stylized) ======== */
 
 .captain-card {
@@ -287,6 +278,7 @@ marquee {
   font-family: 'Caveat', cursive;
 }
 
+/* Home Page - Team and Captain Section */
 /* ================= Shared Section Title (Kaptaans + Teams at a Glance) ================= */
 .shared-section-title {
   text-align: center;
@@ -304,7 +296,7 @@ marquee {
   border-radius: 10px;
 }
 
-
+/* Home Page - Team Section */
 /* ================= Role Cards (Icon / Lead / Rest) ================= */
 .role-block {
   border-radius: 16px;
@@ -338,7 +330,7 @@ marquee {
   box-shadow: 0 2px 14px rgba(33, 150, 243, 0.3);
 }
 
-
+/* Home Page - Team Section */
 /* ================= Player Pills ================= */
 .player-pill {
   display: inline-block;
@@ -370,7 +362,7 @@ marquee {
   text-transform: uppercase;
 }
 
-
+/* Home Page - Team Section */
 /* ================= Team Expander Header with Logo ================= */
 .team-expander-header {
   display: flex;
@@ -412,30 +404,32 @@ marquee {
   padding: 10px 16px 20px;
 }
 
+/* Home Page - Ticker with transparent gradient */
 .live-ticker {
-  background: linear-gradient(90deg, #1e1e1e, #2c2c2c, #1e1e1e);
-  color: #ffea00;
-  padding: 12px 24px;
-  font-weight: 700;
-  font-size: 15px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  animation: ticker 25s linear infinite;
-  white-space: nowrap;
-  overflow: hidden;
-  box-shadow: 0 0 12px rgba(255, 234, 0, 0.4);
-  position: relative;
-  text-shadow: 0 0 4px #585855, 0 0 8px #898982;
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+    background: linear-gradient(90deg, rgba(255, 77, 77, 0.6), rgba(255, 204, 0, 0.6));
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 8px 0;
 }
 
+.live-ticker span {
+    padding-right: 4rem; /* space between repetitions */
+    animation: ticker 50s linear infinite;
+}
 
 @keyframes ticker {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* only move half the total width */
 }
 
 
 
+
+/* Home Page - Team Section */
 /* ================= Team Theme Boxes ================= */
 .team-gully {
   background: linear-gradient(135deg, #fdfbfb, #ebedee);
@@ -461,7 +455,7 @@ marquee {
   border-left: 4px solid #689f38;
 }
 
-
+/* Home Page - Team Section */
 /* ================= Team Section Mini Header (Inside Expander) ================= */
 .team-glance-col h4 {
   font-size: 21px;
@@ -478,6 +472,7 @@ marquee {
 }
 
 
+/* Leaderboard Page - Cards Design */
 /* Compact Card for Top 3 */
 .compact-leaderboard-card {
   background: linear-gradient(135deg, #4b2c5e, #0f2027);
@@ -510,10 +505,27 @@ marquee {
   transform: scale(1.015);
 }
 
-.compact-player-name, .compact-team-name {
-  font-size: 16px;
-  font-weight: 700;
+/* Compact leaderboard name + team layout */
+.compact-name-team {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   margin-bottom: 6px;
+  line-height: 1.2;
+}
+
+.compact-player-name {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--leaderboard-text-primary);
+}
+
+.compact-team-name {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--leaderboard-text-secondary);
 }
 
 .compact-points {
@@ -554,11 +566,13 @@ marquee {
   background: #ffca28;
   color: #000;
   padding: 6px 12px;
-  font-weight: 700;
+  font-weight: 600;
   border-radius: 999px;
   font-size: 14px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   border: 1px solid black;
+  font-size: 15px;
+  margin-bottom: 8px;
 }
 
 /* Glowing rank styles */
@@ -585,13 +599,6 @@ marquee {
   padding: 12px;
   margin: 10px 0;
   border-radius: 12px;
-}
-
-/* For rank badge */
-.compact-rank-badge {
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 8px;
 }
 
 .bonus-highlight {
@@ -646,7 +653,7 @@ marquee {
   right: 8px;
   background: rgba(238, 203, 8, 0.20);
   color: #f50000;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 700;
   padding: 2px 8px;
   border-radius: 12px;
@@ -655,27 +662,202 @@ marquee {
   z-index: 2;
 }
 
+/* Leaderboard Page - Players contribution */
+
+/* Color variables for both modes */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #222222;
+  --secondary-text: #555555;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --highlight-color: #ff9800; /* amber/gold for points */
+}
+
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --secondary-text: #aaaaaa;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --highlight-color: #ffc107;
+}
+
 .player-contribution-row {
   display: flex;
   justify-content: space-between;
   padding: 6px 10px;
-  border-bottom: 1px solid #44444422;
+  border-bottom: 1px solid var(--border-color);
   font-size: 14px;
   font-weight: 500;
-  color: #e0e0e0;
+  color: var(--secondary-text);
+  background-color: var(--bg-color);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .player-name {
   flex: 1;
-  color: #ffffff;
+  color: var(--text-color);
 }
 
 .player-points {
-  color: #ffc107;
+  color: var(--highlight-color);
   font-weight: bold;
 }
 
 
+/* Fixture Page - Sports Logos */
+.sport-banner img {
+    height: 100px;        /* Adjust as you like: 150px, 180px, etc. */
+    object-fit: cover;    /* Crops the image nicely */
+    width: 100%;          /* Keep full width */
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Fixture Page - Rules */
+.rules-card {
+    background: #1e1e1e; /* Dark theme card */
+    color: #f5f5f5;
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-top: 10px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
+    font-size: 0.95rem;
+    max-height: 400px; /* scroll if too long */
+    overflow-y: auto;
+}
+
+.rule-section-title {
+    font-weight: bold;
+    font-size: 1.05rem;
+    color: #ffcc66;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid rgba(255, 204, 102, 0.3);
+    padding-bottom: 3px;
+}
+
+.rules-list {
+    margin: 5px 0 15px 20px;
+    padding: 0;
+}
+
+.rules-list li {
+    margin-bottom: 6px;
+    line-height: 1.4;
+}
+
+/* Home Page - Leadeboard is Live button */
+/* Leaderboard glass button */
+.leaderboard-button div.stButton > button {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  padding: 8px 20px;
+  font-weight: 700;
+  color: #fff !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.leaderboard-button div.stButton > button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
 
 
+
+/* Home Page - Sports schedule section */
+
+.sport-card {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px;
+    padding: 18px;
+    color: white;
+    font-size: 13px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    backdrop-filter: blur(12px);
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+/* Glow border on hover */
+.sport-card:hover {
+    transform: translateY(-6px) rotateX(2deg);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    border-color: rgba(255, 215, 0, 0.8);
+}
+
+/* Subtle glow effect inside */
+.sport-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    background: radial-gradient(circle at top left, rgba(255, 215, 0, 0.15), transparent 70%);
+    pointer-events: none;
+}
+
+/* Header styling */
+.sport-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+/* Icon animation */
+.sport-header img {
+    width: 45px;
+    height: 45px;
+    margin-right: 12px;
+    transition: transform 0.3s ease;
+}
+
+.sport-card:hover .sport-header img {
+    transform: scale(1.15) rotate(5deg);
+}
+
+/* Sport name */
+.sport-header h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* Paragraph spacing */
+.sport-card p {
+    margin: 2px 0;
+}
+
+/* Leaderboard expander container */
+[data-testid="stExpander"] {
+    background: rgba(34, 14, 14, 0.533) !important; /* slightly transparent dark */
+    border-radius: 10px;
+    border: 1px solid rgba(232, 224, 224, 0.922);
+    box-shadow: 0px 3px 10px rgba(15, 0, 0, 0.751);
+    overflow: hidden;
+}
+
+/* Expander header (title row) */
+[data-testid="stExpander"] > div:first-child {
+    background: rgba(60, 60, 60, 0.256) !important; /* dark with tiny transparency */
+    padding: 8px 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85); /* softer white for slight transparency */
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* Hover effect for header */
+[data-testid="stExpander"] > div:first-child:hover {
+    background: rgba(205, 97, 54, 0.436) !important;
+    color: rgba(255, 215, 0, 0.9); /* gold-ish glow on hover */
+}
 

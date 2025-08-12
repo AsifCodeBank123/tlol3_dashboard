@@ -392,7 +392,7 @@ sports_schedule = {
             "format": "Doubles",
             "from": "Wednesday, August 20, 2025",
             "to": "Thursday, September 11, 2025",
-            "event_head": "TBD",
+            "event_head": "Bhagyashree Dhotre",
             "event_coord": "Bhagyashree Dhotre",
             "icon": "https://img.icons8.com/?size=100&id=LY7nh71PMOMY&format=png&color=000000"
         }
@@ -429,8 +429,8 @@ sports_schedule = {
             "type": "Outdoor Game",
             "location": "Court",
             "format": "Doubles",
-            "from": "Friday, September 19, 2025",
-            "to": "Friday, September 19, 2025",
+            "from": "Wednesday, September 17, 2025",
+            "to": "Wednesday, September 17, 2025",
             "event_head": "Avinash Gowda",
             "event_coord": "Pritesh Menon",
             "icon": "https://img.icons8.com/?size=100&id=I8mGwYA8VF0W&format=png&color=000000"

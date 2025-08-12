@@ -429,8 +429,8 @@ sports_schedule = {
             "type": "Outdoor Game",
             "location": "Court",
             "format": "Doubles",
-            "from": "Friday, September 17, 2025",
-            "to": "Friday, September 17, 2025",
+            "from": "Thursday, September 11, 2025",
+            "to": "Thursday, September 11, 2025",
             "event_head": "Avinash Gowda",
             "event_coord": "Pritesh Menon",
             "icon": "https://img.icons8.com/?size=100&id=I8mGwYA8VF0W&format=png&color=000000"

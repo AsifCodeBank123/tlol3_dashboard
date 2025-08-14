@@ -36,6 +36,17 @@ def render():
             unsafe_allow_html=True,
         )
 
+    st.markdown(
+    """
+    <div style="text-align: center; margin-top: 5px; margin-bottom: 20px;">
+        <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fgithub.com%2FAsifCodeBank123%2Ftlol3_dashboard">
+            <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FAsifCodeBank123%2Ftlol3_dashboard&label=LEGENDS%20VISITED&countColor=%23263759" />
+        </a>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
     # Ticker messages
     ticker_messages = [
     "🏆 4 Teams • 7 Games • 1 Trophy – The Clash of Legends Begins! 🔥",

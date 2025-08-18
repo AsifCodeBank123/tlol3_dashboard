@@ -1,28 +1,45 @@
+"""
+Tournament Logic Module
+-----------------------
+
+This module handles:
+1. Normalization of identifiers
+2. Labeling with results
+3. Group stage pairing & match building
+4. Knockout stage match building
+5. Progression across rounds
+6. Building the full knockout tree
+
+Used by the Fixtures system.
+"""
+
 import random
 import pandas as pd
 from itertools import combinations
+
 from fixtures_modules.constants import (
     TOURNAMENT_STRUCTURE,
     ROUND_MATCH_COLS,
     ROUND_RESULT_COLS,
     WINNER_EMOJI,
     LOSER_EMOJI,
-    ROUND_SIZE
+    ROUND_SIZE,
+    SEED_PATTERN
 )
 from fixtures_modules.database_handler import update_match_number
 
 
-# ==============================
+# =====================================================
 # Utility Functions
-# ==============================
+# =====================================================
 
 def normalize_identifier(row, is_chess: bool) -> str:
-    """Return identifier: player for chess, pair for others."""
+    """Return identifier: player for chess, pair for other sports."""
     return row["player"].strip() if is_chess else row["pair"].strip()
 
 
 def label_with_result(row, is_chess: bool, round_name: str) -> str:
-    """Return display label for one player/team with W/L emoji."""
+    """Return team name with W/L emoji for display."""
     if row is None:
         return "TBD"
 
@@ -38,11 +55,11 @@ def label_with_result(row, is_chess: bool, round_name: str) -> str:
     return team_name
 
 
-# ==============================
-# Group Stage
-# ==============================
+# =====================================================
+# Group Stage Functions
+# =====================================================
 
-def build_group_stage_pairs(seed3_df, is_chess: bool, target_pairs: int):
+def build_group_stage_pairs(seed3_df: pd.DataFrame, is_chess: bool, target_pairs: int):
     """Create group stage pairs ensuring no same-team pairing."""
     entries = seed3_df.to_dict("records")
     random.shuffle(entries)
@@ -67,7 +84,7 @@ def build_group_stage_pairs(seed3_df, is_chess: bool, target_pairs: int):
     return pairs
 
 
-def build_group_stage_matches(group_pairs, df, sheet_name: str, is_chess: bool):
+def build_group_stage_matches(group_pairs, df: pd.DataFrame, sheet_name: str, is_chess: bool):
     """Create group stage match data with W/L icons, update sheet if match_no missing."""
     group_stage = []
     id_col = "player" if is_chess else "pair"
@@ -76,7 +93,7 @@ def build_group_stage_matches(group_pairs, df, sheet_name: str, is_chess: bool):
     for i, (p1, p2) in enumerate(group_pairs):
         match_id = i + 1
 
-        # update missing match numbers in sheet
+        # ensure match numbers stored
         for p in [p1, p2]:
             identifier = normalize_identifier(p, is_chess)
             existing = (
@@ -87,7 +104,7 @@ def build_group_stage_matches(group_pairs, df, sheet_name: str, is_chess: bool):
             if not str(existing).strip():
                 update_match_number(sheet_name, id_col, identifier, match_col, match_id)
 
-        # format labels and players
+        # build match record
         team1_label = label_with_result(p1, is_chess, "Group Stage")
         team2_label = label_with_result(p2, is_chess, "Group Stage")
 
@@ -105,111 +122,63 @@ def build_group_stage_matches(group_pairs, df, sheet_name: str, is_chess: bool):
     return group_stage
 
 
-# ==============================
-# Knockout Stage
-# ==============================
+# =====================================================
+# Knockout Stage Functions
+# =====================================================
 
-def build_initial_knockout(seed1_df, seed2_df, group_winners, df, sheet_name, is_chess, round_name):
+def build_initial_knockout(seed1_df, seed2_df, group_winners, df, sheet_name: str, is_chess: bool, round_name: str):
     """
-    Place Seed-1 and Seed-2 into fixed match numbers by round, then fill the rest with group winners.
-    Slot convention: slot 0 = left/top, slot 1 = right/bottom.
+    Build initial knockout matches:
+    - Seed 1 and 2 go into predefined slots (from SEED_PATTERN)
+    - Remaining filled with group winners
     """
     match_col = ROUND_MATCH_COLS[round_name]
     id_col = "player" if is_chess else "pair"
     total_matches = ROUND_SIZE[round_name]
+
     knockout_matches = {i: [None, None] for i in range(1, total_matches + 1)}
 
-    # --- Preferred match numbers for seeds (by round) ---
-    if round_name == "Super 16":
-        seed1_pref = [1, 4, 5, 8]
-        seed2_pref = [7, 6, 3, 2]
-    elif round_name == "Super 32":
-        seed1_pref = [1, 4, 15, 16]
-        seed2_pref = [2, 3, 13, 14]
-    else:
-        # No special pattern for other rounds (shouldn't be called for them anyway)
-        seed1_pref = []
-        seed2_pref = []
+    # === Place Seed 1 & Seed 2 in predefined slots ===
+    if round_name in SEED_PATTERN:
+        seed1_slots = SEED_PATTERN[round_name].get("Seed 1", [])
+        seed2_slots = SEED_PATTERN[round_name].get("Seed 2", [])
 
-    # Track already-used match numbers coming from the sheet (if any)
-    used_match_numbers = set()
-    for _, row in pd.concat([seed1_df, seed2_df]).iterrows():
-        m = str(row.get(match_col, "")).strip()
-        if m.isdigit():
-            used_match_numbers.add(int(m))
+        # Place Seed 1s
+        for (idx, row), match_no in zip(seed1_df.iterrows(), seed1_slots):
+            identifier = row[id_col]
+            knockout_matches[match_no][0] = row
+            update_match_number(sheet_name, id_col, identifier, match_col, match_no)
 
-    # Helper: choose a match number for a seed from preferred list (then fallback)
-    def choose_match_no_for_seed(slot_index: int, preferred_list: list[int]) -> int | None:
-        # first try preferred slots
-        for m in preferred_list:
-            if 1 <= m <= total_matches and knockout_matches[m][slot_index] is None:
-                if m not in used_match_numbers:
-                    return m
-        # fallback: first free slot anywhere
-        for m in range(1, total_matches + 1):
-            if knockout_matches[m][slot_index] is None and m not in used_match_numbers:
-                return m
-        # as a last resort, allow reuse if the slot is free (handles prefilled other slot)
-        for m in range(1, total_matches + 1):
-            if knockout_matches[m][slot_index] is None:
-                return m
-        return None
+        # Place Seed 2s
+        for (idx, row), match_no in zip(seed2_df.iterrows(), seed2_slots):
+            identifier = row[id_col]
+            knockout_matches[match_no][1] = row
+            update_match_number(sheet_name, id_col, identifier, match_col, match_no)
 
-    # --- Place Seed-1 (slot 0) following preferred positions ---
-    for _, row in seed1_df.iterrows():
-        match_no = row.get(match_col)
-        identifier = row[id_col]
-        if pd.isna(match_no) or not str(match_no).strip().isdigit():
-            chosen = choose_match_no_for_seed(0, seed1_pref)
-            if chosen is not None:
-                update_match_number(sheet_name, id_col, identifier, match_col, chosen)
-                match_no = chosen
-            else:
-                continue  # no room; should not happen
-        match_no = int(match_no)
-        knockout_matches[match_no][0] = row
-        used_match_numbers.add(match_no)
-
-    # --- Place Seed-2 (slot 1) following preferred positions ---
-    for _, row in seed2_df.iterrows():
-        match_no = row.get(match_col)
-        identifier = row[id_col]
-        if pd.isna(match_no) or not str(match_no).strip().isdigit():
-            chosen = choose_match_no_for_seed(1, seed2_pref)
-            if chosen is not None:
-                update_match_number(sheet_name, id_col, identifier, match_col, chosen)
-                match_no = chosen
-            else:
-                continue
-        match_no = int(match_no)
-        knockout_matches[match_no][1] = row
-        used_match_numbers.add(match_no)
-
-    # --- Fill remaining empty slots with group winners ---
+    # === Fill rest with group winners ===
     for winner in group_winners:
-        placed = False
-        for match_no in range(1, total_matches + 1):
-            # try slot 0 then slot 1
+        for match_no in sorted(knockout_matches.keys()):
             for slot in [0, 1]:
                 if knockout_matches[match_no][slot] is None:
                     knockout_matches[match_no][slot] = winner
-                    # if this winner is a real player/pair (not a placeholder), write match_no back
+
+                    # Update sheet only if it’s a real player/pair, not a placeholder (Wxx)
                     if not str(winner[id_col]).startswith("W"):
                         existing = df.loc[df[id_col] == winner[id_col], match_col]
                         if existing.empty or not str(existing.iloc[0]).strip():
                             update_match_number(sheet_name, id_col, winner[id_col], match_col, match_no)
-                    placed = True
                     break
-            if placed:
-                break
+            else:
+                continue
+            break
 
-    # Return [(match_no, left_row, right_row)]
+    # Return as list of tuples
     return [(k, v[0], v[1]) for k, v in knockout_matches.items()]
 
 
 
 def generate_next_round(prev_matches, df, sheet_name: str, is_chess: bool, prev_round: str, current_round: str):
-    """Generate next knockout round based on previous match results."""
+    """Generate next knockout round from results of previous round."""
     if not current_round:
         return []
 
@@ -251,7 +220,12 @@ def generate_next_round(prev_matches, df, sheet_name: str, is_chess: bool, prev_
 
 
 def build_full_knockout_tree(seed1_df, seed2_df, seed3_df, df, sheet_name: str, is_chess: bool):
-    """Generate complete knockout tree from group stage → finals."""
+    """
+    Build the complete knockout tree:
+    - Group stage pairs
+    - Winners progress into knockout
+    - Progress through rounds till finals
+    """
     target_pairs = ROUND_SIZE.get("Super 32" if is_chess else "Super 16", 8)
     group_pairs = build_group_stage_pairs(seed3_df, is_chess, target_pairs)
 
@@ -269,30 +243,28 @@ def build_full_knockout_tree(seed1_df, seed2_df, seed3_df, df, sheet_name: str, 
         else:
             group_winners.append({
                 "team_name": f"Winner Match {i+1}",
-                id_col: f"{p1[id_col]} / {p2[id_col]}"
+                id_col: f"{p1[id_col]} / {p2[id_col]}",
             })
 
     rounds = {}
     current_round = "Super 16" if not is_chess else "Super 32"
 
-    # initial knockout setup
-    current_matches = build_initial_knockout(
-        seed1_df, seed2_df, group_winners, df, sheet_name, is_chess, current_round
-    )
+    # Build initial knockout
+    current_matches = build_initial_knockout(seed1_df, seed2_df, group_winners, df, sheet_name, is_chess, current_round)
 
-    # progress through rounds
+    # Progress until final
     while current_round:
         rounds[current_round] = [
-            (m_no,
-             label_with_result(p1, is_chess, current_round),
-             label_with_result(p2, is_chess, current_round))
+            (
+                m_no,
+                label_with_result(p1, is_chess, current_round),
+                label_with_result(p2, is_chess, current_round),
+            )
             for m_no, p1, p2 in current_matches
         ]
 
         next_round = TOURNAMENT_STRUCTURE.get(current_round, {}).get("next")
-        current_matches = generate_next_round(
-            current_matches, df, sheet_name, is_chess, current_round, next_round
-        )
+        current_matches = generate_next_round(current_matches, df, sheet_name, is_chess, current_round, next_round)
         current_round = next_round
 
     return rounds

@@ -15,7 +15,7 @@ from fixtures_modules.tournament_logic import (
     build_full_knockout_tree
 )
 from utils.ui_data import display_card
-from fixtures_modules.constants import SPORT_LOGOS, SPORT_RULES, BONUS_CARDS
+from fixtures_modules.constants import SPORT_LOGOS, SPORT_RULES, BONUS_CARDS, SEED_PATTERN
 
 def render_sport_banner_and_rules(sport_name):
     """Render the banner, rules, and bonus cards for a sport."""
@@ -94,134 +94,116 @@ def extract_team_and_players(team_str: str):
         return team_name, [p.strip() for p in players_raw.split("&")]
 
 # ---------- generation ----------
-
 def generate_and_store_fixtures(sport):
-    """
-    Generate fixtures for `sport`, save to Google Sheet, and return
-    (df, group_matches, all_knockouts) in multi-row-per-match format.
-    Seeds 1 & 2 are placed directly in Super 16 with their players known.
-    Placeholders for group winners are shown when unknown.
-    """
+
+    # === Load & validate sheet ===
     df = load_sheet_as_df(sport)
     if df.empty:
         raise RuntimeError(f"Sheet for {sport} is empty or failed to load.")
 
     is_chess = sport.lower() == "chess"
 
-    # Normalize seeds and player names
+    # === Normalize seeds ===
     df['seed'] = pd.to_numeric(df.get('seed', 0), errors='coerce').fillna(0).astype(int)
+
     if not is_chess:
         df['player_1'] = df.get('player_1', '').fillna('')
         df['player_2'] = df.get('player_2', '').fillna('')
-        df['pair'] = df['player_1'].astype(str) + " & " + df['player_2'].astype(str)
+        df['pair'] = df['player_1'] + " & " + df['player_2']
 
-    # Extract seeds
+    # === Extract seeds ===
     seed1 = df[df['seed'] == 1]
     seed2 = df[df['seed'] == 2]
-    seed3 = df[df['seed'] == 3]
+    seed3 = df[df['seed'] == 3]   # ✅ All seed3 go into group stage now
 
-    if 'group_result' not in seed3.columns:
-        seed3['group_result'] = ''  # create the column if missing
-
-    seed3_winners = seed3[seed3['group_result'].astype(str).str.strip().str.lower().isin(['', 'w'])]
-
+    seed3_winners = seed3
     target_pairs = 16 if is_chess else 8
 
-    # Build group stage
+    # === Build group stage ===
     group_pairs = build_group_stage_pairs(seed3_winners, is_chess, target_pairs)
     group_matches = build_group_stage_matches(group_pairs, df, sport, is_chess)
+    n_group_matches = len(group_matches)
 
-    # Build full knockout tree
+    # === Build knockout tree ===
     all_knockouts = build_full_knockout_tree(seed1, seed2, seed3, df, sport, is_chess)
 
-    # Flatten all matches into multi-row-per-match format
     combined_fixtures = []
 
     # --- Group Stage ---
     for idx, m in enumerate(group_matches, start=1):
-        combined_fixtures.append({
-            "match_id": idx,
-            "round": "Group Stage",
-            "team": m["team 1"],
-            "players": " & ".join(m["players 1"]),
-            "result": ""
-        })
-        combined_fixtures.append({
-            "match_id": idx,
-            "round": "Group Stage",
-            "team": m["team 2"],
-            "players": " & ".join(m["players 2"]),
-            "result": ""
-        })
+        if is_chess:
+            player1 = df.loc[df["team_name"] == m[1], "player"].values[0] \
+                if not df.loc[df["team_name"] == m[1]].empty else ""
+            player2 = df.loc[df["team_name"] == m[2], "player"].values[0] \
+                if not df.loc[df["team_name"] == m[2]].empty else ""
+
+            combined_fixtures.extend([
+                {"match_id": idx, "round": "Group Stage", "team": m["team 1"], "players": player1, "result": ""},
+                {"match_id": idx, "round": "Group Stage", "team": m["team 2"], "players": player2, "result": ""}
+            ])
+        else:
+            combined_fixtures.extend([
+                {"match_id": idx, "round": "Group Stage", "team": m["team 1"], "players": " & ".join(m["players 1"]), "result": ""},
+                {"match_id": idx, "round": "Group Stage", "team": m["team 2"], "players": " & ".join(m["players 2"]), "result": ""}
+            ])
 
     # --- Knockouts ---
-    global_match_id = 0
-    placed_seed1 = []
-    placed_seed2 = []
-
+    start_id = n_group_matches + 1
     for round_name, matches in all_knockouts.items():
-        for idx, m in enumerate(matches, start=1):
-            global_match_id += 1
+        for idx, m in enumerate(matches, start=start_id):
 
-            # Seed preference
-            if round_name == "Super 16":
-                seed1_pref = [1, 4, 5, 8]
-                seed2_pref = [7, 6, 3, 2]
+            # Helper: build team string with pairs
+            def get_team_str(team_placeholder):
+                team_rows = df[df['team_name'].str.strip().str.lower() == team_placeholder.strip().lower()]
+                if not team_rows.empty and not is_chess:
+                    pair = team_rows.iloc[0]['pair']
+                    return f"{team_placeholder}\n{pair}"
+                return team_placeholder
+
+            # Apply SEED_PATTERN (swap sides if needed)
+            seed_pattern = SEED_PATTERN.get(round_name, {})
+            if idx in seed_pattern.get("Seed 1", []):
+                # force seed1 to team1
+                team1_str, team2_str = get_team_str(m[1]), get_team_str(m[2])
+            elif idx in seed_pattern.get("Seed 2", []):
+                # force seed2 to team1
+                team1_str, team2_str = get_team_str(m[2]), get_team_str(m[1])
             else:
-                seed1_pref, seed2_pref = [], []
+                # default order
+                team1_str, team2_str = get_team_str(m[1]), get_team_str(m[2])
 
-            # Assign left/right and pick correct seed
-            if round_name == "Super 16":
-                if idx in seed1_pref:
-                    # Take first unplaced Seed 1
-                    team1_row = seed1[~seed1.index.isin(placed_seed1)].iloc[0]
-                    placed_seed1.append(team1_row.name)
-                    team1_name = team1_row["team_name"]
-                    players1_list = [team1_row["player_1"], team1_row["player_2"]]
-                    # team2 is placeholder (winner from group)
-                    team2_name, players2_list = m[2], []
-                elif idx in seed2_pref:
-                    # Take first unplaced Seed 2
-                    team2_row = seed2[~seed2.index.isin(placed_seed2)].iloc[0]
-                    placed_seed2.append(team2_row.name)
-                    team2_name = team2_row["team_name"]
-                    players2_list = [team2_row["player_1"], team2_row["player_2"]]
-                    # team1 is placeholder
-                    team1_name, players1_list = m[1], []
-                else:
-                    # Both are placeholders
-                    team1_name, players1_list = m[1], []
-                    team2_name, players2_list = m[2], []
 
+            if is_chess:
+                player1 = df.loc[df["team_name"] == m[1], "player"].values[0] \
+                    if not df.loc[df["team_name"] == m[1]].empty else ""
+                player2 = df.loc[df["team_name"] == m[2], "player"].values[0] \
+                    if not df.loc[df["team_name"] == m[2]].empty else ""
+
+                combined_fixtures.extend([
+                    {"match_id": idx, "round": round_name, "team": team1_str, "players": player1, "result": ""},
+                    {"match_id": idx, "round": round_name, "team": team2_str, "players": player2, "result": ""}
+                ])
             else:
-                # Other rounds, just use placeholders
-                team1_name, players1_list = m[1], []
-                team2_name, players2_list = m[2], []
+                team1, players1_list = extract_team_and_players(team1_str)
+                team2, players2_list = extract_team_and_players(team2_str)
 
-            combined_fixtures.append({
-                "match_id": global_match_id,
-                "round": round_name,
-                "team": team1_name,
-                "players": " & ".join([p for p in players1_list if p]),
-                "result": ""
-            })
-            combined_fixtures.append({
-                "match_id": global_match_id,
-                "round": round_name,
-                "team": team2_name,
-                "players": " & ".join([p for p in players2_list if p]),
-                "result": ""
-            })
+                combined_fixtures.extend([
+                    {"match_id": idx, "round": round_name, "team": team1, "players": " & ".join(players1_list), "result": ""},
+                    {"match_id": idx, "round": round_name, "team": team2, "players": " & ".join(players2_list), "result": ""}
+                ])
 
+        start_id += len(matches)
 
-    # Save to sheet
+    # === Save fixtures to sheet ===
     fixtures_df = pd.DataFrame(combined_fixtures)
-    ROUND_ORDER = ["Group Stage", "Super 16", "Quarter Final", "Semi Final", "Final"]
+
+    if is_chess:
+        ROUND_ORDER = ["Group Stage", "Super 32", "Super 16", "Quarter Final", "Semi Final", "Final"]
+    else:
+        ROUND_ORDER = ["Group Stage", "Super 16", "Quarter Final", "Semi Final", "Final"]
+
     fixtures_df['round'] = pd.Categorical(fixtures_df['round'], categories=ROUND_ORDER, ordered=True)
     fixtures_df = fixtures_df.sort_values(['round', 'match_id']).reset_index(drop=True)
-
-    # ✅ Convert players lists to string for Google Sheets
-    fixtures_df['players'] = fixtures_df['players'].astype(str)
 
     write_fixtures_sheet(sport, fixtures_df)
 
@@ -229,97 +211,130 @@ def generate_and_store_fixtures(sport):
 
 
 def render_fixtures_for_sport(sport):
-    st.markdown(
-        f"<h2 style='font-size:28px;color:#FFD700;text-shadow:2px 2px 4px rgba(0,0,0,0.5);margin-top:20px;margin-bottom:10px;font-weight:bold;'>🏆 Fixtures for {sport.title()}</h2>",
-        unsafe_allow_html=True
-    )
+    st.subheader(f"🏆 Fixtures for {sport}")
     st.markdown("----")
 
-    cache_key = f"Fixtures_{sport.lower()}"
-    fixture_flag_key = f"fixtures_ready_{sport.lower()}"
-    regenerate = st.session_state.get(fixture_flag_key, False)
+    # Read fresh data from sheet
+    df = read_fixtures_sheet(sport)
+    if df is None or df.empty:
+        st.warning(f"⚠ Sheet for {sport} is missing or empty.")
+        return
 
-    if cache_key in st.session_state and not regenerate:
-        df, group_matches, all_knockouts = st.session_state[cache_key]
-    else:
-        fixtures_df = read_fixtures_sheet(sport)
-        if fixtures_df.empty:
-            st.info("No fixtures found. Generate them first!")
-            return
+    # Detect if this is chess (single-player per row)
+    is_chess = sport.lower() == "chess"
 
-        df = fixtures_df.copy()
+    # Group rows by (match_id, round)
+    matches_grouped = defaultdict(list)
+    for _, row in df.iterrows():
+        matches_grouped[(row["match_id"], row["round"])].append(row)
 
-        # Split group vs knockout
-        group_matches = []
-        all_knockouts = {}
-        for match_id, group in fixtures_df.groupby("match_id"):
-            rows = group.to_dict(orient="records")
-            round_name = rows[0]["round"]
-            if round_name.lower() == "group stage":
-                group_matches.append({
-                    "match_id": match_id,
-                    "team 1": rows[0]["team"],
-                    "players 1": [p.strip() for p in rows[0]["players"].split(" & ") if p.strip()],
-                    "result 1": rows[0].get("result", ""),
-                    "team 2": rows[1]["team"] if len(rows) > 1 else "",
-                    "players 2": [p.strip() for p in rows[1]["players"].split(" & ") if p.strip()] if len(rows) > 1 else [],
-                    "result 2": rows[1].get("result", "") if len(rows) > 1 else ""
-                })
-            else:
-                if round_name not in all_knockouts:
-                    all_knockouts[round_name] = []
-                t1_label = f"{rows[0]['team']}\n{rows[0]['players']}"
-                t2_label = f"{rows[1]['team']}\n{rows[1]['players']}" if len(rows) > 1 else ""
-                t1_result = rows[0].get("result", "")
-                t2_result = rows[1].get("result", "")
-                all_knockouts[round_name].append((match_id, t1_label, t2_label, t1_result, t2_result))
+    group_matches = []
+    all_knockouts = defaultdict(list)
 
-        st.session_state[cache_key] = (df, group_matches, all_knockouts)
-        st.session_state[fixture_flag_key] = False
+    for (match_id, round_name), rows in matches_grouped.items():
+        # Ensure exactly 2 rows
+        while len(rows) < 2:
+            rows.append({
+                "team": "TBD",
+                "players": "" if not is_chess else "TBD",
+                "result": "",
+                "match_id": match_id,
+                "round": round_name
+            })
 
-    # === Render Group Stage ===
-    st.subheader("📦 Group Stage Matches")
+        row1, row2 = rows[0], rows[1]
+
+        # Handle chess vs other sports
+        if is_chess:
+            players1 = [row1.get("players", row1.get("player", ""))]
+            players2 = [row2.get("players", row2.get("player", ""))]
+        else:
+            players1 = row1.get("players", "").split(" & ") if row1.get("players") else []
+            players2 = row2.get("players", "").split(" & ") if row2.get("players") else []
+
+        match_data = {
+            "team 1": row1.get("team", "TBD"),
+            "players 1": players1,
+            "result 1": row1.get("result", ""),
+            "team 2": row2.get("team", "TBD"),
+            "players 2": players2,
+            "result 2": row2.get("result", ""),
+            "match_id": int(match_id),
+            "round": round_name
+        }
+
+        if "group" in round_name.lower():
+            group_matches.append(match_data)
+        else:
+            all_knockouts[round_name].append(match_data)
+
+    # --- Render Group Matches ---
+    st.markdown("### 📦 Group Stage Matches")
     if not group_matches:
-        st.info("No group matches available.")
+        st.info("No group matches available yet.")
     else:
         for i in range(0, len(group_matches), 2):
             cols = st.columns(2)
             with cols[0]:
                 m = group_matches[i]
                 display_card(
-                    f"Match {m['match_id']}", m["team 1"], m["players 1"],
+                    f"Match {m['match_id']}",
+                    m["team 1"], m["players 1"],
                     m["team 2"], m["players 2"],
-                    match_id=m["match_id"], round_name="Group Stage", card_index=i,
-                    result1=m["result 1"], result2=m["result 2"]
+                    match_id=m["match_id"],
+                    round_name=m["round"],
+                    card_index=i,
+                    result1=m.get("result 1", ""),
+                    result2=m.get("result 2", "")
                 )
             if i + 1 < len(group_matches):
                 with cols[1]:
-                    m = group_matches[i+1]
+                    m = group_matches[i + 1]
                     display_card(
-                        f"Match {m['match_id']}", m["team 1"], m["players 1"],
+                        f"Match {m['match_id']}",
+                        m["team 1"], m["players 1"],
                         m["team 2"], m["players 2"],
-                        match_id=m["match_id"], round_name="Group Stage", card_index=i+1,
-                        result1=m["result 1"], result2=m["result 2"]
+                        match_id=m["match_id"],
+                        round_name=m["round"],
+                        card_index=i + 1,
+                        result1=m.get("result 1", ""),
+                        result2=m.get("result 2", "")
                     )
 
-    # === Render Knockouts ===
-    st.subheader("🔗 Knockout Fixtures")
+    st.markdown("----")
+
+    # --- Render Knockouts ---
+    st.markdown("### 🔗 Knockout Fixtures")
     for round_name, matches in all_knockouts.items():
         st.markdown(f"**{round_name}**")
         if not matches:
             st.info("No matches available yet.")
             continue
+
         for i in range(0, len(matches), 2):
             cols = st.columns(2)
-            for col_idx, idx in enumerate([i, i+1]):
-                if idx >= len(matches):
-                    continue
-                m = matches[idx]
-                t1, p1 = extract_team_and_players(m[1])
-                t2, p2 = extract_team_and_players(m[2])
-                with cols[col_idx]:
+            with cols[0]:
+                m = matches[i]
+                display_card(
+                    f"Match {m['match_id']}",
+                    m["team 1"], m["players 1"],
+                    m["team 2"], m["players 2"],
+                    match_id=m["match_id"],
+                    round_name=round_name,
+                    card_index=i,
+                    result1=m.get("result 1", ""),
+                    result2=m.get("result 2", "")
+                )
+            if i + 1 < len(matches):
+                with cols[1]:
+                    m = matches[i + 1]
                     display_card(
-                        f"Match {m[0]}", t1, p1, t2, p2,
-                        match_id=m[0], round_name=round_name, card_index=idx,
-                        result1=m[3], result2=m[4]  # ✅ pass results
+                        f"Match {m['match_id']}",
+                        m["team 1"], m["players 1"],
+                        m["team 2"], m["players 2"],
+                        match_id=m["match_id"],
+                        round_name=round_name,
+                        card_index=i + 1,
+                        result1=m.get("result 1", ""),
+                        result2=m.get("result 2", "")
                     )

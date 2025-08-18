@@ -2,7 +2,7 @@ import streamlit as st
 st.set_page_config(page_title="TLOL3 Dashboard", layout="wide")
 from sections import players_stats
 from sections.fixtures import render_fixtures_for_sport, render_sport_banner_and_rules ,render_bonus_cards, generate_and_store_fixtures
-from fixtures_modules.database_handler import load_sheet_as_df, sheet_exists
+from fixtures_modules.database_handler import load_sheet_as_df, sheet_exists, read_fixtures_sheet
 
 from sections import home, auction_live, leaderboard
 import os
@@ -82,6 +82,12 @@ try:
                     key="sport_selector"
                 )
 
+                try:
+                    st.session_state.fixture_cache[selected_sport] = read_fixtures_sheet(selected_sport)
+                    #st.success(f"📥 Fixtures loaded for {selected_sport}")
+                except Exception as e:
+                    st.error(f"⚠️ Could not load fixtures for {selected_sport}: {e}")
+
                 col1, col2 = st.columns(2)
                 fun_messages = [
                     "Sabr Karo, Abhi Karke Deta Hoo.. ⏳",
@@ -110,6 +116,7 @@ try:
                                     st.session_state[f"fixtures_ready_{selected_sport.lower()}"] = True
 
                                 st.success(f"✅ Fixtures successfully generated and saved for {selected_sport}!")
+                                st.rerun()
 
                             except Exception as e:
                                 st.error(f"❌ An error occurred during fixture generation: {e}")

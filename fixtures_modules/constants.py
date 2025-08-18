@@ -7,6 +7,20 @@ TEAM_CODE_MAP = {
     "Dabangg Dynamos": "DD"
 }
 
+SEED_PATTERN = {
+    "Super 16": {
+        1: "Seed 1",
+        2: "Seed 2",
+        3: "Seed 2",
+        4: "Seed 1",
+        5: "Seed 1",
+        6: "Seed 2",
+        7: "Seed 2",
+        8: "Seed 1",
+    }
+}
+
+
 
 # ✅ Tournament structure per sport
 TOURNAMENT_STRUCTURE = {

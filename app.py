@@ -71,11 +71,11 @@ try:
                     if password == "tlol3":
                         st.session_state.admin_verified = True
                         st.success("✅ Admin access granted!")
-                        st.rerun()
+                        st.experimental_rerun()
                     else:
                         st.error("❌ Incorrect password. Try again.")
             else:
-                # Everything below is **only visible after login**
+                # Only visible after login
                 selected_sport = st.selectbox(
                     "🎯 Choose a Sport to Manage Fixtures",
                     ["Foosball", "Carrom", "Table tennis", "Badminton", "Chess"],
@@ -93,36 +93,32 @@ try:
 
                 with col1:
                     if st.button("🚀 Generate Fixtures"):
-                        try:
-                            cache_key = f"fixtures_{selected_sport.lower()}"
-                            # Clear old cache
-                            st.session_state.fixture_cache.pop(cache_key, None)
+                        cache_key = f"fixtures_{selected_sport.lower()}"
 
-                            with st.spinner(random.choice(fun_messages)):
-                                time.sleep(0.5)
-                                df, group_matches, all_knockouts = generate_and_store_fixtures(selected_sport)
+                        # Only generate if not cached
+                        if cache_key not in st.session_state.fixture_cache:
+                            try:
+                                with st.spinner(random.choice(fun_messages)):
+                                    df, group_matches, all_knockouts = generate_and_store_fixtures(selected_sport)
 
-                                # Save to cache
-                                st.session_state.fixture_cache[cache_key] = {
-                                    "df": df,
-                                    "group_matches": group_matches,
-                                    "all_knockouts": all_knockouts
-                                }
-                                st.session_state[f"fixtures_ready_{selected_sport.lower()}"] = True
+                                    # Save to cache
+                                    st.session_state.fixture_cache[cache_key] = {
+                                        "df": df,
+                                        "group_matches": group_matches,
+                                        "all_knockouts": all_knockouts
+                                    }
+                                    st.session_state[f"fixtures_ready_{selected_sport.lower()}"] = True
 
-                            st.success(f"✅ Fixtures successfully generated and saved for {selected_sport}!")
+                                st.success(f"✅ Fixtures successfully generated and saved for {selected_sport}!")
 
-                            # Lock admin again and refresh to show public view
-                            st.session_state.admin_verified = False
-                            st.rerun()
-
-                        except Exception as e:
-                            st.error(f"❌ An error occurred during fixture generation: {e}")
+                            except Exception as e:
+                                st.error(f"❌ An error occurred during fixture generation: {e}")
+                        else:
+                            st.info("⚠ Fixtures already generated. Refresh page to regenerate.")
 
                 if st.button("🔒 Logout Admin"):
                     st.session_state.admin_verified = False
-                    st.rerun()
-
+                    st.experimental_rerun()
 
 
         # === Public Fixture Tabs ===
@@ -138,10 +134,10 @@ try:
                 fixture_flag_key = f"fixtures_ready_{sport.lower()}"
                 regenerate = st.session_state.get(fixture_flag_key, False)
 
-                if cache_key in st.session_state and not regenerate:
+                if cache_key in st.session_state.fixture_cache and not regenerate:
                     render_fixtures_for_sport(sport)
                 else:
-                    # Try loading from sheet
+                    # Try loading from sheet only once
                     try:
                         df = load_sheet_as_df(f"Fixtures_{sport.lower()}")
                         if not df.empty:
@@ -152,6 +148,7 @@ try:
                             st.info("⚠ Fixtures not generated yet for this sport.")
                     except Exception as e:
                         st.warning(f"⚠ Could not load fixtures sheet: {e}")
+
 
 
 

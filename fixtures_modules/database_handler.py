@@ -142,6 +142,21 @@ def write_fixtures_sheet(sport, matches_df):
     except Exception as e:
         st.error(f"❌ Failed to save fixtures for {sport}: {e}")
 
+# ✅ Check if a sheet exists
+def sheet_exists(sheet_name):
+    """Check if a sheet exists in the spreadsheet without triggering a full read."""
+    try:
+        client = get_gsheet_connection()
+        if client is None:
+            return False
+        spreadsheet = client.open_by_key(SPREADSHEET_ID)
+        worksheets = spreadsheet.worksheets()
+        return any(ws.title.strip().lower() == sheet_name.strip().lower() for ws in worksheets)
+    except Exception as e:
+        st.warning(f"⚠ Could not check sheet existence: {e}")
+        return False
+
+
 # =========================
 # TEAMS & POINTS FUNCTIONS
 # =========================

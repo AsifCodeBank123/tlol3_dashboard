@@ -233,7 +233,7 @@ def render_fixtures_for_sport(sport):
     )
     st.markdown("----")
 
-    cache_key = f"fixtures_{sport.lower()}"
+    cache_key = f"Fixtures_{sport.lower()}"
     fixture_flag_key = f"fixtures_ready_{sport.lower()}"
     regenerate = st.session_state.get(fixture_flag_key, False)
 

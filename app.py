@@ -2,7 +2,7 @@ import streamlit as st
 st.set_page_config(page_title="TLOL3 Dashboard", layout="wide")
 from sections import players_stats
 from sections.fixtures import render_fixtures_for_sport, render_sport_banner_and_rules ,render_bonus_cards, generate_and_store_fixtures
-from fixtures_modules.database_handler import load_sheet_as_df
+from fixtures_modules.database_handler import load_sheet_as_df, sheet_exists
 
 from sections import home, auction_live, leaderboard
 import os
@@ -134,20 +134,23 @@ try:
                 fixture_flag_key = f"fixtures_ready_{sport.lower()}"
                 regenerate = st.session_state.get(fixture_flag_key, False)
 
+                # Render from cache if available
                 if cache_key in st.session_state.fixture_cache and not regenerate:
                     render_fixtures_for_sport(sport)
                 else:
-                    # Try loading from sheet only once
-                    try:
-                        df = load_sheet_as_df(f"Fixtures_{sport.lower()}")
+                    # Check sheet existence first
+                    sheet_name = f"Fixtures_{sport.lower()}"
+                    if sheet_exists(sheet_name):  # <-- implement sheet_exists() to return True/False
+                        df = load_sheet_as_df(sheet_name)
                         if not df.empty:
                             st.session_state.fixture_cache[cache_key] = {"df": df}
                             st.session_state[fixture_flag_key] = True
                             render_fixtures_for_sport(sport)
                         else:
-                            st.info("⚠ Fixtures not generated yet for this sport.")
-                    except Exception as e:
-                        st.warning(f"⚠ Could not load fixtures sheet: {e}")
+                            st.info(f"⚠ Fixtures sheet '{sheet_name}' exists but is empty.")
+                    else:
+                        st.info(f"⚠ Fixtures sheet '{sheet_name}' does not exist yet.")
+
 
 
 

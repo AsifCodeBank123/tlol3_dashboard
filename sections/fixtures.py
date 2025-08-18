@@ -155,64 +155,62 @@ def generate_and_store_fixtures(sport):
         })
 
     # --- Knockouts ---
-   
-    global_match_id = 0
-    used_pairs = set()  # track (team_name, players_str) to prevent duplication
-
+    global_match_id = 0  # start numbering after group matches
     for round_name, matches in all_knockouts.items():
-        for idx, m in enumerate(matches, start=1):
+        for idx, m in enumerate(matches, start=1):  # idx = per-round local match number
             global_match_id += 1
 
-            # Determine left/right as before
-            seed_side = 1
+            # Get preferred seeds from build_initial_knockout logic
             if round_name == "Super 16":
-                seed1_pref = [1,4,7,8]
-                seed2_pref = [2,3,5,6]
-                if idx in seed1_pref:
-                    seed_side = 1
-                elif idx in seed2_pref:
-                    seed_side = 2
+                seed1_pref = [1, 4, 7, 8]
+                seed2_pref = [2, 3, 5, 6]
             elif round_name == "Super 32":
-                seed1_pref = [1,4,15,16]
-                seed2_pref = [2,3,13,14]
-                if idx in seed1_pref:
-                    seed_side = 1
-                elif idx in seed2_pref:
-                    seed_side = 2
-
-            # Safely get team string and players
-            def get_team_str_safe(team_placeholder):
-                if not team_placeholder or str(team_placeholder).strip().upper() in ["B","TBD"]:
-                    return "BYE", []
-                team_placeholder = str(team_placeholder).strip()
-                team_row = df[df['team_name'].str.strip().str.lower() == team_placeholder.lower()]
-                if not team_row.empty:
-                    pair_str = team_row.iloc[0].get('pair', "")
-                    return team_placeholder, [p.strip() for p in pair_str.split("&")]
-                else:
-                    return team_placeholder, []
-
-            # Assign left/right
-            if seed_side == 1:
-                team1_name, players1_list = get_team_str_safe(m[1])
-                team2_name, players2_list = get_team_str_safe(m[2])
+                seed1_pref = [1, 4, 15, 16]
+                seed2_pref = [2, 3, 13, 14]
             else:
-                team1_name, players1_list = get_team_str_safe(m[2])
-                team2_name, players2_list = get_team_str_safe(m[1])
+                seed1_pref = []
+                seed2_pref = []
 
-            # Prevent duplicates
-            for t_name, p_list in [(team1_name, players1_list), (team2_name, players2_list)]:
-                key = (t_name, " & ".join(p_list))
-                if key not in used_pairs:
-                    combined_fixtures.append({
-                        "match_id": global_match_id,
-                        "round": round_name,
-                        "team": t_name,
-                        "players": " & ".join(p_list),
-                        "result": ""
-                    })
-                    used_pairs.add(key)
+            # Determine side for current match
+            if idx in seed1_pref:
+                seed_side = 1  # left/top
+            elif idx in seed2_pref:
+                seed_side = 2  # right/bottom
+            else:
+                seed_side = 1  # default
 
+
+            # Helper to get team string with players
+            def get_team_str(team_placeholder):
+                team_rows = df[df['team_name'].str.strip().str.lower() == team_placeholder.strip().lower()]
+                if not team_rows.empty:
+                    return f"{team_placeholder}\n{team_rows.iloc[0]['pair']}"
+                else:
+                    return team_placeholder  # placeholder like "Winner Match X"
+
+            # Assign left/right based on seed_side
+            if seed_side == 1:
+                team1_str, team2_str = get_team_str(m[1]), get_team_str(m[2])
+            else:
+                team1_str, team2_str = get_team_str(m[2]), get_team_str(m[1])
+
+            team1, players1_list = extract_team_and_players(team1_str)
+            team2, players2_list = extract_team_and_players(team2_str)
+
+            combined_fixtures.append({
+                "match_id": global_match_id,
+                "round": round_name,
+                "team": team1,
+                "players": " & ".join(players1_list),
+                "result": ""
+            })
+            combined_fixtures.append({
+                "match_id": global_match_id,
+                "round": round_name,
+                "team": team2,
+                "players": " & ".join(players2_list),
+                "result": ""
+            })
 
     # Save to sheet
     fixtures_df = pd.DataFrame(combined_fixtures)

@@ -121,8 +121,8 @@ def build_initial_knockout(seed1_df, seed2_df, group_winners, df, sheet_name, is
 
     # --- Preferred match numbers for seeds (by round) ---
     if round_name == "Super 16":
-        seed1_pref = [1, 4, 7, 8]
-        seed2_pref = [2, 3, 5, 6]
+        seed1_pref = [1, 4, 5, 8]
+        seed2_pref = [7, 6, 3, 2]
     elif round_name == "Super 32":
         seed1_pref = [1, 4, 15, 16]
         seed2_pref = [2, 3, 13, 14]

@@ -56,7 +56,7 @@ def load_sheet_as_df(sheet_name, spreadsheet_id=SPREADSHEET_ID):
         return df
 
     except Exception as e:
-        st.error(f"❌ Could not load sheet '{sheet_name}' from spreadsheet '{spreadsheet_id}': {e}")
+        st.error(f"❌ Could not load sheet '{sheet_name}': {e}")
         return pd.DataFrame()
 
 # ✅ Match number update logic

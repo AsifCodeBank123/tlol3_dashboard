@@ -1,11 +1,13 @@
 import streamlit as st
-st.set_page_config(page_title="TLOL Fixtures", layout="wide")
+st.set_page_config(page_title="TLOL3 Dashboard", layout="wide")
 from sections import players_stats
-from sections.fixtures import render_fixtures_for_sport, render_sport_banner_and_rules ,render_bonus_cards
+from sections.fixtures import render_fixtures_for_sport, render_sport_banner_and_rules ,render_bonus_cards, generate_and_store_fixtures
+from fixtures_modules.database_handler import load_sheet_as_df
 
 from sections import home, auction_live, leaderboard
 import os
 import traceback
+import random, time
 
 
 def load_global_styles():
@@ -81,48 +83,75 @@ try:
 
                 col1, col2 = st.columns(2)
 
+                fun_messages = [
+                    "Sabr Karo, Abhi Karke Deta Hoo.. ⏳",
+                    "Generating magic… ✨",
+                    "Shuffling teams… 🌀",
+                    "Crunching numbers… 🤓",
+                    "Almost there… 🏃‍♂️💨"
+                ]
+
                 with col1:
                     if st.button("🚀 Generate Fixtures"):
-                        st.session_state[f"fixtures_ready_{selected_sport.lower()}"] = True
-                        st.success(f"✅ Fixtures generation triggered for {selected_sport}")
-                        st.rerun()
+                        try:
+                            # Clear old cache
+                            st.session_state.fixture_cache.pop(selected_sport.lower(), None)
 
-                with col2:
-                    refresh_key = f"refresh_{selected_sport.lower()}"
-                    # In Refresh button logic
-                    if st.button(f"🔁 Refresh Fixture Data for {selected_sport}", key=refresh_key):
-                        st.session_state.fixture_cache.pop(selected_sport, None)  # clear cached fixtures
-                        st.session_state[f"fixtures_ready_{selected_sport.lower()}"] = True
-                        st.success(f"🔄 Fixture refresh triggered for {selected_sport}")
-                        st.rerun()
+                            # Spinner messages
+                            with st.spinner(random.choice(fun_messages)):
+                                time.sleep(0.5)
+                                df, group_matches, all_knockouts = generate_and_store_fixtures(selected_sport)
+
+                                # Save fixtures to session_state cache for immediate rendering
+                                st.session_state.fixture_cache[f"fixtures_{selected_sport.lower()}"] = {
+                                    "df": df,
+                                    "group_matches": group_matches,
+                                    "all_knockouts": all_knockouts
+                                }
+                                st.session_state[f"fixtures_ready_{selected_sport.lower()}"] = True
+
+                            st.success(f"✅ Fixtures successfully generated and saved for {selected_sport}!")
+                            st.rerun()
+                        
+                        except Exception as e:
+                            st.error(f"❌ An error occurred during fixture generation: {e}")
 
 
                 if st.button("🔒 Logout Admin"):
                     st.session_state.admin_verified = False
                     st.rerun()
 
-        # Public Fixture Tabs (Always visible)
+        # === Public Fixture Tabs ===
         sport_tabs = ["Foosball", "Carrom", "Table tennis", "Badminton", "Chess"]
         tab_objects = st.tabs(sport_tabs)
 
         for tab, sport in zip(tab_objects, sport_tabs):
             with tab:
-                # Always render banner and bonus cards regardless of cache
                 render_sport_banner_and_rules(sport)
                 render_bonus_cards(sport)
+                
 
-                cache_key = f"fixtures_{sport.lower()}"
+                cache_key = f"Fixtures_{sport.lower()}"
                 fixture_flag_key = f"fixtures_ready_{sport.lower()}"
-
                 regenerate = st.session_state.get(fixture_flag_key, False)
 
                 if cache_key in st.session_state and not regenerate:
-                    # Cached data present and no regeneration requested
-                    df, group_matches, all_knockouts = st.session_state[cache_key]
+                    # If cached, render from session_state
                     render_fixtures_for_sport(sport)
                 else:
-                    # If regenerate flag is True or no cache, generate fresh fixtures
-                    st.info("⚠ Fixtures not generated yet for this sport.")
+                    # Try loading from existing sheet if cache is empty
+                    try:
+                        df = load_sheet_as_df(f"Fixtures_{sport.lower()}")
+                        if not df.empty:
+                            st.session_state.fixture_cache[cache_key] = {"df": df}
+                            st.session_state[fixture_flag_key] = True
+                            render_fixtures_for_sport(sport)
+                        else:
+                            st.info("⚠ Fixtures not generated yet for this sport.")
+                    except Exception as e:
+                        st.warning(f"⚠ Could not load fixtures sheet: {e}")
+
+
 
     elif st.session_state.active_section == "Khatron Ke Khiladi (Player Stats)":
         players_stats.render()

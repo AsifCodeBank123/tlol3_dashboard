@@ -45,8 +45,9 @@ def load_global_styles():
         with open(style_path) as f:
             st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
+# === Main Card Renderer ===
 def display_card(title, team1, players1, team2, players2,
-                 match_id, round_name, card_index=0):
+                 match_id, round_name, card_index=0, result1="", result2=""):
 
     def is_real_team(team):
         team_clean = str(team).strip().upper()
@@ -63,9 +64,12 @@ def display_card(title, team1, players1, team2, players2,
     initials1 = get_initials(players1)
     initials2 = get_initials(players2)
 
-    # === Safe key hash ===
-    unique_hash = get_stable_hash(match_id,round_name,team1 + initials1,team2 + initials2,card_index,title)
+    # Check winners
+    team1_won = str(result1).strip().upper() == "W"
+    team2_won = str(result2).strip().upper() == "W"
 
+    # Stable keys for session state
+    unique_hash = get_stable_hash(match_id, round_name, team1 + initials1, team2 + initials2, card_index, title)
     vote_key = f"vote_{unique_hash}"
     team_votes_key = f"votes_{unique_hash}"
     radio_key = f"radio_{unique_hash}"
@@ -84,19 +88,20 @@ def display_card(title, team1, players1, team2, players2,
             players1=players1,
             team2=team2,
             players2=players2,
-            team1_logo=TEAM_LOGOS.get(team1.strip().replace(" 🏆", "").replace(" 🦆", ""), "assets/tbd_logo.png"),
-            team2_logo=TEAM_LOGOS.get(team2.strip().replace(" 🏆", "").replace(" 🦆", ""), "assets/tbd_logo.png"),
-            team1_pct=0,
-            team2_pct=0,
+            team1_logo=TEAM_LOGOS.get(team1.strip(), "assets/tbd_logo.png"),
+            team2_logo=TEAM_LOGOS.get(team2.strip(), "assets/tbd_logo.png"),
+            result1=result1,
+            result2=result2,
             has_voted=has_voted,
             voted_abbr=voted_for
         )
         st.markdown(html, unsafe_allow_html=True)
 
+        # === Voting ===
         if is_real_team(team1) and is_real_team(team2):
             if not has_voted:
                 vote = st.radio(
-                    f"🙌 Support your team:",
+                    "🙌 Support your team:",
                     [abbr1, abbr2],
                     key=radio_key,
                     horizontal=True
@@ -109,26 +114,26 @@ def display_card(title, team1, players1, team2, players2,
                 st.markdown(f"✅ You supported: **{voted_for}**")
 
             vote_counts = st.session_state[team_votes_key]
+            total_votes = vote_counts[abbr1] + vote_counts[abbr2]
+
+            if total_votes == 0:
+                pct1 = pct2 = 0
+            else:
+                pct1 = vote_counts[abbr1] / total_votes
+                pct2 = vote_counts[abbr2] / total_votes
+
             data = pd.DataFrame({
                 "Team": [abbr1, abbr2],
-                "Votes": [vote_counts[abbr1], vote_counts[abbr2]]
+                "Votes": [pct1, pct2]
             })
 
-            bar_chart = alt.Chart(data).mark_bar(size=40).encode(
-                x=alt.X("Votes:Q", title="Votes"),
+            bar_chart = alt.Chart(data).mark_bar(size=20).encode(
+                x=alt.X("Votes:Q", title="Votes", axis=alt.Axis(format="%")),
                 y=alt.Y("Team:N", sort="-x", title=None),
                 color=alt.Color("Team:N", scale=alt.Scale(range=["#2196f3", "#e91e63"]))
-            ).properties(height=120)
+            ).properties(height=80)
 
-            if vote_counts[abbr1] == 0 and vote_counts[abbr2] == 0:
+            if total_votes == 0:
                 st.info("No votes yet. Be the first to support your team! 🎉")
             else:
                 st.altair_chart(bar_chart, use_container_width=True)
-
-
-        elif team1.strip().split()[0] == team2.strip().split()[0]:
-            st.markdown(
-                "<div style='text-align:center; color:gray;'>📌 Voting not available for same-team matches</div>",
-                unsafe_allow_html=True
-            )
-

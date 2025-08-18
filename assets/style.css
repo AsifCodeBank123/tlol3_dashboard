@@ -1,62 +1,39 @@
-/* ======== Card Base ======== */
+/* ======== Card Base (Glass Effect) ======== */
 .match-card {
   border-radius: 20px;
-  background: linear-gradient(120deg, #9b59b6 40%, #2980b9 100%);
-  border: 1.5px solid #8e44ad;
-  box-shadow: 0 4px 20px 0 rgba(155, 89, 182, 0.3),
-              0 1.5px 0px 0 #a56cc6;
+  background: rgba(255, 255, 255, 0.08); /* translucent base */
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35),
+              inset 0 0 8px rgba(255, 255, 255, 0.15);
+
   padding: 22px 24px 20px 24px;
   margin: 18px 0 28px 0;
-  transition: box-shadow 0.22s ease, background 0.22s ease, transform 0.19s ease;
+  transition: box-shadow 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
   position: relative;
-  height: 270px;
-  border-left: 5px solid #8e44ad;
-  color: white;
+  min-height: 270px;
+
+  /* accent border */
+  border-left: 5px solid transparent;
+  border-image: linear-gradient(180deg, #00c6ff, #0072ff); /* cyan → blue */
+  border-image-slice: 1;
+  color: #f4f4f4;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* ======== Card Hover (Glow/Lift) ======== */
 .match-card:hover {
-  box-shadow: 0 6px 30px 0 #9b59b6cc, 0 4px 15px 0 #2980b9cc;
-  background: linear-gradient(120deg, #8e44ad 40%, #3498db 100%);
+  box-shadow: 0 12px 35px rgba(0, 114, 255, 0.45),
+              0 6px 20px rgba(0, 198, 255, 0.35);
   transform: translateY(-6px) scale(1.02);
   z-index: 10;
   cursor: pointer;
-}
-
-
-/* ======== Team Content ======== */
-.team-box {
-  flex: 1;
-  text-align: center;
-}
-.team-box img {
-  width: 60px;
-  margin-bottom: 7px;
-  border-radius: 13px;
-  box-shadow: 0 2px 12px rgba(240, 236, 236, 0.944);
-}
-.team-name {
-  font-size: 15.5px;
-  font-weight: 700;
-  color: #140ce7;
-  transition: color 0.18s;
-}
-.player-names {
-  font-size: 13px;
-  color: #64648a;
-}
-.team-abbr {
-  margin-top: 5px;
-  font-size: 13.5px;
-  color: #005d75;
-}
-
-/* ======== Versus ======== */
-.match-versus {
-  font-size: 30px;
-  font-weight: bold;
-  line-height: 4;
-  text-align: center;
+  border-color: #00c6ff;
 }
 
 /* ======== Card Title ======== */
@@ -64,96 +41,107 @@
   text-align: center;
   font-weight: 800;
   font-size: 20px;
-  margin-bottom: 15px;
-  color: #672056;
+  margin-bottom: 12px;
+  color: #0072ff;
   letter-spacing: 1px;
   transition: color 0.18s;
 }
 
-/* ======== Team Outcome Indicators ======== */
-.team-winner {
-  border-left-color: #2ecc71;
-}
-.team-loser {
-  border-left-color: #e74c3c;
+/* ======== Versus ======== */
+.match-versus {
+  font-size: 26px;
+  font-weight: bold;
+  text-align: center;
+  color: #00c6ff;
+  margin: 10px 0;
 }
 
-/* ======== Tournament Bracket Visualization ======== */
-.bracket-container {
-  display: flex;
-  justify-content: space-between;
-  margin: 20px 0;
-  overflow-x: auto;
-}
-.bracket-round {
-  display: flex;
-  flex-direction: column;
-  min-width: 200px;
-  margin: 0 10px;
-}
-.bracket-match {
-  background-color: white;
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 40px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: relative;
-}
-.bracket-match::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: -20px;
-  width: 20px;
-  height: 2px;
-  background-color: #ccc;
-}
-.bracket-round:last-child .bracket-match::after {
-  display: none;
-}
-.bracket-title {
+/* ======== Team Box Styling ======== */
+.team-box {
+  flex: 1;
   text-align: center;
-  font-weight: bold;
-  margin-bottom: 15px;
-  color: #3498db;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 12px;
+  transition: background 0.25s ease;
+  max-width: 48%;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 1%;
+}
+
+.team-box.winner {
+  background: linear-gradient(145deg, rgba(0, 255, 120, 0.25), rgba(255, 255, 255, 0.1));
+  border: 1.5px solid rgba(0, 255, 120, 0.6);
+  box-shadow: 0 0 12px rgba(0, 255, 120, 0.5);
+}
+
+/* ======== Team Content ======== */
+.team-box img {
+  width: 58px;
+  margin-bottom: 6px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(240, 236, 236, 0.9);
+}
+.team-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0072ff;
+  transition: color 0.18s;
+}
+.player-names {
+  font-size: 12.5px;
+  color: #666c7a;
+}
+.team-abbr {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #00c6ff;
+}
+
+/* ======== Responsive Fix ======== */
+@media (max-width: 600px) {
+  .team-box {
+    display: block;
+    max-width: 100%;
+    margin: 10px 0;
+  }
+  .match-card {
+    height: auto;
+    padding: 16px;
+  }
+  .match-versus {
+    font-size: 22px;
+    margin: 8px 0;
+  }
 }
 
 /* ======== Dark Mode Styles ======== */
 @media (prefers-color-scheme: dark) {
   .match-card {
-    background: linear-gradient(120deg, #ba996a 10%, #154044 100%);
-    border: 1.3px solid #18282d;
-    box-shadow: 0 3px 24px #191e1f8f;
-    color: #f8eadd;
+    background: linear-gradient(135deg, #1e1f29 10%, #101319 100%);
+    border: 1.3px solid #2a2f38;
+    box-shadow: 0 3px 20px rgba(0,0,0,0.5);
+    color: #e9f0ff;
   }
   .match-card:hover {
-    background: linear-gradient(120deg, #805879 41%, #197888 100%);
-    box-shadow: 0 6px 36px 0 #8ae4ff42, 0 1.5px 0px 0 #3d72a0;
+    background: linear-gradient(135deg, #252738 20%, #1b2a3d 100%);
+    box-shadow: 0 6px 32px rgba(0,198,255,0.35);
   }
   .team-name, .match-title {
-    color: #ffe8b0 !important;
-    text-shadow: 0 1px 1.5px #37323a9f;
+    color: #7bc9ff !important;
   }
   .player-names {
-    color: #dae74d !important;
+    color: #b0b7c4 !important;
   }
   .match-versus {
-    color: #ffd0f8 !important;
+    color: #00f7ff !important;
   }
   .team-abbr {
-    color: #00ff0d !important;
-  }
-  .bracket-match {
-    background-color: #2d3748;
-    color: #e2e8f0;
-  }
-  .bracket-match::after {
-    background-color: #4a5568;
-  }
-  .bracket-title {
-    color: #63b3ed;
+    color: #00ff9d !important;
   }
 }
+
 
 /* Side Bars */
 /* ======== Button Styles ======== */

@@ -63,7 +63,7 @@ try:
         # === Admin Controls ===
         with st.expander("🛠️ Admin Controls", expanded=True):
             if "admin_verified" not in st.session_state:
-                st.session_state.admin_verified = False
+                st.session_state.admin_verified = False  # default locked
 
             if not st.session_state.admin_verified:
                 password = st.text_input("Enter Admin Password:", type="password")
@@ -82,7 +82,6 @@ try:
                 )
 
                 col1, col2 = st.columns(2)
-
                 fun_messages = [
                     "Sabr Karo, Abhi Karke Deta Hoo.. ⏳",
                     "Generating magic… ✨",
@@ -94,16 +93,16 @@ try:
                 with col1:
                     if st.button("🚀 Generate Fixtures"):
                         try:
+                            cache_key = f"fixtures_{selected_sport.lower()}"
                             # Clear old cache
-                            st.session_state.fixture_cache.pop(selected_sport.lower(), None)
+                            st.session_state.fixture_cache.pop(cache_key, None)
 
-                            # Spinner messages
                             with st.spinner(random.choice(fun_messages)):
                                 time.sleep(0.5)
                                 df, group_matches, all_knockouts = generate_and_store_fixtures(selected_sport)
 
-                                # Save fixtures to session_state cache for immediate rendering
-                                st.session_state.fixture_cache[f"fixtures_{selected_sport.lower()}"] = {
+                                # Save to cache
+                                st.session_state.fixture_cache[cache_key] = {
                                     "df": df,
                                     "group_matches": group_matches,
                                     "all_knockouts": all_knockouts
@@ -111,15 +110,18 @@ try:
                                 st.session_state[f"fixtures_ready_{selected_sport.lower()}"] = True
 
                             st.success(f"✅ Fixtures successfully generated and saved for {selected_sport}!")
-                            st.rerun()
-                        
+
+                            # Lock admin again and refresh to show public view
+                            st.session_state.admin_verified = False
+                            st.experimental_rerun()
+
                         except Exception as e:
                             st.error(f"❌ An error occurred during fixture generation: {e}")
-
 
                 if st.button("🔒 Logout Admin"):
                     st.session_state.admin_verified = False
                     st.rerun()
+
 
         # === Public Fixture Tabs ===
         sport_tabs = ["Foosball", "Carrom", "Table tennis", "Badminton", "Chess"]
@@ -129,17 +131,15 @@ try:
             with tab:
                 render_sport_banner_and_rules(sport)
                 render_bonus_cards(sport)
-                
 
-                cache_key = f"Fixtures_{sport.lower()}"
+                cache_key = f"fixtures_{sport.lower()}"
                 fixture_flag_key = f"fixtures_ready_{sport.lower()}"
                 regenerate = st.session_state.get(fixture_flag_key, False)
 
                 if cache_key in st.session_state and not regenerate:
-                    # If cached, render from session_state
                     render_fixtures_for_sport(sport)
                 else:
-                    # Try loading from existing sheet if cache is empty
+                    # Try loading from sheet
                     try:
                         df = load_sheet_as_df(f"Fixtures_{sport.lower()}")
                         if not df.empty:
@@ -150,6 +150,7 @@ try:
                             st.info("⚠ Fixtures not generated yet for this sport.")
                     except Exception as e:
                         st.warning(f"⚠ Could not load fixtures sheet: {e}")
+
 
 
 

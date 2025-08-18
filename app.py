@@ -75,6 +75,7 @@ try:
                     else:
                         st.error("❌ Incorrect password. Try again.")
             else:
+                # Everything below is **only visible after login**
                 selected_sport = st.selectbox(
                     "🎯 Choose a Sport to Manage Fixtures",
                     ["Foosball", "Carrom", "Table tennis", "Badminton", "Chess"],
@@ -113,7 +114,7 @@ try:
 
                             # Lock admin again and refresh to show public view
                             st.session_state.admin_verified = False
-                            st.experimental_rerun()
+                            st.rerun()
 
                         except Exception as e:
                             st.error(f"❌ An error occurred during fixture generation: {e}")
@@ -121,6 +122,7 @@ try:
                 if st.button("🔒 Logout Admin"):
                     st.session_state.admin_verified = False
                     st.rerun()
+
 
 
         # === Public Fixture Tabs ===

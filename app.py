@@ -71,7 +71,7 @@ try:
                     if password == "tlol3":
                         st.session_state.admin_verified = True
                         st.success("✅ Admin access granted!")
-                        st.experimental_rerun()
+                        st.rerun()
                     else:
                         st.error("❌ Incorrect password. Try again.")
             else:
@@ -118,7 +118,7 @@ try:
 
                 if st.button("🔒 Logout Admin"):
                     st.session_state.admin_verified = False
-                    st.experimental_rerun()
+                    st.rerun()
 
 
         # === Public Fixture Tabs ===

@@ -165,8 +165,8 @@ def generate_and_store_fixtures(sport):
 
             # Seed preference
             if round_name == "Super 16":
-                seed1_pref = [1, 5, 6, 8]
-                seed2_pref = [7, 6, 2, 3]
+                seed1_pref = [1, 4, 5, 8]
+                seed2_pref = [7, 6, 3, 2]
             else:
                 seed1_pref, seed2_pref = [], []
 

@@ -109,7 +109,7 @@ def display_card(title, team1, players1, team2, players2,
         has_voted = st.session_state[vote_key] is not None
         voted_for = st.session_state[vote_key]
 
-        # --- Compute current vote counts for this match ---
+       # --- Compute current vote counts ---
         def compute_vote_counts(votes_df, match_id, abbr1, abbr2):
             match_votes = votes_df[votes_df["match_id"].astype(str) == str(match_id)]
             votes = {abbr1: 0, abbr2: 0}
@@ -142,28 +142,72 @@ def display_card(title, team1, players1, team2, players2,
                         ], ignore_index=True)
 
                     st.session_state.votes_df = votes_df  # save updated cache
-                    st.session_state[vote_key] = vote   # mark user as voted
+                    st.session_state[vote_key] = vote     # mark user as voted
 
                     # --- Push update to Google Sheets ---
                     save_votes(votes_df)
 
                     st.rerun()
-            else:
-                st.markdown(f"✅ You supported: **{voted_for}**")
+            
 
-        # --- Compute percentages ---
-        total_votes = vote_counts[abbr1] + vote_counts[abbr2]
+        # --- Display vote counts with CSS cards ---
+        votes_list = [vote_counts[abbr1], vote_counts[abbr2]]
+        total_votes = sum(votes_list)
+
+        # Fallback info if no votes
         if total_votes == 0:
-            pct1 = pct2 = 0
             st.info("No votes yet. Be the first to support your team! 🎉")
-        else:
-            pct1 = vote_counts[abbr1] / total_votes
-            pct2 = vote_counts[abbr2] / total_votes
-            data = pd.DataFrame({"Team": [abbr1, abbr2], "Votes": [pct1, pct2]})
-            bar_chart = alt.Chart(data).mark_bar(size=20).encode(
-                x=alt.X("Votes:Q", title="Votes", axis=alt.Axis(format="%")),
-                y=alt.Y("Team:N", sort="-x", title=None),
-                color=alt.Color("Team:N", scale=alt.Scale(range=["#2196f3", "#e91e63"]))
-            ).properties(height=80)
-            st.altair_chart(bar_chart, use_container_width=True)
+
+        # --- CSS styles for vote cards ---
+        st.markdown(
+            """
+            <style>
+            .vote-container {
+                display: flex;
+                justify-content: space-around;
+                margin-top: 10px;
+                margin-bottom: 20px;
+            }
+            .vote-card {
+                flex: 1;
+                margin: 0 5px;
+                padding: 12px;
+                border-radius: 12px;
+                background: linear-gradient(135deg, #2196f3, #21cbf3);
+                color: white;
+                font-weight: bold;
+                text-align: center;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+            .vote-card.team2 {
+                background: linear-gradient(135deg, #e91e63, #f06292);
+            }
+            .vote-count {
+                font-size: 18px;
+                margin-top: 6px;
+            }
+            </style>
+            """, unsafe_allow_html=True
+        )
+
+        # --- Generate HTML for vote cards ---
+        html_votes = f"""
+        <div class="vote-container">
+            <div class="vote-card team1">
+                {abbr1}
+                <div class="vote-count">{votes_list[0]} vote{'s' if votes_list[0] != 1 else ''}</div>
+            </div>
+            <div class="vote-card team2">
+                {abbr2}
+                <div class="vote-count">{votes_list[1]} vote{'s' if votes_list[1] != 1 else ''}</div>
+            </div>
+        </div>
+        """
+
+        st.markdown(html_votes, unsafe_allow_html=True)
+
+
+
+
+
 

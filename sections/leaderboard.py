@@ -51,7 +51,8 @@ def render_leaderboard():
 
     # Load team data
     df_teams = load_sheet_as_df("points", spreadsheet_id=SPREADSHEET_ID2)
-    df_teams.columns = df_teams.columns.map(str).str.strip().str.lower().str.replace(" ", "_")
+    df_teams.columns = [str(c).strip().lower().replace(" ", "_") for c in df_teams.columns]
+
 
     df_teams.fillna(0, inplace=True)
 

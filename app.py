@@ -50,7 +50,7 @@ try:
         home.render()
 
     elif st.session_state.active_section == "Kismein Kitna Hai Dum (Leaderboard)":
-        st.title("🏋️‍♂️ Kismein Kitna Hai Dum (Leaderboard)")
+        #st.title("🏋️‍♂️ Kismein Kitna Hai Dum (Leaderboard)")
         leaderboard.render()
 
     elif st.session_state.active_section == "Rab Ne Bana Di Jodi":
@@ -60,72 +60,72 @@ try:
         if "fixture_cache" not in st.session_state:
             st.session_state.fixture_cache = {}
 
-        # === Admin Controls ===
-        with st.expander("🛠️ Admin Controls", expanded=True):
-            if "admin_verified" not in st.session_state:
-                st.session_state.admin_verified = False  # default locked
+        # # === Admin Controls ===
+        # with st.expander("🛠️ Admin Controls", expanded=True):
+        #     if "admin_verified" not in st.session_state:
+        #         st.session_state.admin_verified = False  # default locked
 
-            if not st.session_state.admin_verified:
-                password = st.text_input("Enter Admin Password:", type="password")
-                if st.button("✅ Verify"):
-                    if password == "tlol3":
-                        st.session_state.admin_verified = True
-                        st.success("✅ Admin access granted!")
-                        st.rerun()
-                    else:
-                        st.error("❌ Incorrect password. Try again.")
-            else:
-                # Only visible after login
-                selected_sport = st.selectbox(
-                    "🎯 Choose a Sport to Manage Fixtures",
-                    ["Foosball", "Carrom", "Table tennis", "Badminton", "Chess"],
-                    key="sport_selector"
-                )
+        #     if not st.session_state.admin_verified:
+        #         password = st.text_input("Enter Admin Password:", type="password")
+        #         if st.button("✅ Verify"):
+        #             if password == "tlol3":
+        #                 st.session_state.admin_verified = True
+        #                 st.success("✅ Admin access granted!")
+        #                 st.rerun()
+        #             else:
+        #                 st.error("❌ Incorrect password. Try again.")
+        #     else:
+        #         # Only visible after login
+        #         selected_sport = st.selectbox(
+        #             "🎯 Choose a Sport to Manage Fixtures",
+        #             ["Foosball", "Carrom", "Table tennis", "Badminton", "Chess"],
+        #             key="sport_selector"
+        #         )
 
-                try:
-                    st.session_state.fixture_cache[selected_sport] = read_fixtures_sheet(selected_sport)
-                    #st.success(f"📥 Fixtures loaded for {selected_sport}")
-                except Exception as e:
-                    st.error(f"⚠️ Could not load fixtures for {selected_sport}: {e}")
+        #         try:
+        #             st.session_state.fixture_cache[selected_sport] = read_fixtures_sheet(selected_sport)
+        #             #st.success(f"📥 Fixtures loaded for {selected_sport}")
+        #         except Exception as e:
+        #             st.error(f"⚠️ Could not load fixtures for {selected_sport}: {e}")
 
-                col1, col2 = st.columns(2)
-                fun_messages = [
-                    "Sabr Karo, Abhi Karke Deta Hoo.. ⏳",
-                    "Generating magic… ✨",
-                    "Shuffling teams… 🌀",
-                    "Crunching numbers… 🤓",
-                    "Almost there… 🏃‍♂️💨"
-                ]
+        #         col1, col2 = st.columns(2)
+        #         fun_messages = [
+        #             "Sabr Karo, Abhi Karke Deta Hoo.. ⏳",
+        #             "Generating magic… ✨",
+        #             "Shuffling teams… 🌀",
+        #             "Crunching numbers… 🤓",
+        #             "Almost there… 🏃‍♂️💨"
+        #         ]
 
-                with col1:
-                    if st.button("🚀 Generate Fixtures"):
-                        cache_key = f"fixtures_{selected_sport.lower()}"
+        #         with col1:
+        #             if st.button("🚀 Generate Fixtures"):
+        #                 cache_key = f"fixtures_{selected_sport.lower()}"
 
-                        # Only generate if not cached
-                        if cache_key not in st.session_state.fixture_cache:
-                            try:
-                                with st.spinner(random.choice(fun_messages)):
-                                    df, group_matches, all_knockouts = generate_and_store_fixtures(selected_sport)
+        #                 # Only generate if not cached
+        #                 if cache_key not in st.session_state.fixture_cache:
+        #                     try:
+        #                         with st.spinner(random.choice(fun_messages)):
+        #                             df, group_matches, all_knockouts = generate_and_store_fixtures(selected_sport)
 
-                                    # Save to cache
-                                    st.session_state.fixture_cache[cache_key] = {
-                                        "df": df,
-                                        "group_matches": group_matches,
-                                        "all_knockouts": all_knockouts
-                                    }
-                                    st.session_state[f"fixtures_ready_{selected_sport.lower()}"] = True
+        #                             # Save to cache
+        #                             st.session_state.fixture_cache[cache_key] = {
+        #                                 "df": df,
+        #                                 "group_matches": group_matches,
+        #                                 "all_knockouts": all_knockouts
+        #                             }
+        #                             st.session_state[f"fixtures_ready_{selected_sport.lower()}"] = True
 
-                                st.success(f"✅ Fixtures successfully generated and saved for {selected_sport}!")
-                                st.rerun()
+        #                         st.success(f"✅ Fixtures successfully generated and saved for {selected_sport}!")
+        #                         st.rerun()
 
-                            except Exception as e:
-                                st.error(f"❌ An error occurred during fixture generation: {e}")
-                        else:
-                            st.info("⚠ Fixtures already generated. Refresh page to regenerate.")
+        #                     except Exception as e:
+        #                         st.error(f"❌ An error occurred during fixture generation: {e}")
+        #                 else:
+        #                     st.info("⚠ Fixtures already generated. Refresh page to regenerate.")
 
-                if st.button("🔒 Logout Admin"):
-                    st.session_state.admin_verified = False
-                    st.rerun()
+        #         if st.button("🔒 Logout Admin"):
+        #             st.session_state.admin_verified = False
+        #             st.rerun()
 
 
         # === Public Fixture Tabs ===

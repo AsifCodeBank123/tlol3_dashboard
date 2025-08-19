@@ -27,6 +27,28 @@ def normalize_col(col):
 def render_leaderboard():
     load_global_styles()
 
+    # === Background image div ===
+    # === Background ===
+    image_path = "assets/lb.jpg"
+    if os.path.exists(image_path):
+        with open(image_path, "rb") as img_file:
+            bg_img = base64.b64encode(img_file.read()).decode()
+
+        st.markdown(
+            f"""
+            <style>
+            .stApp {{
+                background-image: url("data:image/jpg;base64,{bg_img}");
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+            }}
+            </style>
+            """,
+            unsafe_allow_html=True,
+        )
+
+
     # Load team data
     df_teams = load_sheet_as_df("points", spreadsheet_id=SPREADSHEET_ID2)
     df_teams.columns = df_teams.columns.map(str).str.strip().str.lower().str.replace(" ", "_")
@@ -91,7 +113,21 @@ def render_leaderboard():
 
     # 🎯 Individual Leaderboard
     with col1:
-        with st.expander("🎯 Individual Leaderboard", expanded=False):
+        st.markdown("""
+            <style>
+            .leaderboard-title {
+                color: #FFD700; /* gold */
+                font-size: 2rem;
+                font-weight: bold;
+                text-align: center;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            }
+            </style>
+            <div class='leaderboard-title-section'>
+                <div class='leaderboard-title'>🎯 Individual Leaderboard</div>
+            </div>
+        """, unsafe_allow_html=True)
+        with st.expander("Check it Out", expanded=False):
             # Sort players by total_points (descending) and assign rank with ties
             df_players['rank'] = (
                 df_players['total_points']
@@ -171,10 +207,20 @@ def render_leaderboard():
     # 🏆 Team Leaderboard
     with col2:
         st.markdown("""
+            <style>
+            .leaderboard-title {
+                color: #FFD700; /* gold */
+                font-size: 2rem;
+                font-weight: bold;
+                text-align: center;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            }
+            </style>
             <div class='leaderboard-title-section'>
                 <div class='leaderboard-title'>🏆 Team Leaderboard</div>
             </div>
         """, unsafe_allow_html=True)
+
 
         # Calculate adjusted points for all teams first
         df_teams_grouped["adjusted_points"] = (

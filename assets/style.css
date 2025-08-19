@@ -737,7 +737,7 @@ section[data-testid="stSidebar"] button:active {
 /* Home Page - Leadeboard is Live button */
 /* Leaderboard glass button */
 .leaderboard-button div.stButton > button {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgb(240, 52, 52);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -753,6 +753,11 @@ section[data-testid="stSidebar"] button:active {
   background: rgba(255, 255, 255, 0.2);
   transform: scale(1.05);
 }
+
+/*Leaderboard Page - background
+
+/* === Background for Leaderboard Page === */
+
 
 
 
@@ -823,32 +828,32 @@ section[data-testid="stSidebar"] button:active {
     margin: 2px 0;
 }
 
-/* Leaderboard expander container - works for both light & dark modes */
+/* Leaderboard expander container */
 [data-testid="stExpander"] {
-    background: rgba(40, 17, 17, 0.308) !important;
-    border-radius: 10px;
-    border: 1px solid rgba(232, 224, 224, 0.922);
-    box-shadow: 0px 3px 10px rgba(15, 0, 0, 0.751);
+    background: rgba(255, 255, 255, 0.05) !important; /* faint glass effect */
+    border-radius: 14px;
+    border: 1px solid rgba(255, 215, 0, 0.4); /* subtle gold border */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
     overflow: hidden;
-    backdrop-filter: blur(4px) brightness(1.05); /* helps in light mode */
+    backdrop-filter: blur(8px) saturate(140%);
 }
 
 /* Expander header (title row) */
 [data-testid="stExpander"] > div:first-child {
-    background: rgba(60, 60, 60, 0.256) !important;
-    padding: 8px 14px;
-    font-weight: 600;
-    color: #ffffff !important; /* always pure white */
-    font-size: 16px;
-    letter-spacing: 0.5px;
-    transition: background 0.2s ease, color 0.2s ease;
+    background: linear-gradient(90deg, rgba(255,215,0,0.15), rgba(255,140,0,0.15)) !important;
+    padding: 10px 16px;
+    font-weight: 700;
+    color: #FFD700 !important; /* bright gold */
+    font-size: 18px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    transition: all 0.25s ease;
 }
 
 /* Hover effect for header */
 [data-testid="stExpander"] > div:first-child:hover {
-    background: rgba(205, 97, 54, 0.436) !important;
-    color: rgba(255, 215, 0, 0.95) !important; /* gold glow */
+    background: linear-gradient(90deg, rgba(255,215,0,0.35), rgba(255,140,0,0.35)) !important;
+    color: #fff !important; /* flips to white for contrast */
+    text-shadow: 0px 0px 8px rgba(255, 215, 0, 0.8);
+    cursor: pointer;
 }
-
-
-

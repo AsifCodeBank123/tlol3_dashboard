@@ -115,7 +115,7 @@ def overwrite_sheet(sheet_name, df):
 
         worksheet.clear()
         worksheet.update([df.columns.tolist()] + df.values.tolist())
-        st.success(f"✅ Sheet '{sheet_name}' overwritten successfully.")
+        #st.success(f"✅ Sheet '{sheet_name}' overwritten successfully.")
     except Exception as e:
         st.error(f"❌ Failed to overwrite sheet: {e}")
 
@@ -175,3 +175,72 @@ def read_teams_points(sheet_name="teams"):
     except Exception as e:
         st.error(f"❌ Error reading Teams sheet: {e}")
         return pd.DataFrame()
+    
+
+# =========================
+# VOTING FUNCTIONS
+# =========================
+VOTE_SHEET = "votes"
+
+def load_votes():
+    """Load all votes into a DataFrame."""
+    try:
+        client = get_gsheet_connection()
+        spreadsheet = client.open_by_key(SPREADSHEET_ID)
+
+        try:
+            worksheet = spreadsheet.worksheet(VOTE_SHEET)
+        except gspread.exceptions.WorksheetNotFound:
+            # Create the sheet if it doesn't exist
+            worksheet = spreadsheet.add_worksheet(title=VOTE_SHEET, rows="100", cols="20")
+            worksheet.update([["match_id", "abbr", "votes"]])
+            return pd.DataFrame(columns=["match_id", "abbr", "votes"])
+
+        data = worksheet.get_all_records()
+        if not data:
+            return pd.DataFrame(columns=["match_id", "abbr", "votes"])
+        return pd.DataFrame(data)
+
+    except Exception as e:
+        st.error(f"❌ Error loading votes: {e}")
+        return pd.DataFrame(columns=["match_id", "abbr", "votes"])
+
+
+def save_votes(df):
+    """Overwrite the votes sheet with the given DataFrame."""
+    try:
+        overwrite_sheet(VOTE_SHEET, df)
+    except Exception as e:
+        st.error(f"❌ Failed to save votes: {e}")
+
+
+def get_vote_counts(match_id, abbr1, abbr2):
+    """Fetch vote counts for a specific match + both teams."""
+    df = load_votes()
+    if df.empty:
+        return {abbr1: 0, abbr2: 0}
+
+    match_votes = df[df["match_id"].astype(str) == str(match_id)]
+    votes = {abbr1: 0, abbr2: 0}
+    for abbr in [abbr1, abbr2]:
+        row = match_votes[match_votes["abbr"] == abbr]
+        if not row.empty:
+            votes[abbr] = int(row.iloc[0]["votes"])
+    return votes
+
+
+def add_vote(match_id, abbr):
+    """Increment vote count for a team in a given match."""
+    df = load_votes()
+    mask = (df["match_id"].astype(str) == str(match_id)) & (df["abbr"] == abbr)
+
+    if mask.any():
+        df.loc[mask, "votes"] = df.loc[mask, "votes"].astype(int) + 1
+    else:
+        df = pd.concat([
+            df,
+            pd.DataFrame([[match_id, abbr, 1]], columns=["match_id", "abbr", "votes"])
+        ], ignore_index=True)
+
+    save_votes(df)
+

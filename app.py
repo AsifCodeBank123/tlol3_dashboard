@@ -171,6 +171,6 @@ except Exception as e:
     #st.error(f"An error occurred: {e}")
     st.error("Please refresh the page and try again.")
     # Log the full traceback for debugging
-    # with st.expander("Error Details"):
-    #     st.text(traceback.format_exc())
+    with st.expander("Error Details"):
+         st.text(traceback.format_exc())
     

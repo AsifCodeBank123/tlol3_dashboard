@@ -160,9 +160,6 @@ try:
 
 
 
-
-
-
     elif st.session_state.active_section == "Khatron Ke Khiladi (Player Stats)":
         players_stats.render()
     elif st.session_state.active_section == "Live Auction":

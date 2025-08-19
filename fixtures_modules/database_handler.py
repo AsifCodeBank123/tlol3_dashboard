@@ -115,7 +115,7 @@ def overwrite_sheet(sheet_name, df):
 
         worksheet.clear()
         worksheet.update([df.columns.tolist()] + df.values.tolist())
-        #st.success(f"✅ Sheet '{sheet_name}' overwritten successfully.")
+        st.success(f"✅ Sheet '{sheet_name}' overwritten successfully.")
     except Exception as e:
         st.error(f"❌ Failed to overwrite sheet: {e}")
 
@@ -215,8 +215,7 @@ def save_votes(df):
 
 
 def get_vote_counts(match_id, abbr1, abbr2):
-    """Fetch vote counts for a specific match + both teams."""
-    df = load_votes()
+    df = st.session_state.votes_df  # no API call
     if df.empty:
         return {abbr1: 0, abbr2: 0}
 
@@ -230,8 +229,7 @@ def get_vote_counts(match_id, abbr1, abbr2):
 
 
 def add_vote(match_id, abbr):
-    """Increment vote count for a team in a given match."""
-    df = load_votes()
+    df = st.session_state.votes_df
     mask = (df["match_id"].astype(str) == str(match_id)) & (df["abbr"] == abbr)
 
     if mask.any():
@@ -242,5 +240,5 @@ def add_vote(match_id, abbr):
             pd.DataFrame([[match_id, abbr, 1]], columns=["match_id", "abbr", "votes"])
         ], ignore_index=True)
 
-    save_votes(df)
-
+    st.session_state.votes_df = df  # update session cache
+    save_votes(df)                  # write once to Sheets

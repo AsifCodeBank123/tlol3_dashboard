@@ -182,6 +182,7 @@ def read_teams_points(sheet_name="teams"):
 # =========================
 VOTE_SHEET = "votes"
 
+@st.cache_data(ttl=300)  # Cache for 5 minutes
 def load_votes():
     """Load all votes into a DataFrame with a 'round' column."""
     try:
@@ -197,20 +198,21 @@ def load_votes():
             return pd.DataFrame(columns=["match_id", "round", "abbr", "votes"])
 
         data = worksheet.get_all_records()
-        if not data:
-            return pd.DataFrame(columns=["match_id", "round", "abbr", "votes"])
-        
         df = pd.DataFrame(data)
         
         # Ensure 'round' column exists
         if 'round' not in df.columns:
             df['round'] = ""
         
+        # Normalize column names
+        df.columns = [c.strip().lower() for c in df.columns]
+
         return df
 
     except Exception as e:
         st.error(f"❌ Error loading votes: {e}")
         return pd.DataFrame(columns=["match_id", "round", "abbr", "votes"])
+
 
 
 

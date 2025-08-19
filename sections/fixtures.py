@@ -306,7 +306,13 @@ def render_fixtures_for_sport(sport):
     # --- Render Knockouts ---
     st.markdown("### 🔗 Knockout Fixtures")
     for round_name, matches in all_knockouts.items():
-        st.markdown(f"**{round_name}**")
+        st.markdown("----")
+        st.markdown(
+        f"<h2 style='text-align:center; font-size:28px; margin-bottom:10px;'>{round_name}</h2>",
+        unsafe_allow_html=True
+)
+
+        st.markdown("----")
         if not matches:
             st.info("No matches available yet.")
             continue

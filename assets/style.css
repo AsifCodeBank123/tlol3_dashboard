@@ -857,3 +857,90 @@ section[data-testid="stSidebar"] button:active {
     text-shadow: 0px 0px 8px rgba(255, 215, 0, 0.8);
     cursor: pointer;
 }
+
+/* ----------------------------
+   Fixtures Styling - Table Tennis
+----------------------------- */
+
+/* Group Stage Match Card */
+.fixture-card {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 10px;
+    margin: 6px 0;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.fixture-card .match-id {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 6px;
+}
+
+.fixture-card .fixture-vs {
+    font-size: 1.0rem;
+    font-weight: 400;
+    margin: 8px 0;
+    color: #222;
+}
+
+.fixture-card .fixture-teams {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.knockout-card {
+    background: linear-gradient(135deg, #f9f9f9, #ffffff);
+    border: 2px solid #ccc;
+    border-radius: 14px;
+    padding: 14px;
+    margin: 10px auto;
+    text-align: center;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+    font-family: 'Segoe UI', sans-serif;
+    min-width: 180px;
+}
+
+.knockout-card .match-id {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.knockout-card .fixture-vs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.knockout-card .fixture-side {
+    text-align: center;
+    flex: 1;
+}
+
+.knockout-card .player-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #222;
+    display: block;
+}
+
+.knockout-card .team-name {
+    font-size: 0.8rem;
+    color: #777;
+    margin-top: 3px;
+}
+
+.knockout-card .vs-text {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #c62828;
+}
+

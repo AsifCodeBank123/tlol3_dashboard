@@ -71,7 +71,7 @@ def update_match_number(sheet_name, id_col, identifier, match_col, match_no,
         data = data_cache or worksheet.get_all_records()
 
         headers = [h.strip().lower().replace(" ", "_") for h in headers]
-        id_index = headers.index(id_col)
+        
         match_index = headers.index(match_col)
 
         norm = lambda x: str(x).strip().lower()
@@ -176,82 +176,3 @@ def read_teams_points(sheet_name="teams"):
         st.error(f"❌ Error reading Teams sheet: {e}")
         return pd.DataFrame()
     
-
-# =========================
-# VOTING FUNCTIONS
-# =========================
-VOTE_SHEET = "votes"
-
-@st.cache_data(ttl=300)  # Cache for 5 minutes
-def load_votes():
-    """Load all votes into a DataFrame with a 'round' column."""
-    try:
-        client = get_gsheet_connection()
-        spreadsheet = client.open_by_key(SPREADSHEET_ID)
-
-        try:
-            worksheet = spreadsheet.worksheet(VOTE_SHEET)
-        except gspread.exceptions.WorksheetNotFound:
-            # Create the sheet if it doesn't exist
-            worksheet = spreadsheet.add_worksheet(title=VOTE_SHEET, rows="100", cols="20")
-            worksheet.update([["match_id", "round", "abbr", "votes"]])
-            return pd.DataFrame(columns=["match_id", "round", "abbr", "votes"])
-
-        data = worksheet.get_all_records()
-        df = pd.DataFrame(data)
-        
-        # Ensure 'round' column exists
-        if 'round' not in df.columns:
-            df['round'] = ""
-        
-        # Normalize column names
-        df.columns = [c.strip().lower() for c in df.columns]
-
-        return df
-
-    except Exception as e:
-        st.error(f"❌ Error loading votes: {e}")
-        return pd.DataFrame(columns=["match_id", "round", "abbr", "votes"])
-
-
-
-
-def save_votes(df):
-    """Overwrite the votes sheet with the given DataFrame."""
-    try:
-        overwrite_sheet(VOTE_SHEET, df)
-    except Exception as e:
-        st.error(f"❌ Failed to save votes: {e}")
-
-
-def get_vote_counts(match_id, round_name, abbr1, abbr2):
-    df = load_votes()
-    if df.empty:
-        return {abbr1: 0, abbr2: 0}
-
-    match_votes = df[(df["match_id"].astype(str) == str(match_id)) &
-                     (df["round"] == round_name)]
-    votes = {abbr1: 0, abbr2: 0}
-    for abbr in [abbr1, abbr2]:
-        row = match_votes[match_votes["abbr"] == abbr]
-        if not row.empty:
-            votes[abbr] = int(row.iloc[0]["votes"])
-    return votes
-
-
-def add_vote(match_id, round_name, abbr):
-    df = load_votes()
-    mask = (df["match_id"].astype(str) == str(match_id)) & \
-           (df["round"] == round_name) & \
-           (df["abbr"] == abbr)
-
-    if mask.any():
-        df.loc[mask, "votes"] = df.loc[mask, "votes"].astype(int) + 1
-    else:
-        df = pd.concat([
-            df,
-            pd.DataFrame([[match_id, round_name, abbr, 1]], columns=["match_id", "round", "abbr", "votes"])
-        ], ignore_index=True)
-
-    st.session_state.votes_df = df  # update session cache
-    save_votes(df)                  # write once to Sheets

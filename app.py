@@ -2,12 +2,12 @@ import streamlit as st
 st.set_page_config(page_title="TLOL3 Dashboard", layout="wide")
 from sections import players_stats
 from sections.fixtures import render_fixtures_for_sport, render_sport_banner_and_rules ,render_bonus_cards, generate_and_store_fixtures
-from fixtures_modules.database_handler import load_sheet_as_df, sheet_exists, read_fixtures_sheet
+from fixtures_modules.database_handler import load_sheet_as_df, sheet_exists
+from sections.tt_fixtures import render_table_tennis_fixtures
 
 from sections import home, auction_live, leaderboard
 import os
 import traceback
-import random, time
 
 
 def load_global_styles():
@@ -60,74 +60,6 @@ try:
         if "fixture_cache" not in st.session_state:
             st.session_state.fixture_cache = {}
 
-        # # === Admin Controls ===
-        # with st.expander("🛠️ Admin Controls", expanded=True):
-        #     if "admin_verified" not in st.session_state:
-        #         st.session_state.admin_verified = False  # default locked
-
-        #     if not st.session_state.admin_verified:
-        #         password = st.text_input("Enter Admin Password:", type="password")
-        #         if st.button("✅ Verify"):
-        #             if password == "tlol3":
-        #                 st.session_state.admin_verified = True
-        #                 st.success("✅ Admin access granted!")
-        #                 st.rerun()
-        #             else:
-        #                 st.error("❌ Incorrect password. Try again.")
-        #     else:
-        #         # Only visible after login
-        #         selected_sport = st.selectbox(
-        #             "🎯 Choose a Sport to Manage Fixtures",
-        #             ["Foosball", "Carrom", "Table tennis", "Badminton", "Chess"],
-        #             key="sport_selector"
-        #         )
-
-        #         try:
-        #             st.session_state.fixture_cache[selected_sport] = read_fixtures_sheet(selected_sport)
-        #             #st.success(f"📥 Fixtures loaded for {selected_sport}")
-        #         except Exception as e:
-        #             st.error(f"⚠️ Could not load fixtures for {selected_sport}: {e}")
-
-        #         col1, col2 = st.columns(2)
-        #         fun_messages = [
-        #             "Sabr Karo, Abhi Karke Deta Hoo.. ⏳",
-        #             "Generating magic… ✨",
-        #             "Shuffling teams… 🌀",
-        #             "Crunching numbers… 🤓",
-        #             "Almost there… 🏃‍♂️💨"
-        #         ]
-
-        #         with col1:
-        #             if st.button("🚀 Generate Fixtures"):
-        #                 cache_key = f"fixtures_{selected_sport.lower()}"
-
-        #                 # Only generate if not cached
-        #                 if cache_key not in st.session_state.fixture_cache:
-        #                     try:
-        #                         with st.spinner(random.choice(fun_messages)):
-        #                             df, group_matches, all_knockouts = generate_and_store_fixtures(selected_sport)
-
-        #                             # Save to cache
-        #                             st.session_state.fixture_cache[cache_key] = {
-        #                                 "df": df,
-        #                                 "group_matches": group_matches,
-        #                                 "all_knockouts": all_knockouts
-        #                             }
-        #                             st.session_state[f"fixtures_ready_{selected_sport.lower()}"] = True
-
-        #                         st.success(f"✅ Fixtures successfully generated and saved for {selected_sport}!")
-        #                         st.rerun()
-
-        #                     except Exception as e:
-        #                         st.error(f"❌ An error occurred during fixture generation: {e}")
-        #                 else:
-        #                     st.info("⚠ Fixtures already generated. Refresh page to regenerate.")
-
-        #         if st.button("🔒 Logout Admin"):
-        #             st.session_state.admin_verified = False
-        #             st.rerun()
-
-
         # === Public Fixture Tabs ===
         sport_tabs = ["Foosball", "Carrom", "Table tennis", "Badminton", "Chess"]
         tab_objects = st.tabs(sport_tabs)
@@ -137,26 +69,42 @@ try:
                 render_sport_banner_and_rules(sport)
                 render_bonus_cards(sport)
 
+                is_table_tennis = (sport.lower() == "table tennis")
                 cache_key = f"fixtures_{sport.lower()}"
                 fixture_flag_key = f"fixtures_ready_{sport.lower()}"
                 regenerate = st.session_state.get(fixture_flag_key, False)
 
-                # Render from cache if available
+                # ✅ If already cached and not regenerating → just render
                 if cache_key in st.session_state.fixture_cache and not regenerate:
-                    render_fixtures_for_sport(sport)
-                else:
-                    # Check sheet existence first
-                    sheet_name = f"Fixtures_{sport.lower()}"
-                    if sheet_exists(sheet_name):  # <-- implement sheet_exists() to return True/False
+                    if is_table_tennis:
+                        render_table_tennis_fixtures()
+                    else:
+                        render_fixtures_for_sport(sport)
+                    continue
+
+                # ✅ Common Google Sheet name
+                sheet_name = f"Fixtures_{sport.lower()}"
+
+                try:
+                    if sheet_exists(sheet_name):
                         df = load_sheet_as_df(sheet_name)
+
                         if not df.empty:
+                            # ✅ Cache fixtures for current sport
                             st.session_state.fixture_cache[cache_key] = {"df": df}
                             st.session_state[fixture_flag_key] = True
-                            render_fixtures_for_sport(sport)
+
+                            # ✅ Render based on sport type
+                            if is_table_tennis:
+                                render_table_tennis_fixtures()
+                            else:
+                                render_fixtures_for_sport(sport)
                         else:
                             st.info(f"⚠ Fixtures sheet '{sheet_name}' exists but is empty.")
                     else:
                         st.info(f"⚠ Fixtures sheet '{sheet_name}' does not exist yet.")
+                except Exception as e:
+                    st.error(f"⚠ Error rendering fixtures for {sport}: {e}")
 
 
 

@@ -1,53 +1,54 @@
-Team Name,Player Name,Player Type,Gender,Table Tennis Participation,Table Tennis,Chess Participation,Chess,Carrom Participation,Carrom,Foosball Participation,Foosball,Badminton Participation,Badminton,Cricket,Bonus Card Point,Olympics,Underdog Uprising Points
-Badshah Blasters,Wilfred Dsilva,Icon,Male,50,250,50,100,50,200,50,150,50,100,50,1000,,0
-Badshah Blasters,Vishal Shinde,Rest,Male,50,100,,,,,,,,,,,,
-Badshah Blasters,Saurabh Mahadik,Rest,Male,,,,,,,,,,,,,,
-Badshah Blasters,Pritesh Menon,Lead,Male,,,,,,,,,,,,,,
-Badshah Blasters,Samiksha Prabhu,Lead,Female,,,,,,,,,,,,,,
-Badshah Blasters,Umesh Gawade,Lead,Male,,,,,,,,,,,,,,
-Badshah Blasters,N Pratap Kumar,Rest,Male,,,,,,,,,,,,,,
-Badshah Blasters,Vijay Chinkate,Rest,Male,,,,,,,,,,,,,,
-Badshah Blasters,Pooja Nandoskar,Rest,Female,,,,,,,,,,,,,,
-Badshah Blasters,Gayatri Zuting,Rest,Female,,,,,,,,,,,,,,
-Badshah Blasters,Hitesh Ghadigaonkar,Rest,Male,,,,,,,,,,,,,,
-Badshah Blasters,Somansh Datta,Captain,Male,,,,,,,,,,,,,,
-Badshah Blasters,Kiran Padwal,Rest,Male,,,,,,,,,,,,,,
-Dabangg Dynamos,Adnan Shaikh,Icon,Male,50,150,,,,,,,,,,,,
-Dabangg Dynamos,Nilesh Sansare,Lead,Male,,,,,,,,,,,,,,
-Dabangg Dynamos,Rachita Harit,Lead,Female,,,,,,,,,,,,,,
-Dabangg Dynamos,Nilesh Mulik,Lead,Male,,,,,,,,,,,,,,
-Dabangg Dynamos,Mayur Pawar,Rest,Male,,,,,,,,,,,,,,
-Dabangg Dynamos,Bijal Gala,Rest,Female,,,,,,,,,,,,,,
-Dabangg Dynamos,Sanskar Bagwe,Rest,Male,,,,,,,,,,,,,,
-Dabangg Dynamos,Lalit Chavan,Captain,Male,,,,,,,,,,,,,,
-Dabangg Dynamos,Ravi Khanra,Rest,Male,,,,,,,,,,,,,,
-Dabangg Dynamos,Bishal Pandit,Rest,Male,,,,,,,,,,,,,,
-Dabangg Dynamos,Arijit Ghosh,Rest,Male,,,,,,,,,,,,,,
-Dabangg Dynamos,Amit Singh,Rest,Male,,,,,,,,,,,,,,
-Gully Gang,Umesh Tank,Icon,Male,50,,50,100,,,,,,,,,,
-Gully Gang,Bhaskar Patil,Lead,Male,,,,,,,,,,,,,,
-Gully Gang,Rahul Arjun,Lead,Male,,,,,,,,,,,,,,
-Gully Gang,Avinash Gowda,Rest,Male,,,,,,,,,,,,,,
-Gully Gang,Rahul Pokharkar,Rest,Male,,,,,,,,,,,,,,
-Gully Gang,Avin Chorage,Lead,Male,,,,,,,,,,,,,,
-Gully Gang,Vijay Sangale,Rest,Male,,,,,,,,,,,,,,
-Gully Gang,Jay Jagad,Captain,Male,,,,,,,,,,,,,,
-Gully Gang,Bhagyashree Dhotre,Rest,Female,,,,,,,,,,,,,,
-Gully Gang,Pramod Patel,Rest,Male,,,,,,,,,,,,,,
-Gully Gang,Komal Panjwani,Rest,Female,,,,,,,,,,,,,,
-Gully Gang,Pritam Paparkar,Rest,Male,,,,,,,,,,,,,,
-Rockstar Rebels,Dhananjay Kulkarni,Icon,Male,,,,,,,,,,,,,,
-Rockstar Rebels,Suraj Kamerkar,Rest,Male,,,,,,,,,,,,,,
-Rockstar Rebels,Kishansingh Devda,Lead,Male,,,,,,,,,,,,,,
-Rockstar Rebels,Vibhuti S Dabholkar,Rest,Female,,,,,,,,,,,,,,
-Rockstar Rebels,Jincy Geevarghese,Rest,Female,,,,,,,,,,,,,,
-Rockstar Rebels,Arvind Arumuga Nainar,Rest,Male,,,,,,,,,,,,,,
-Rockstar Rebels,Johnson Thomas,Rest,Male,,,,,,,,,,,,,,
-Rockstar Rebels,Ankit Yadav,Rest,Male,,,,,,,,,,,,,,
-Rockstar Rebels,Irshad Darji,Rest,Male,,,,,,,,,,,,,,
-Rockstar Rebels,Ravi Chavan,Lead,Male,,,,,,,,,,,,,,
-Rockstar Rebels,Sanket Patil,Lead,Male,,,,,,,,,,,,,,
-Rockstar Rebels,Asif Khan,Rest,Male,,,,,,,,,,,,,,
-Rockstar Rebels,Esakki Shummugavel,Rest,Female,,,,,,,,,,,,,,
-Rockstar Rebels,Blessen Thomas,Captain,Male,,,,,,,,,,,,,,
-Rockstar Rebels,,,,,,,,,,,,,,,,,
+Team Name,Player Name,Player Type,Gender,Bid Price,Underdog
+Badshah Blasters,Wilfred Dsilva,Icon,Male,2850,N
+Badshah Blasters,Vishal Shinde,Rest,Male,100,Y
+Badshah Blasters,Saurabh Mahadik,Rest,Male,100,Y
+Badshah Blasters,Pritesh Menon,Lead,Male,100,N
+Badshah Blasters,Samiksha Prabhu,Lead,Female,390,N
+Badshah Blasters,Umesh Gawade,Lead,Male,100,N
+Badshah Blasters,N Pratap Kumar,Rest,Male,100,Y
+Badshah Blasters,Vijay Chinkate,Rest,Male,250,N
+Badshah Blasters,Pooja Nandoskar,Rest,Female,600,N
+Badshah Blasters,Gayatri Zuting,Rest,Female,100,N
+Badshah Blasters,Hitesh Ghadigaonkar,Rest,Male,700,N
+Badshah Blasters,Somansh Datta,Captain,Male,0,N
+Badshah Blasters,Kiran Padwal,Rest,Male,100,N
+Dabangg Dynamos,Adnan Shaikh,Icon,Male,2600,N
+Dabangg Dynamos,Nilesh Sansare,Lead,Male,540,N
+Dabangg Dynamos,Rachita Harit,Lead,Female,100,N
+Dabangg Dynamos,Nilesh Mulik,Lead,Male,100,N
+Dabangg Dynamos,Mayur Pawar,Rest,Male,890,N
+Dabangg Dynamos,Amitabh Singh,Lead,Male,100,Y
+Dabangg Dynamos,Bijal Gala,Rest,Female,100,Y
+Dabangg Dynamos,Sanskar Bagwe,Rest,Male,100,Y
+Dabangg Dynamos,Lalit Chavan,Captain,Male,0,N
+Dabangg Dynamos,Ravi Khanra,Rest,Male,100,Y
+Dabangg Dynamos,Bishal Pandit,Rest,Male,100,Y
+Dabangg Dynamos,Arijit Ghosh,Rest,Male,360,N
+Dabangg Dynamos,Amit Singh,Rest,Male,100,N
+Gully Gang,Umesh Tank,Icon,Male,700,N
+Gully Gang,Bhaskar Patil,Lead,Male,100,N
+Gully Gang,Rahul Arjun,Lead,Male,100,N
+Gully Gang,Prachi Dalvi,Rest,Female,390,N
+Gully Gang,Avinash Gowda,Rest,Male,280,N
+Gully Gang,Rahul Pokharkar,Rest,Male,300,N
+Gully Gang,Avin Chorage,Lead,Male,100,Y
+Gully Gang,Vijay Sangale,Rest,Male,100,Y
+Gully Gang,Jay Jagad,Captain,Male,0,N
+Gully Gang,Bhagyashree Dhotre,Rest,Female,500,N
+Gully Gang,Pramod Patel,Rest,Male,100,Y
+Gully Gang,Komal Panjwani,Rest,Female,120,N
+Gully Gang,Pritam Paparkar,Rest,Male,1450,N
+Rockstar Rebels,Dhananjay Kulkarni,Icon,Male,2050,N
+Rockstar Rebels,Suraj Kamerkar,Rest,Male,860,N
+Rockstar Rebels,Kishansingh Devda,Lead,Male,800,N
+Rockstar Rebels,Vibhuti S Dabholkar,Rest,Female,800,N
+Rockstar Rebels,Jincy Geevarghese,Rest,Female,510,N
+Rockstar Rebels,Arvind Arumuga Nainar,Rest,Male,490,N
+Rockstar Rebels,Johnson Thomas,Rest,Male,350,N
+Rockstar Rebels,Ankit Yadav,Rest,Male,340,N
+Rockstar Rebels,Irshad Darji,Rest,Male,270,N
+Rockstar Rebels,Ravi Chavan,Lead,Male,100,N
+Rockstar Rebels,Sanket Patil,Lead,Male,100,Y
+Rockstar Rebels,Asif Khan,Rest,Male,100,Y
+Rockstar Rebels,Esakki Shummugavel,Rest,Female,100,Y
+Rockstar Rebels,Blessen Thomas,Captain,Male,0,N

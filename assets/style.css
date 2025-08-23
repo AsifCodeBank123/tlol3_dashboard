@@ -266,130 +266,160 @@ section[data-testid="stSidebar"] button:active {
   font-family: 'Caveat', cursive;
 }
 
-/* Home Page - Team and Captain Section */
-/* ================= Shared Section Title (Kaptaans + Teams at a Glance) ================= */
+/* ================= Shared Section Title ================= */
 .shared-section-title {
   text-align: center;
-  font-size: 34px;
+  font-size: 36px;
   font-weight: 900;
   font-family: 'Bebas Neue', 'Segoe UI', sans-serif;
-  letter-spacing: 1.6px;
-  margin: 36px 0 26px;
+  letter-spacing: 1.8px;
+  margin: 40px 0 28px;
   color: #fff9c4;
-  text-shadow: 1px 1px 2px #000000aa;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  text-shadow: 2px 2px 4px #000000aa;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.25);
   display: inline-block;
-  padding: 8px 20px;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
+  padding: 10px 24px;
+  background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.5));
+  border-radius: 12px;
+  transition: all 0.3s ease-in-out;
+}
+.shared-section-title:hover {
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(0,0,0,0.6));
+  transform: scale(1.04);
 }
 
-/* Home Page - Team Section */
-/* ================= Role Cards (Icon / Lead / Rest) ================= */
+/* ================= Role Blocks ================= */
 .role-block {
-  border-radius: 16px;
-  padding: 14px 16px 10px;
-  margin: 12px 0 20px;
-  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.04);
-  transition: box-shadow 0.2s ease-in-out;
+  border-radius: 18px;
+  padding: 16px 18px 12px;
+  margin: 14px 0 22px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease-in-out;
 }
 .role-block:hover {
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
 }
 
-/* Icon - Royal Gold */
+/* Icon Role - Premium Gold */
 .role-icon {
-  background: linear-gradient(135deg, #fffde7, #ffe57f);
-  border-left: 6px solid #fbc02d;
-  box-shadow: 0 2px 14px rgba(251, 192, 45, 0.35);
+  background: linear-gradient(135deg, #fffde7, #ffe082);
+  border-left: 6px solid #f9a825;
+  box-shadow: 0 3px 16px rgba(251, 192, 45, 0.4);
 }
 
-/* Lead - Vibrant Mint */
+/* Lead Role - Fresh Mint */
 .role-lead {
-  background: linear-gradient(135deg, #e6f9ec, #c8facc);
-  border-left: 6px solid #2e7d32;
-  box-shadow: 0 2px 14px rgba(76, 175, 80, 0.3);
+  background: linear-gradient(135deg, #e6f9ec, #d2fbd9);
+  border-left: 6px solid #1b5e20;
+  box-shadow: 0 3px 16px rgba(56, 142, 60, 0.35);
 }
 
-/* Rest - Ice Blue */
+/* Rest Role - Ice Blue */
 .role-rest {
-  background: linear-gradient(135deg, #e3f2fd, #d0e8ff);
-  border-left: 6px solid #0288d1;
-  box-shadow: 0 2px 14px rgba(33, 150, 243, 0.3);
+  background: linear-gradient(135deg, #e3f2fd, #d6ecff);
+  border-left: 6px solid #0277bd;
+  box-shadow: 0 3px 16px rgba(25, 118, 210, 0.35);
 }
 
-/* Home Page - Team Section */
 /* ================= Player Pills ================= */
 .player-pill {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   background: #ffffff;
   color: #263238;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 600;
   border-radius: 999px;
-  padding: 6px 13px;
-  margin: 5px 5px 6px 0;
+  padding: 8px 14px;
+  margin: 6px 6px 8px 0;
   border: 1px solid #c5d8e7;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.04);
-  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  transition: all 0.25s ease-in-out;
 }
 .player-pill:hover {
-  background: #f4fbff;
+  background: #f1f8ff;
   color: #0d47a1;
-  transform: scale(1.03);
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Underdog Badge */
+.underdog-badge {
+  background: #ffebee;
+  color: #c62828;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 6px;
+  border-radius: 6px;
+  margin-left: 6px;
+}
 
-/* ================= Section Titles in Cards (Role Headers) ================= */
+.team-summary {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Bid Price Styling */
+.bid-price {
+  color: #2e7d32;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* ================= Section Titles (Role Headers) ================= */
 .section-title {
-  font-weight: 800;
-  font-size: 14px;
-  margin-bottom: 10px;
-  letter-spacing: 0.75px;
-  color: #263238;
+  font-weight: 900;
+  font-size: 15px;
+  margin-bottom: 12px;
+  letter-spacing: 0.85px;
+  color: #212121;
   text-transform: uppercase;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding-bottom: 6px;
 }
 
-/* Home Page - Team Section */
-/* ================= Team Expander Header with Logo ================= */
+/* ================= Team Expander Header ================= */
 .team-expander-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px 14px;
-  margin-bottom: 12px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.15); /* Slightly brighter glass */
-  backdrop-filter: blur(6px);            /* Stronger blur for effect */
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  gap: 14px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+  transition: all 0.25s ease-in-out;
 }
-
+.team-expander-header:hover {
+  background: rgba(255, 255, 255, 0.28);
+  cursor: pointer;
+  transform: scale(1.02);
+}
 .team-logo {
-  width: 42px;
-  height: 42px;
+  width: 48px;
+  height: 48px;
   object-fit: contain;
   border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.25);
   border: 2px solid #ffffffcc;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
 }
-
 .team-expander-title {
-  font-size: 20px;
-  font-weight: 800;
+  font-size: 22px;
+  font-weight: 900;
   color: #ffffff;
-  letter-spacing: 1px;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.65); /* Key: Improved visibility */
-}
-
-.team-expander-header:hover {
-  background: rgba(255, 255, 255, 0.25);
-  cursor: pointer;
-  transform: scale(1.01);
-  transition: all 0.2s ease-in-out;
+  letter-spacing: 1.2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 .team-expander-block {
-  padding: 10px 16px 20px;
+  padding: 12px 18px 22px;
 }
 
 /* Home Page - Ticker with transparent gradient */

@@ -4,7 +4,6 @@ from google.oauth2.service_account import Credentials
 import pandas as pd
 from fixtures_modules.constants import SPREADSHEET_ID
 import time
-import os
 import json
 
 # ✅ Google Sheets auth

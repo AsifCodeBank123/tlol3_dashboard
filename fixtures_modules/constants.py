@@ -405,7 +405,7 @@ sports_schedule = {
             "location": "Airoli",
             "format": "Doubles",
             "from": "Wednesday, September 10, 2025",
-            "to": "Thursday, September 11, 2025",
+            "to": "Thursday, September 25, 2025",
             "event_head": "Bhagyashree Dhotre",
             "event_coord": "Bhagyashree Dhotre",
             "icon": "https://img.icons8.com/?size=100&id=LY7nh71PMOMY&format=png&color=000000"
@@ -418,7 +418,7 @@ sports_schedule = {
             "location": "Airoli",
             "format": "Doubles",
             "from": "Wednesday, September 10, 2025",
-            "to": "Thursday, September 11, 2025",
+            "to": "Thursday, September 25, 2025",
             "event_head": "Umesh Tank",
             "event_coord": "Komal Panjwani",
             "icon": "https://img.icons8.com/?size=100&id=fg6EW7vMn9tC&format=png&color=000000"
@@ -457,7 +457,7 @@ sports_schedule = {
             "location": "Nesco",
             "format": "Doubles",
             "from": "Wednesday, September 17, 2025",
-            "to": "Thursday, September 25, 2025",
+            "to": "Wednesday, September 24, 2025",
             "event_head": "Rahul Arjun",
             "event_coord": "Rachita Harit",
             "icon": "https://img.icons8.com/?size=100&id=bbyXyG0mbZO2&format=png&color=000000"

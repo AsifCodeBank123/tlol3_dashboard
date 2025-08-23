@@ -1,7 +1,7 @@
 import streamlit as st
-st.set_page_config(page_title="TLOL3 Dashboard", layout="wide")
+st.set_page_config(page_title="TLOL3 Arena", layout="wide")
 from sections import players_stats
-from sections.fixtures import render_fixtures_for_sport, render_sport_banner_and_rules ,render_bonus_cards, generate_and_store_fixtures
+from sections.fixtures import render_fixtures_for_sport, render_sport_banner_and_rules ,render_bonus_cards
 from fixtures_modules.database_handler import load_sheet_as_df, sheet_exists
 from sections.tt_fixtures import render_table_tennis_fixtures
 

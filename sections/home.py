@@ -3,6 +3,7 @@ import os
 import pandas as pd
 import base64
 import html
+import math
 from fixtures_modules.constants import sports_schedule
 
 def load_global_styles():
@@ -148,18 +149,6 @@ def render():
     
 
 
-    # --- Role and Team Mappings ---
-    role_class_map = {
-        "Icon": "role-icon",
-        "Lead": "role-lead",
-        "Rest": "role-rest"
-    }
-    role_emojis = {
-        "Icon": "🌟",
-        "Lead": "🧠",
-        "Rest": "👤"
-    }
-   
     # --- Section Divider ---
     st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
 
@@ -170,48 +159,100 @@ def render():
     df_teams = pd.read_csv("reports/teams.csv")
     df_teams.columns = df_teams.columns.str.strip()
     df_teams.rename(columns={"Player Name": "Player", "Player Type": "Role"}, inplace=True)
-    df_teams["Role"] = df_teams["Role"].str.strip().str.lower().map({
-        "icon": "Icon", "lead": "Lead", "rest": "Rest"
-    }).fillna("Rest")
+    df_teams["Role"] = (
+        df_teams["Role"].astype(str).str.strip().str.lower().map({
+            "icon": "Icon", "lead": "Lead", "rest": "Rest"
+        }).fillna("Rest")
+    )
 
     # --- Custom Team Order and Role Order ---
     team_order = ["Gully Gang", "Badshah Blasters", "Rockstar Rebels", "Dabangg Dynamos"]
     role_order = ["Icon", "Lead", "Rest"]
 
-    
+    # --- CSS Class Maps & Emojis ---
+    role_class_map = {
+        "Icon": "role-icon",
+        "Lead": "role-lead",
+        "Rest": "role-rest",
+    }
+    role_emojis = {
+        "Icon": "🌟",
+        "Lead": "🧠",
+        "Rest": "👤",
+    }
 
+    # --- Build UI ---
     for team in team_order:
-        captain_info = next((c for c in captains if c["team"] == team), {})
-        logo_base64 = get_base64_image(captain_info.get("img", ""))
-        expander_title = f"🏀 {team.title()}"
+        team_df = df_teams[df_teams["Team Name"] == team]
 
-        with st.expander(expander_title, expanded=(team == team_order[0])):
-            # Inside: visible logo + styled team name
-            st.markdown(f"""
-                <div class="team-expander-header">
-                    <img src="{logo_base64}" class="team-logo"/>
-                    <span class="team-expander-title">{team}</span>
-                </div>
-               
-            """, unsafe_allow_html=True)
+        # Team Summary
+        total_players = len(team_df[team_df["Player"].str.lower() != "captain"])
+        total_spend = pd.to_numeric(team_df["Bid Price"], errors="coerce").fillna(0).sum()
 
+        if "Underdog" in team_df.columns:
+            underdog_count = (team_df["Underdog"].astype(str).str.upper() == "Y").sum()
+        else:
+            underdog_count = 0
+
+
+        with st.expander(f"🏀 {team}", expanded=(team == team_order[0])):
+            # --- Summary Bar ---
+            summary_html = f"""
+            <div class='team-summary'>
+                <span>👥 Players: <b>{total_players}</b></span>
+                <span>💰 Total Spend: <b>${int(total_spend)}</b></span>
+                <span>🔥 Underdogs: <b>{underdog_count}</b></span>
+            </div>
+            """
+            st.markdown(summary_html, unsafe_allow_html=True)
+
+            # --- Role-wise Players ---
             for role in role_order:
-                players = df_teams[
-                    (df_teams["Team Name"] == team) & (df_teams["Role"] == role)
-                ]["Player"].tolist()
-                if players:
-                    role_class = role_class_map.get(role, "role-rest")
-                    emoji = role_emojis.get(role, "")
-                    section = f"<div class='role-block {role_class}'><div class='section-title'>{emoji} {role}</div>"
-                    section += "".join(
-                        [f"<span class='player-pill'>{p}</span>" for p in players]
+                role_players = team_df[team_df["Role"] == role]
+                if role_players.empty:
+                    continue
+
+                role_class = role_class_map.get(role, "role-rest")
+                emoji = role_emojis.get(role, "")
+
+                # Build pills
+                pills_html_parts = []
+                for _, row in role_players.iterrows():
+                    player = str(row.get("Player", "")).strip()
+                    if not player or player.lower() == "captain":
+                        continue
+
+                    bid_price = row.get("Bid Price", None)
+                    underdog = str(row.get("Underdog", "")).strip().upper()
+
+                    # Price
+                    price_html = ""
+                    if pd.notna(bid_price) and str(bid_price).strip() != "":
+                        try:
+                            price_html = f"<span class='bid-price'>${int(float(bid_price))}</span>"
+                        except Exception:
+                            price_html = f"<span class='bid-price'>${str(bid_price)}</span>"
+
+                    # Underdog badge
+                    underdog_html = "<span class='underdog-badge'>Underdog</span>" if underdog == "Y" else ""
+
+                    pills_html_parts.append(
+                        f"<span class='player-pill'>{player} {price_html} {underdog_html}</span>"
                     )
-                    section += "</div>"
-                    st.markdown(section, unsafe_allow_html=True)
 
-            st.markdown("</div>", unsafe_allow_html=True)
+                # Render role section
+                if pills_html_parts:
+                    section_html = (
+                        f"<div class='role-block {role_class}'>"
+                        f"<div class='section-title'>{emoji} {role}</div>"
+                        + "".join(pills_html_parts) +
+                        "</div>"
+                    )
+                    st.markdown(section_html, unsafe_allow_html=True)
 
-  
+    # --- Section Divider ---
+    st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
+    
     # Sports Schedule Section
     
     # Title

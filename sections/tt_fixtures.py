@@ -3,7 +3,7 @@ import pandas as pd
 import itertools
 import os
 
-from fixtures_modules.database_handler import read_fixtures_sheet, sheet_exists, load_sheet_as_df
+from fixtures_modules.database_handler import sheet_exists, load_sheet_as_df
 
 # ----------------------
 # Helpers
@@ -134,29 +134,10 @@ def build_group_standings(fixtures_df):
                 "MP": mp,
                 "W": w,
                 "L": l,
-                "PTS": w * 2
+                "PTS": w * 3
             })
 
     return pd.DataFrame(standings).sort_values(["PTS", "W"], ascending=[False, False])
-
-
-
-# def create_table_tennis_fixtures():
-#     """Create Fixtures_Table tennis sheet fresh inside seeded_teams.xlsx."""
-#     seed_df = pd.read_excel(REPORTS_PATH, sheet_name=INPUT_SHEET)
-
-#     # Assign codes like GG1, BB2 etc.
-#     seed_df["code"] = seed_df.apply(lambda x: TEAM_CODES[x["team_name"]] + str(x["seed"]), axis=1)
-
-#     group_df = build_group_fixtures(seed_df)
-#     knockout_df = build_knockout_fixtures()
-#     fixtures_df = pd.concat([group_df, knockout_df], ignore_index=True)
-
-#     # Always overwrite Fixtures_Table tennis
-#     with pd.ExcelWriter(REPORTS_PATH, mode="a", if_sheet_exists="replace") as writer:
-#         fixtures_df.to_excel(writer, sheet_name=FIXTURES_SHEET, index=False)
-
-#     return fixtures_df
 
 # ----------------------
 # Render in Streamlit

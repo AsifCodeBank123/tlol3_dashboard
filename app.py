@@ -6,6 +6,7 @@ from fixtures_modules.database_handler import load_sheet_as_df, sheet_exists
 from sections.tt_fixtures import render_table_tennis_fixtures
 
 from sections import home, auction_live, leaderboard
+from sections.leaderboard import render_points_info
 import os
 import traceback
 
@@ -50,6 +51,8 @@ try:
         home.render()
 
     elif st.session_state.active_section == "Kismein Kitna Hai Dum (Leaderboard)":
+        render_points_info()
+        st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
         #st.title("🏋️‍♂️ Kismein Kitna Hai Dum (Leaderboard)")
         leaderboard.render()
 

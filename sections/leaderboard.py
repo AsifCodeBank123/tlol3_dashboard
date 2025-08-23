@@ -24,6 +24,91 @@ def normalize_col(col):
     """Convert a column name to lowercase with underscores, matching df_teams naming."""
     return col.strip().lower().replace(" ", "_")
 
+# --- Global Points Table Section ---
+def render_points_info():
+    # --- Points Table ---
+    st.markdown("<div class='shared-section-title'>🏅 Tournament Points System</div>", unsafe_allow_html=True)
+    with st.expander("View", expanded=False):
+
+        points_data = {
+            "Type": ["Participation", "Quarter Finals", "Semi Finals", "Runner Up", "Winner/Champion"],
+            "Points": ["50 Points", "250 Points", "500 Points", "750 Points", "1000 Points"]
+        }
+        points_df = pd.DataFrame(points_data)
+        
+        st.table(points_df)  # hides index by default
+
+    # Detailed info inside an Expander
+    with st.expander("ℹ️ How Points Are Calculated (Click to Expand)"):
+        st.markdown("""
+        **Participation:**  
+        - Every Star playing the event earns **50 points**.  
+        - In doubles, if one partner is absent, the attending player still earns **50 points**.
+
+        **Progression Points:**  
+        - Quarter Finals: **+100 points total** (50 each if doubles).  
+        - Semi Finals: **+250 points total**.  
+        - Runner Up: **+500 points** (250 each if doubles).  
+        - Winner: **+1000 points** (500 each if doubles).  
+
+        **These points contribute to:**  
+        - Individual rankings  
+        - Team rankings for Final Prizes  
+
+        **Participation points** are awarded **only for Singles & Doubles formats**.
+
+        **Note:**  
+        Tournament events follow this system. One-time events may give smaller points (e.g., <500 for winners).
+        """, unsafe_allow_html=True)
+
+    # --- Power Cards Section in Expander ---
+    with st.expander("🎴 Power Cards Details", expanded=False):
+        power_cards_html = """
+        <table style='width:100%; border-collapse: collapse; margin: 15px 0; font-size: 16px; border: 1px solid #ddd;'>
+            <thead>
+                <tr style='background-color: #f4b400; color: white; text-align: left;'>
+                    <th style='padding: 10px;'>Sr</th>
+                    <th style='padding: 10px;'>Event</th>
+                    <th style='padding: 10px;'>Card</th>
+                    <th style='padding: 10px;'>Description</th>
+                    <th style='padding: 10px;'>When it should be called</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style='padding: 10px;'>1</td>
+                    <td style='padding: 10px;'>Overall</td>
+                    <td style='padding: 10px;'>Underdog Uprising</td>
+                    <td style='padding: 10px;'>Underdogs (unsold players) will win 2x points if reached quarterfinal and above. Player Points will be 2x.</td>
+                    <td style='padding: 10px;'>Automatically after the Auction</td>
+                </tr>
+                <tr>
+                    <td style='padding: 10px;'>2</td>
+                    <td style='padding: 10px;'>Overall</td>
+                    <td style='padding: 10px;'>Double-e-Risk</td>
+                    <td style='padding: 10px;'>Doubles the points of a selected event. The event points are multiplied by a factor (2x). If the event is lost then it will be -500.</td>
+                    <td style='padding: 10px;'>Before the Event Starts</td>
+                </tr>
+                <tr>
+                    <td style='padding: 10px;'>3</td>
+                    <td style='padding: 10px;'>Overall</td>
+                    <td style='padding: 10px;'>Jodi Breakers</td>
+                    <td style='padding: 10px;'>Swap two members between teams for one event (Before Rosters when Participation list is finalized). If the swapped player helps the new team win, the playing team gets 200 points and the team who has used the card gets -200 Points. If the swapped player underperforms, the Team who has used the card gets 200 points.</td>
+                    <td style='padding: 10px;'>After the rosters are done</td>
+                </tr>
+                <tr>
+                    <td style='padding: 10px;'>4</td>
+                    <td style='padding: 10px;'>Overall</td>
+                    <td style='padding: 10px;'>Shakti Bonus</td>
+                    <td style='padding: 10px;'>Female Pairing (Excluding chess) reaching Quarters and Above would get 2x points.</td>
+                    <td style='padding: 10px;'>Automatically after the Auction</td>
+                </tr>
+            </tbody>
+        </table>
+        """
+        st.markdown(power_cards_html, unsafe_allow_html=True)
+
+
 def render_leaderboard():
     load_global_styles()
 
@@ -91,7 +176,22 @@ def render_leaderboard():
 
     # 🎯 Individual Leaderboard
     with col1:
-        with st.expander("🎯 Individual Leaderboard", expanded=False):
+        st.markdown("""
+            <style>
+            .leaderboard-title {
+                color: #FFD700; /* gold */
+                font-size: 2rem;
+                font-weight: bold;
+                text-align: center;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            }
+            </style>
+            <div class='leaderboard-title-section'>
+                <div class='leaderboard-title'>🎯 Individual Leaderboard</div>
+            </div>
+        """, unsafe_allow_html=True)
+
+        with st.expander("View", expanded=False):
             # Sort players by total_points (descending) and assign rank with ties
             df_players['rank'] = (
                 df_players['total_points']

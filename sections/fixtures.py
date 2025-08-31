@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import base64
+import base64, os
 from pathlib import Path
 from collections import defaultdict
 
@@ -17,7 +17,33 @@ from fixtures_modules.tournament_logic import (
 from utils.ui_data import display_card
 from fixtures_modules.constants import SPORT_LOGOS, SPORT_RULES, BONUS_CARDS, SEED_PATTERN
 
+def load_global_styles():
+    style_path = "assets/style.css"
+    if os.path.exists(style_path):
+        with open(style_path) as f:
+            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
 def render_sport_banner_and_rules(sport_name):
+
+    load_global_styles()
+
+    image_path = "assets/fixtures_bg.png"
+    if os.path.exists(image_path):
+        with open(image_path, "rb") as img_file:
+            bg_img = base64.b64encode(img_file.read()).decode()
+
+        st.markdown(
+            f"""
+            <style>
+            .stApp {{
+                background: url("data:image/jpg;base64,{bg_img}") no-repeat center center fixed !important;
+                background-size: cover !important;
+            }}
+            </style>
+            """,
+            unsafe_allow_html=True,
+        )
+
     """Render the banner, rules, and bonus cards for a sport."""
 
     # --- Banner ---

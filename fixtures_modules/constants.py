@@ -407,7 +407,7 @@ sports_schedule = {
             "from": "Wednesday, September 10, 2025",
             "to": "Thursday, September 25, 2025",
             "event_head": "Bhagyashree Dhotre",
-            "event_coord": "Bhagyashree Dhotre",
+            "event_coord": "Asif Khan",
             "icon": "https://img.icons8.com/?size=100&id=LY7nh71PMOMY&format=png&color=000000"
         }
     ],
@@ -433,7 +433,7 @@ sports_schedule = {
             "from": "Wednesday, August 20, 2025",
             "to": "Thursday, September 11, 2025",
             "event_head": "Arijit Ghosh",
-            "event_coord": "Pritam Paparkar",
+            "event_coord": "TBD",
             "icon": "https://img.icons8.com/?size=100&id=1uCVxPabLUk0&format=png&color=000000"
         }
     ],

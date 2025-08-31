@@ -7,7 +7,7 @@ import time
 import json
 
 # ✅ Google Sheets auth
-@st.cache_resource(ttl=300)
+@st.cache_resource(ttl=65)
 def get_gsheet_connection():
     try:
         # Read JSON string from Streamlit secrets
@@ -23,7 +23,7 @@ def get_gsheet_connection():
         st.error(f"❌ Error connecting to Google Sheets: {e}")
         return None
     
-@st.cache_data(ttl=300)  # Cache for 5 mins
+@st.cache_data(ttl=65)  # Cache for 5 mins
 def load_sheet_as_df(sheet_name, spreadsheet_id=SPREADSHEET_ID):
     """Load a specific sheet from a given spreadsheet."""
     try:
@@ -159,7 +159,7 @@ def sheet_exists(sheet_name):
 # =========================
 # TEAMS & POINTS FUNCTIONS
 # =========================
-@st.cache_data(ttl=300)  # 5 min cache
+@st.cache_data(ttl=65)  # 5 min cache
 def read_teams_points(sheet_name="teams"):
     """Read teams/points data from the separate Teams Google Sheet."""
     try:

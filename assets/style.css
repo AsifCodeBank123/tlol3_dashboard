@@ -1,12 +1,12 @@
 /* ======== Card Base (Glass Effect) ======== */
 .match-card {
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.75);
-  border: 1.5px solid rgba(0, 114, 255, 0.2);
+  background: rgba(255, 245, 230, 0.8);
+  border: 1.5px solid rgba(255, 94, 77, 0.3);
   backdrop-filter: blur(14px) saturate(160%);
   -webkit-backdrop-filter: blur(14px) saturate(160%);
-  
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+
+  box-shadow: 0 6px 20px rgba(255, 94, 77, 0.25);
 
   padding: 22px 24px 20px 24px;
   margin: 18px 0 28px 0;
@@ -16,9 +16,9 @@
 
   /* accent border */
   border-left: 5px solid transparent;
-  border-image: linear-gradient(180deg, #00c6ff, #0072ff); /* cyan → blue */
+  border-image: linear-gradient(180deg, #ff6a00, #ee0979); /* orange → magenta */
   border-image-slice: 1;
-  color: #f4f4f4;
+  color: #3a2a2a;
 
   display: flex;
   flex-direction: column;
@@ -116,7 +116,7 @@
 }
 
 /* ======== Dark Mode Styles ======== */
-@media (prefers-color-scheme: dark) {
+/*@media (prefers-color-scheme: dark) {
   .match-card {
     background: linear-gradient(135deg, #1e1f29 10%, #101319 100%);
     border: 1.3px solid #2a2f38;
@@ -139,7 +139,7 @@
   .team-abbr {
     color: #00ff9d !important;
   }
-}
+} */
 
 
 /* Side Bars */

@@ -27,22 +27,22 @@ def render_sport_banner_and_rules(sport_name):
 
     load_global_styles()
 
-    image_path = "assets/fixtures_bg.png"
-    if os.path.exists(image_path):
-        with open(image_path, "rb") as img_file:
-            bg_img = base64.b64encode(img_file.read()).decode()
+    # image_path = "assets/fixtures_bg.png"
+    # if os.path.exists(image_path):
+    #     with open(image_path, "rb") as img_file:
+    #         bg_img = base64.b64encode(img_file.read()).decode()
 
-        st.markdown(
-            f"""
-            <style>
-            .stApp {{
-                background: url("data:image/jpg;base64,{bg_img}") no-repeat center center fixed !important;
-                background-size: cover !important;
-            }}
-            </style>
-            """,
-            unsafe_allow_html=True,
-        )
+    #     st.markdown(
+    #         f"""
+    #         <style>
+    #         .stApp {{
+    #             background: url("data:image/jpg;base64,{bg_img}") no-repeat center center fixed !important;
+    #             background-size: cover !important;
+    #         }}
+    #         </style>
+    #         """,
+    #         unsafe_allow_html=True,
+    #     )
 
     """Render the banner, rules, and bonus cards for a sport."""
 
@@ -237,7 +237,36 @@ def generate_and_store_fixtures(sport):
 
 
 def render_fixtures_for_sport(sport):
-    st.subheader(f"🏆 Fixtures for {sport}")
+    
+    st.markdown(
+    f"""
+    <h2 style="
+        text-align:center;
+        font-size:32px;
+        margin: 16px 0;
+        padding: 14px 22px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #1e3c72, #2a5298);
+        color: white;
+        font-weight: 900;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    ">
+        <span style="
+            font-size: 36px;
+            margin-right: 8px;
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FF4500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        ">🏆</span>
+        Fixtures for {sport}
+    </h2>
+    """,
+    unsafe_allow_html=True
+)
+
+
     st.markdown("----")
 
     # Read fresh data from sheet
@@ -295,7 +324,26 @@ def render_fixtures_for_sport(sport):
             all_knockouts[round_name].append(match_data)
 
     # --- Render Group Matches ---
-    st.markdown("### 📦 Group Stage Matches")
+    st.markdown(
+    """
+    <div style="
+        text-align:left;
+        display:inline-block;
+        font-size:22px;
+        margin: 12px 0;
+        padding: 8px 16px;
+        border-radius: 50px;
+        background: rgba(0, 114, 255, 0.1);
+        color: #0072ff;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    ">
+        📦 Group Stage Matches
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
     if not group_matches:
         st.info("No group matches available yet.")
     else:
@@ -330,13 +378,48 @@ def render_fixtures_for_sport(sport):
     st.markdown("----")
 
     # --- Render Knockouts ---
-    st.markdown("### 🔗 Knockout Fixtures")
+    st.markdown(
+    """
+    <div style="
+        text-align:left;
+        display:inline-block;
+        font-size:22px;
+        margin: 12px 0;
+        padding: 8px 16px;
+        border-radius: 50px;
+        background: rgba(0, 114, 255, 0.1);
+        color: #0072ff;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    ">
+        👊 Knockout Matches
+    </div>
+    """,
+    unsafe_allow_html=True
+)
     for round_name, matches in all_knockouts.items():
         st.markdown("----")
         st.markdown(
-        f"<h2 style='text-align:center; font-size:28px; margin-bottom:10px;'>{round_name}</h2>",
-        unsafe_allow_html=True
+    f"""
+    <div style="
+        text-align:center;
+        font-size:28px;
+        margin: 12px 0;
+        padding: 10px 20px;
+        border-radius: 50px;
+        background: #111;
+        color: #0ff;
+        font-weight: 800;
+        text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+        box-shadow: 0 0 15px #0ff;
+    ">
+        {round_name}
+    </div>
+    """,
+    unsafe_allow_html=True,
 )
+
+
 
         st.markdown("----")
         if not matches:

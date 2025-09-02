@@ -19,9 +19,19 @@ def get_gsheet_connection():
             scopes=["https://www.googleapis.com/auth/spreadsheets"]
         )
         return gspread.authorize(creds)
+
     except Exception as e:
-        st.error(f"❌ Error connecting to Google Sheets: {e}")
+        st.markdown(
+            """
+            <div style="padding:1em; border-radius:10px; background:linear-gradient(135deg, #FF512F, #DD2476); color:white; font-size:16px; text-align:center;">
+                🎬 "Ache chizo me time lagta hai...<br>
+                🔄 Thoda intezaar karo, phir se try karo!"
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
         return None
+
     
 @st.cache_data(ttl=65)  # Cache for 5 mins
 def load_sheet_as_df(sheet_name, spreadsheet_id=SPREADSHEET_ID):

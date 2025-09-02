@@ -23,9 +23,9 @@ def get_gsheet_connection():
     except Exception as e:
         st.markdown(
             """
-            <div style="padding:1em; border-radius:10px; background:linear-gradient(135deg, #FF512F, #DD2476); color:white; font-size:16px; text-align:center;">
-                🎬 "Ache chizo me time lagta hai...<br>
-                🔄 Thoda intezaar karo, phir se try karo!"
+            <div style="padding:1em; border-radius:10px; background:linear-gradient(135deg, #FF6B6B, #FFB88C); color:white; font-size:16px; text-align:center;">
+                ❌ Unable to connect to Google Sheets.<br>
+                🔄 Please try again in a moment.
             </div>
             """,
             unsafe_allow_html=True
@@ -161,10 +161,19 @@ def sheet_exists(sheet_name):
         spreadsheet = client.open_by_key(SPREADSHEET_ID)
         worksheets = spreadsheet.worksheets()
         return any(ws.title.strip().lower() == sheet_name.strip().lower() for ws in worksheets)
-    except Exception as e:
-        st.warning(f"⚠ Could not check sheet existence: {e}")
+    except Exception:
+        st.markdown(
+            """
+            <div style="padding:1em; border-radius:10px;
+                        background:linear-gradient(135deg, #FF512F, #DD2476);
+                        color:white; font-size:16px; text-align:center;">
+                🎬 "Mogambo khush nahi hua... quota khatam ho gaya!" <br>
+                🔄 Try again in a bit (Kaunsa tujhe panvel jana hai).
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
         return False
-
 
 # =========================
 # TEAMS & POINTS FUNCTIONS

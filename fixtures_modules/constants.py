@@ -387,7 +387,7 @@ BONUS_CARDS = {
         {
             "Sr": 1,
             "Event": "Chess",
-            "Card": "Piece Revival",
+            "Card": "Meri Marzi",
             "Description": "Choose the game type from the available options.",
             "When it should be called": "Before the Match",
             "When it cannot be active": "",

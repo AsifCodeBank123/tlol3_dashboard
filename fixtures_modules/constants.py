@@ -388,11 +388,31 @@ BONUS_CARDS = {
             "Sr": 1,
             "Event": "Chess",
             "Card": "Piece Revival",
-            "Description": "1 piece will be revived automatically if dead without touching the opponent's line.",
-            "When it should be called": "During the match",
+            "Description": "Choose the game type from the available options.",
+            "When it should be called": "Before the Match",
             "When it cannot be active": "",
-            "Team Restrictions": "Once in Semis and Finals"
-        }
+            "Team Restrictions": "Once per Tournament (Each Player)"
+        },
+
+        {
+            "Sr": 2,
+            "Event": "Chess",
+            "Card": "Galti Se Mistake",
+            "Description": "Rewind your own last move and play a different move instead. Can’t be used to undo a checkmate or stalemate.",
+            "When it should be called": "During the match",
+            "When it cannot be active": "Before the final move resulting in Checkmate",
+            "Team Restrictions": "Once in a Match"
+        },
+
+        {
+            "Sr": 3,
+            "Event": "Chess",
+            "Card": "Kal Ho Naa Ho",
+            "Description": "Use your team’s 30-minute time budget to add 1–2 (eg)minutes in any game (max 30 mins across rounds). Time can be added just once per game.",
+            "When it should be called": "During the match or Moderater will ask before 1 min mark once",
+            "When it cannot be active": "Before 1 min mark (Pending 1 Min)",
+            "Team Restrictions": "Once in a Match"
+        },
     ]
 }
 
@@ -430,10 +450,10 @@ sports_schedule = {
             "type": "Online Game",
             "location": "Airoli",
             "format": "Singles",
-            "from": "Wednesday, August 20, 2025",
+            "from": "Wednesday, September 3, 2025",
             "to": "Thursday, September 11, 2025",
             "event_head": "Arijit Ghosh",
-            "event_coord": "TBD",
+            "event_coord": "Pritesh Menon",
             "icon": "https://img.icons8.com/?size=100&id=1uCVxPabLUk0&format=png&color=000000"
         }
     ],
@@ -472,7 +492,7 @@ sports_schedule = {
             "from": "Friday, October 10, 2025",
             "to": "Friday, October 10, 2025",
             "event_head": "Wilfred Dsilva",
-            "event_coord": "Vishal Dubey",
+            "event_coord": "Somansh Datta",
             "icon": "https://img.icons8.com/?size=100&id=Efof68tuPEwj&format=png&color=000000"
         }
     ],

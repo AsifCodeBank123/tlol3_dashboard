@@ -18,3 +18,43 @@ TEAM_COLORS = {
     "Dabangg Dynamos": "#E6F4EA",
     "Rockstar Rebels": "#F3E5F5"
 }
+
+# Compact ticker (as you set)
+ticker_messages = [
+    "📢 Bigul baj chuka hai – khel abhi garam hai!",
+    "📊 Leaderboard mein uthal-puthal shuru ho chuki hai!",
+    "🔥 Mehnat karo, haar mat maano – har point ki keemat hai!",
+    "🏆 Winners aa rahe ek ke baad ek – asli daud abhi shuru hai!"
+]
+
+# Winners by sport and stage
+# Each entry: {"match": "Match 1", "winner": "Bijal", "team": "Rockstar Rebels"}
+winners_by_sport_stage = {
+    "Chess": {
+        "Group Stage Winners": [
+            {"match": "Match 12", "winner": "Bijal", "team": "Dabangg Dynamos"},
+            {"match": "Match 4", "winner": "Jincy", "team": "Rockstar Rebels"},
+            
+           
+         
+            # add more...
+        ],
+        "Quarterfinal Winners": [
+            
+        ],
+        "Semifinals": [],
+        "Final": []
+    },
+    "Carrom": {
+        "Group Stages": [],
+        "Quarterfinals": [],
+        "Semifinals": [],
+        "Final": []
+    },
+    "Badminton": {
+        "Group Stages": [],
+        "Quarterfinals": [],
+        "Semifinals": [],
+        "Final": []
+    }
+}

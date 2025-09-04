@@ -2,8 +2,7 @@ import streamlit as st
 import os
 import pandas as pd
 import base64
-import html
-import math
+from utils.constants import ticker_messages, winners_by_sport_stage
 from fixtures_modules.constants import sports_schedule
 
 def load_global_styles():
@@ -48,35 +47,10 @@ def render():
     unsafe_allow_html=True
 )
 
-    # Ticker messages
-    ticker_messages = [
-    "🏆 4 Teams • 7 Games • 1 Trophy – The Clash of Legends Begins! 🔥",
-    "⚔️ Agni Pariksha of Skills – Only the Bold Will Rule the Field!",
-    "🔥 Yeh Sirf Game Nahi, Yeh Hai Office ka MahaKumbh!",
-    "⏳ Countdown Begins – 4 Teams, 7 Games, Sirf Ek Champion!",
-    "🎯 Clash of Legends – Jeetega Wahi Jo Dega Sabse Zyada!",
-    "💥 7 Games, 4 Teams, 1 Trophy – Baazi Lagao, Dil Jeeto!",
-    "🚀 Agni Pariksha Mode: ON – Time to Prove Your Mettle!",
-    "🌟 Legends Aren’t Born, They’re Made on the Battlefield!",
-    "⚡ Har Game Ek Jung – 7 Chances to Become a Legend!",
-    "🎭 Drama, Action & Glory – Office Sports ka Blockbuster!",
-    "🔥 4 Teams in a Battle Royale – Only One Will Lift the Trophy!",
-    "💪 7 Games of Pure Skill – Agni Pariksha Shuru!",
-    "🎯 Apni Team ko Banaye Legend – 4 Teams, Ek Sapna!",
-    "🏆 7 Rounds • 4 Teams • 1 Champion – Are You Ready?",
-    "⚔️ The Countdown Ends When Legends Rise!",
-    "🔥 Yeh Trophy Har Kisi ke Bas ki Baat Nahi!",
-    "🚀 Sirf Ek Trophy – Lekin 4 Teams Ki Khwahish Ek Jaise!",
-    "🌟 The Clash of Legends: Where Heroes Are Forged!",
-    "💥 Ab Khel Mein Hoga Sirf Action, No Distraction!",
-    "⚡ 4 Teams ka Sapna, 7 Games ka Safar, 1 Office Champion!"
-]
-
     # Join into one scrolling string
     ticker_text = "  ".join(ticker_messages)
 
     st.markdown(f"""<div class="live-ticker"><span>{ticker_text}</span><span>{ticker_text}</span></div>""", unsafe_allow_html=True)
-
 
     ## Top-right button
     col1, col2 = st.columns([0.85, 0.15])
@@ -123,6 +97,52 @@ def render():
         </div>
     """, unsafe_allow_html=True)
     st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
+
+    # ===== Sports & Stage-wise Winners (NEW – right after Title) =====
+    #st.markdown("<div class='winners-section'>", unsafe_allow_html=True)
+    st.markdown("<div class='winners-title'>🏅 Live Winners • Sport & Stage-wise</div>", unsafe_allow_html=True)
+
+    # Tabs per sport
+    sport_names = list(winners_by_sport_stage.keys())
+    if sport_names:
+        tabs = st.tabs([f"🏟️ {name}" for name in sport_names])
+        for tab, sport in zip(tabs, sport_names):
+            with tab:
+                stages = winners_by_sport_stage.get(sport, {})
+                for stage_name, results in stages.items():
+                    if not results:
+                        continue
+
+                    # each stage inside its own expander
+                    with st.expander(f"🎯 {stage_name}", expanded=False):   # set expanded=False if you want them collapsed by default
+                        st.markdown("<div class='stage-block'>", unsafe_allow_html=True)
+                        #st.markdown(f"<div class='stage-title'>🎯 {stage_name}</div>", unsafe_allow_html=True)
+                        
+                        # Build clean, non-indented HTML (no leading spaces/newlines)
+                        card_chunks = []
+                        for rec in results:
+                            match = rec.get("match", "")
+                            winner = rec.get("winner", "")
+                            team = rec.get("team", "")
+
+                            card_chunks.append(
+                                f'<div class="winner-card">'
+                                f'  <div class="winner-topline">♟️ {sport} • {match}</div>'
+                                f'  <div class="winner-name">{winner}</div>'
+                                f'  <div class="badge-team">{team}</div>'
+                                f'</div>'
+                            )
+
+                        grid_html = '<div class="winners-grid">' + "".join(card_chunks) + '</div>'
+                        st.markdown(grid_html, unsafe_allow_html=True)
+
+                    st.markdown("</div>", unsafe_allow_html=True)  # close stage-block
+
+
+    else:
+        st.info("No winners to show yet. Keep an eye on this space!")
+
+    st.markdown("</div>", unsafe_allow_html=True)  # close winners-section
 
     # --- Hamare Kaptaans ---
     st.markdown("<div class='shared-section-title'>👨‍✈ Hamare Kaptaans</div>", unsafe_allow_html=True)

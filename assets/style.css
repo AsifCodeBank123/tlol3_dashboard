@@ -973,3 +973,207 @@ section[data-testid="stSidebar"] button:active {
     color: #c62828;
 }
 
+
+/* =========================
+   Winners (opaque, bold)
+   ========================= */
+
+/* keep your existing winners title/section markup unchanged */
+.winners-section {
+  margin: 12px auto 24px;
+  padding: 14px 16px 8px;
+  background: #0b1220;                 /* solid background */
+  border: 2px solid #ffcc00;           /* gold accent */
+  border-radius: 18px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.45);
+}
+
+.winners-title {
+  font-size: 28px;
+  font-weight: 900;
+  text-align: center;
+  margin: 10px 0 16px;
+  color: #ffcc00; /* solid gold */
+  text-shadow:
+    0 2px 6px rgba(0,0,0,0.5),
+    0 0 18px rgba(255,204,0,0.28); /* soft glow */
+  letter-spacing: 1px;
+  position: relative;
+}
+
+.winners-title::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 3px;
+  margin: 8px auto 0;
+  background: linear-gradient(90deg, #ffe071, #ffcc00, #ffd84d);
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(255,204,0,0.35);
+}
+
+/* optional subtle shine sweep on the underline */
+.winners-title::after {
+  position: relative;
+  overflow: hidden;
+}
+.winners-title::after:before {
+  content: "";
+  position: absolute;
+  top: -1px; left: -80px; width: 60px; height: 5px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.85), transparent);
+  filter: blur(1px);
+  animation: underline-shine 2.8s linear infinite;
+}
+@keyframes underline-shine {
+  from { transform: translateX(0); }
+  to   { transform: translateX(180px); }
+}
+
+
+/* stage title spacing stays the same */
+.stage-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #e9edf5;
+  margin: 16px 0 10px;
+}
+.stage-title::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: #ffcc00;
+  box-shadow: 0 0 0 3px rgba(255,204,0,0.15);
+}
+
+/* each stage block stacks as a column */
+.stage-block {
+  margin-bottom: 20px;   /* spacing between stages */
+}
+
+/* winners grid inside a stage: single horizontal row */
+.winners-grid {
+  display: flex;
+  flex-direction: row;   /* force horizontal alignment */
+  gap: 14px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 6px 2px 12px;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  border-radius: 12px;
+}
+.winners-grid::-webkit-scrollbar { height: 8px; }
+.winners-grid::-webkit-scrollbar-track { background: #0f172a; border-radius: 999px; }
+.winners-grid::-webkit-scrollbar-thumb { background: #27324a; border-radius: 999px; }
+
+/* winner cards: solid, punchy */
+.winner-card {
+  flex: 0 0 auto;
+  width: 150px;                         /* 220–300 works; tweak if needed */
+  border-radius: 16px;
+  background: linear-gradient(145deg, #111a2e 0%, #0d1628 100%); /* dark, opaque */
+  border: 1px solid #22304f;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+  padding: 14px;
+  scroll-snap-align: start;
+  position: relative;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+/* thin gold accent bar */
+.winner-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  right: 0; height: 3px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  background: linear-gradient(90deg, #ffcc00, #ffe071);
+}
+
+.winner-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 26px rgba(0,0,0,0.55);
+  border-color: #2e3d63;
+}
+
+/* text styles inside card */
+.winner-topline {
+  font-size: 13px;
+  letter-spacing: .3px;
+  color: #b8c3da;
+  margin-bottom: 6px;
+}
+
+.winner-name {
+  font-size: 19px;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.25;
+}
+
+/* team pill */
+.badge-team {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  margin-top: 10px;
+  color: #0b1220;
+  background: #ffcc00;                 /* solid gold */
+  border-radius: 999px;
+  border: 1px solid #e1b700;
+}
+
+/* small screens: slightly narrower cards */
+@media (max-width: 400px) {
+  .winner-card { width: 200px; }
+}
+
+/* =========================
+   Sports Tabs Styling
+   ========================= */
+
+/* tab container */
+.stTabs [role="tablist"] {
+  border-bottom: 2px solid #ffcc00;   /* gold underline for whole bar */
+  gap: 10px;
+  justify-content: center;            /* center align the tabs */
+  margin-bottom: 14px;
+}
+
+/* individual tab button */
+.stTabs [role="tab"] {
+  padding: 8px 18px;
+  border-radius: 20px 20px 0 0;
+  background: #0d1628;                 /* solid dark */
+  color: #b8c3da;
+  font-weight: 600;
+  font-size: 15px;
+  border: 1px solid #22304f;
+  border-bottom: none;                 /* merge with active underline */
+  transition: all 0.2s ease;
+}
+
+/* hover effect */
+.stTabs [role="tab"]:hover {
+  background: #111a2e;
+  color: #ffffff;
+  border-color: #2e3d63;
+}
+
+/* active tab */
+.stTabs [aria-selected="true"] {
+  background: linear-gradient(145deg, #ffcc00, #ffe071);
+  color: #0b1220 !important;           /* dark text on gold */
+  font-weight: 700;
+  border: 1px solid #e1b700;
+  border-bottom: none;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.35);
+}
+

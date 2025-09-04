@@ -1171,9 +1171,16 @@ section[data-testid="stSidebar"] button:active {
 .stTabs [role="tablist"] {
   border-bottom: 2px solid #ffcc00;   /* gold underline for whole bar */
   gap: 10px;
-  justify-content: center;            /* center align the tabs */
+  justify-content: flex-start;        /* left align so first tab shows */
   margin-bottom: 14px;
+
+  overflow-x: auto;                   /* allow side scroll */
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;              /* hide scrollbar (Firefox) */
 }
+.stTabs [role="tablist"]::-webkit-scrollbar { display: none; } /* hide scrollbar (Chrome/Safari) */
+
 
 /* individual tab button */
 .stTabs [role="tab"] {

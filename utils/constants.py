@@ -34,6 +34,9 @@ winners_by_sport_stage = {
         "Group Stage Winners": [
             {"match": "Match 12", "winner": "Bijal", "team": "Dabangg Dynamos"},
             {"match": "Match 4", "winner": "Jincy", "team": "Rockstar Rebels"},
+            {"match": "Match 7", "winner": "Rachita", "team": "Dabangg Dynamos"},
+            {"match": "Match 1", "winner": "Amit", "team": "Dabangg Dynamos"},
+            
             
            
          

@@ -1177,3 +1177,166 @@ section[data-testid="stSidebar"] button:active {
   box-shadow: 0 -2px 6px rgba(0,0,0,0.35);
 }
 
+
+/* =========================
+   Wall of Fame Gallery
+   ========================= */
+
+.wof-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 18px;
+  margin: 20px 0 30px;
+}
+
+.wof-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid #ffcc00;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.45);
+  background: #0b1220;
+  min-height: 180px;
+  
+}
+
+.wof-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.8);
+}
+
+.wof-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11,18,32,0.85) 0%, rgba(11,18,32,0.5) 60%, rgba(11,18,32,0.3) 100%);
+}
+
+.wof-content {
+  position: relative;
+  padding: 14px;
+  text-align: center;
+  color: #fff;
+}
+
+.wof-sport-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffcc00;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.wof-title {
+  font-size: 18px;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+
+.wof-line-main {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.wof-line-sub {
+  font-size: 12px;
+  color: #c7d2e1;
+}
+
+/* ===== Wall of Fame: tasty effects ===== */
+
+/* 1) smooth motion defaults (and respect reduced motion) */
+:root { --wof-zoom: 1.06; --wof-glow: 0 14px 28px rgba(255,204,0,0.20); }
+@media (prefers-reduced-motion: reduce) {
+  .wof-card, .wof-bg, .wof-badge, .wof-overlay { transition: none !important; animation: none !important; }
+}
+
+/* 2) base transitions */
+.wof-card {
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  isolation: isolate; /* keep overlays contained */
+}
+.wof-bg { transition: transform 6s ease; } /* slow zoom */
+.wof-overlay { transition: background .25s ease, opacity .25s ease; }
+
+/* 3) hover lift + gold glow + subtle border tint */
+.wof-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--wof-glow), 0 18px 38px rgba(0,0,0,0.55);
+  border-color: #ffe071;
+}
+
+/* 4) slow Ken Burns zoom on bg */
+.wof-card:hover .wof-bg { transform: scale(var(--wof-zoom)); }
+
+/* 5) darker overlay on hover for readability */
+.wof-card:hover .wof-overlay {
+  background: linear-gradient(180deg, rgba(11,18,32,0.92) 0%, rgba(11,18,32,0.6) 60%, rgba(11,18,32,0.4) 100%);
+}
+
+/* 6) animated border sheen (subtle) */
+.wof-card::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  background: linear-gradient(120deg, rgba(255,224,113,0.0) 0%, rgba(255,224,113,0.35) 50%, rgba(255,224,113,0.0) 100%);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity .25s ease;
+  pointer-events: none;
+}
+.wof-card:hover::after { opacity: 1; }
+
+/* 7) badge shine sweep */
+.wof-badge {
+  position: relative;
+  overflow: hidden;
+}
+.wof-badge::after {
+  content: "";
+  position: absolute;
+  top: 0; left: -120%;
+  width: 120%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+  transform: skewX(-20deg);
+  filter: blur(2px);
+  opacity: 0.0;
+}
+.wof-card:hover .wof-badge::after {
+  animation: badge-sheen 1.8s ease forwards;
+}
+@keyframes badge-sheen {
+  0%   { left: -120%; opacity: 0; }
+  40%  { opacity: .75; }
+  100% { left: 120%; opacity: 0; }
+}
+
+/* 8) gentle text rise on hover */
+.wof-card:hover .wof-line-main { transform: translateY(-1px); }
+.wof-card:hover .wof-title     { transform: translateY(-1px); }
+.wof-title, .wof-line-main { transition: transform .25s ease; }
+
+/* 9) optional sparkle (very light, not flashy) */
+.wof-card .wof-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(rgba(255,255,255,0.17) 1px, transparent 1px),
+    radial-gradient(rgba(255,224,113,0.15) 1px, transparent 1px);
+  background-size: 80px 80px, 120px 120px;
+  background-position: 10px 20px, 40px 60px;
+  opacity: .15;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* 10) crisper sport label */
+.wof-sport-label {
+  letter-spacing: .7px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.45);
+}

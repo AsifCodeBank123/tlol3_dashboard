@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import pandas as pd
 import base64
-from utils.constants import ticker_messages, winners_by_sport_stage
+from utils.constants import ticker_messages, winners_by_sport_stage, wall_of_fame
 from fixtures_modules.constants import sports_schedule
 
 def load_global_styles():
@@ -98,6 +98,47 @@ def render():
     """, unsafe_allow_html=True)
     st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
 
+    st.markdown("<div class='winners-title'>🌟 Wall of Fame</div>", unsafe_allow_html=True)
+
+    card_chunks = []
+    for sport, wof in wall_of_fame.items():
+        # image
+        wof_img_b64 = ""
+        img_path = wof.get("image")
+        if img_path and os.path.exists(img_path):
+            wof_img_b64 = get_base64_image(img_path)
+
+        # cricket shows team, others show winner
+        is_cricket = sport.lower() == "cricket"
+        if is_cricket:
+            main_line = (wof.get("team") or "TBD").strip()
+            sub_line = "Final • Team Champion"
+        else:
+            main_line = (wof.get("winner") or "TBD").strip()
+            sub_line = f"Final • {wof.get('team')}" if wof.get("team") else "Final"
+
+        bg_style = f'style="background-image:url({wof_img_b64});"' if wof_img_b64 else ""
+
+        # ⬇️ no leading spaces/newlines
+        card_chunks.append(
+            f'<div class="wof-card">'
+            f'  <div class="wof-bg" {bg_style}></div>'
+            f'  <div class="wof-overlay"></div>'
+            f'  <div class="wof-content">'
+            f'    <div class="wof-sport-label">{sport}</div>'
+            f'    <div class="wof-title">{wof.get("title","🏅 Champion")}</div>'
+            f'    <div class="wof-line-main">{main_line}</div>'
+            f'    <div class="wof-line-sub">{sub_line}</div>'
+            f'  </div>'
+            f'</div>'
+        )
+
+    gallery_html = '<div class="wof-gallery">' + "".join(card_chunks) + '</div>'
+    st.markdown(gallery_html, unsafe_allow_html=True)
+
+    st.markdown("</div>", unsafe_allow_html=True)  # close winners-section
+
+
     # ===== Sports & Stage-wise Winners (NEW – right after Title) =====
     #st.markdown("<div class='winners-section'>", unsafe_allow_html=True)
     st.markdown("<div class='winners-title'>🏅 Live Winners • Sport & Stage-wise</div>", unsafe_allow_html=True)
@@ -105,7 +146,7 @@ def render():
     # Tabs per sport
     sport_names = list(winners_by_sport_stage.keys())
     if sport_names:
-        tabs = st.tabs([f"🏟️ {name}" for name in sport_names])
+        tabs = st.tabs([f"💪 {name}" for name in sport_names])
         for tab, sport in zip(tabs, sport_names):
             with tab:
                 stages = winners_by_sport_stage.get(sport, {})

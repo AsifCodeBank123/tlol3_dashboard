@@ -59,5 +59,60 @@ winners_by_sport_stage = {
         "Quarterfinals": [],
         "Semifinals": [],
         "Final": []
+   
+    },
+    "Foosball": {
+        "Group Stages": [],
+        "Quarterfinals": [],
+        "Semifinals": [],
+        "Final": []
+    },
+    "Table Tennis": {
+        "Group Stages": [],
+        "Quarterfinals": [],
+        "Semifinals": [],
+        "Final": []
     }
+}
+
+# Wall of Fame: per sport (final winners)
+# For individual sports, use 'winner'. For Cricket, use 'team'.
+wall_of_fame = {
+    "Chess": {
+        "title": "♟️ Chess Master",
+        "image": "assets/chess.jpg",
+        "winner": "",      # e.g., "Bijal"
+        "team": ""  # optional
+    },
+    "Carrom": {
+        "title": "🎯 Carrom King",
+        "image": "assets/carrom.jpg",
+        "winner": "",
+        "team": ""
+    },
+    "Foosball": {
+        "title": "⚽ Foosball Ace",
+        "image": "assets/foosball.jpg",
+        "winner": "",
+        "team": ""
+    },
+    "Badminton": {
+        "title": "🏸 Smash Legend",
+        "image": "assets/badminton.jpg",
+        "winner": "",
+        "team": ""
+    },
+    "Table Tennis": {
+        "title": "🏓 TT Maestro",
+        "image": "assets/tt.jpg",
+        "winner": "",
+        "team": ""
+    },
+    "Cricket": {
+        "title": "🏏 Cricket Champion",
+        "image": "assets/cricket.jpg",
+        "winner": "",
+        "team": ""
+    },
+    
 }

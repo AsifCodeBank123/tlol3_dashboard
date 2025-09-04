@@ -23,7 +23,6 @@ TEAM_COLORS = {
 ticker_messages = [
     "📢 Bigul baj chuka hai – khel abhi garam hai!",
     "📊 Leaderboard mein uthal-puthal shuru ho chuki hai!",
-    "🔥 Mehnat karo, haar mat maano – har point ki keemat hai!",
     "🏆 Winners aa rahe ek ke baad ek – asli daud abhi shuru hai!"
 ]
 
@@ -36,10 +35,8 @@ winners_by_sport_stage = {
             {"match": "Match 4", "winner": "Jincy", "team": "Rockstar Rebels"},
             {"match": "Match 7", "winner": "Rachita", "team": "Dabangg Dynamos"},
             {"match": "Match 1", "winner": "Amit", "team": "Dabangg Dynamos"},
+            {"match": "Match 5", "winner": "Lalit", "team": "Dabangg Dynamos"},
             
-            
-           
-         
             # add more...
         ],
         "Quarterfinal Winners": [
@@ -85,25 +82,25 @@ wall_of_fame = {
         "team": ""  # optional
     },
     "Carrom": {
-        "title": "🎯 Carrom King",
+        "title": "🎯 Carrom Kings",
         "image": "assets/carrom.jpg",
         "winner": "",
         "team": ""
     },
     "Foosball": {
-        "title": "⚽ Foosball Ace",
+        "title": "⚽ Foosball Aces",
         "image": "assets/foosball.jpg",
         "winner": "",
         "team": ""
     },
     "Badminton": {
-        "title": "🏸 Smash Legend",
+        "title": "🏸 Smash Legends",
         "image": "assets/badminton.jpg",
         "winner": "",
         "team": ""
     },
     "Table Tennis": {
-        "title": "🏓 TT Maestro",
+        "title": "🏓 TT Maestros",
         "image": "assets/tt.jpg",
         "winner": "",
         "team": ""

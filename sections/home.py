@@ -38,7 +38,7 @@ def render():
 
     st.markdown(
     """
-    <div style="text-align: center; margin-top: 5px; margin-bottom: 20px;">
+    <div style="text-align: center; margin-top: -50px; margin-bottom: 3px;">
         <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fgithub.com%2FAsifCodeBank123%2Ftlol3_dashboard">
             <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FAsifCodeBank123%2Ftlol3_dashboard&label=LEGENDS%20VISITED&countColor=%23263759" />
         </a>
@@ -54,38 +54,61 @@ def render():
 
     ## Top-right button
     col1, col2 = st.columns([0.85, 0.15])
+
     with col2:
-        st.markdown('<div class="leaderboard-button">', unsafe_allow_html=True)
         if st.button("📊 Leaderboard is Live", key="leaderboard_live"):
-            st.session_state.active_section = "Kismein Kitna Hai Dum (Leaderboard)"
-            st.rerun()
-        st.markdown('</div>', unsafe_allow_html=True)
+            if st.session_state.get("active_section") != "Kismein Kitna Hai Dum (Leaderboard)":
+                st.session_state.active_section = "Kismein Kitna Hai Dum (Leaderboard)"
+                st.rerun()
+
+        # inline style override
+    st.markdown("""
+        <style>
+        :root .stApp .block-container .stButton > button {
+        background: linear-gradient(135deg, #ffcc00, #ffe071) !important;
+        color: #0b1220 !important;
+        font-weight: 900 !important;
+        font-size: 15px !important;
+        border: none !important;
+        border-radius: 999px !important;   /* capsule */
+        padding: 10px 22px !important;
+        white-space: nowrap !important;
+        cursor: pointer !important;
+        margin: 10px auto auto 0px;   /* <-- push -40px left */
+
+        box-shadow: 0 6px 14px rgba(0,0,0,0.4) !important;
+        transition: transform .2s ease, box-shadow .2s ease !important;
+
+        animation: leaderboard-pulse 2.5s infinite;
+        }
+
+        :root .stApp .block-container .stButton > button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 22px rgba(255,204,0,0.75),
+                    0 0 12px rgba(255,204,0,0.4);
+        }
+
+        :root .stApp .block-container .stButton > button:active {
+        transform: translateY(0) scale(0.96);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+
+        @keyframes leaderboard-pulse {
+        0%   { box-shadow: 0 0 0 rgba(255,204,0,0.35); }
+        50%  { box-shadow: 0 0 20px rgba(255,204,0,0.85); }
+        100% { box-shadow: 0 0 0 rgba(255,204,0,0.35); }
+        }
+        </style>
+        """, unsafe_allow_html=True)
 
 
     # Title
     st.markdown("""
         <div style='text-align:center; padding-top: 10px;'>
-            <h1 style='
-                font-family: "Impact", "Copperplate", sans-serif;
-                font-size: 64px;
-                color: #ffcc00;
-                text-shadow: 3px 3px 5px #000;
-                letter-spacing: 2px;'>
-                🎬 TCOE League of Legends 3
+            <h1 class="main-title">
+            🎬 TCOE League of Legends <span class="season-number">3</span>
             </h1>
             <!--
-            <marquee scrollamount="8" direction="left" style='
-                font-family: "Dancing Script","Great Vibes",cursive;
-                font-size: 22px;
-                color: #fffbe7;
-                background: rgba(0,0,0,0.45);
-                border-radius:14px;
-                padding: 8px 0; 
-                margin-bottom:8px;
-                letter-spacing: 1.5px;
-                width:98%; display: block; margin-left:auto; margin-right:auto;'>
-                💥 Breaking: Welcome to TCOE League of Legends Season 3! Prepare for epic showdowns, iconic players & bollywood drama. Stay tuned for daily updates & team rankings! 🔥
-            </marquee> -->
             <p style='
                 font-family: "Brush Script MT", cursive;
                 font-size: 28px;
@@ -99,6 +122,20 @@ def render():
     st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
 
     st.markdown("<div class='winners-title'>🌟 Wall of Fame</div>", unsafe_allow_html=True)
+    st.markdown(
+    """
+    <p style='text-align:center;
+              font-size:30px;
+              font-style:italic;
+              color:#ffcc00;
+              margin-top:-6px;
+              margin-bottom:14px;
+              text-shadow:0 1px 3px rgba(0,0,0,0.6);'>
+        Are you the next?
+    </p>
+    """,
+    unsafe_allow_html=True
+)
 
     card_chunks = []
     for sport, wof in wall_of_fame.items():
@@ -138,9 +175,11 @@ def render():
 
     st.markdown("</div>", unsafe_allow_html=True)  # close winners-section
 
+    #st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
+
 
     # ===== Sports & Stage-wise Winners (NEW – right after Title) =====
-    #st.markdown("<div class='winners-section'>", unsafe_allow_html=True)
+    st.markdown("<div class='winners-section'>", unsafe_allow_html=True)
     st.markdown("<div class='winners-title'>🏅 Live Winners • Sport & Stage-wise</div>", unsafe_allow_html=True)
 
     # Tabs per sport
@@ -184,6 +223,7 @@ def render():
         st.info("No winners to show yet. Keep an eye on this space!")
 
     st.markdown("</div>", unsafe_allow_html=True)  # close winners-section
+    st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
 
     # --- Hamare Kaptaans ---
     st.markdown("<div class='shared-section-title'>👨‍✈ Hamare Kaptaans</div>", unsafe_allow_html=True)

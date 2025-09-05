@@ -21,9 +21,15 @@ TEAM_COLORS = {
 
 # Compact ticker (as you set)
 ticker_messages = [
-    "📢 Bigul baj chuka hai – khel abhi garam hai!",
-    "📊 Leaderboard mein uthal-puthal shuru ho chuki hai!",
-    "🏆 Winners aa rahe ek ke baad ek – asli daud abhi shuru hai!"
+    "♟️ Chess battles heating up – Raja ko checkmate karna easy nahi!",
+    "🎯 Carrom striker shots flying – Queen pakadne ki race on!",
+    "⚽ Foosball warriors in full attack – Ab leaderboard hilne wala hai!",
+    "🏸 Badminton smashes everywhere – Rally abhi khatam nahi hui!",
+    "🏓 Table Tennis spins & smashes – Khel mein asli tadka yahin hai!",
+    "🏏 Cricket runs raining hard – Jeet ka maza tabhi jab fight ho josh mein!",
+    "📊 Leaderboard shuffle nonstop – Kabhi tum upar, kabhi main neeche!",
+    "💪 Winners never give up – Haar bhi ek nayi seekh hai!",
+    "🏆 Celebrate every win with grace – Haar ko bhi izzat dena zaroori hai!"
 ]
 
 # Winners by sport and stage

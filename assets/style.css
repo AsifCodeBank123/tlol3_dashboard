@@ -18,7 +18,7 @@
   border-radius: 8px;
   margin-left: 6px;
   text-shadow: none;
-  font-size: 1.1em;
+  font-size: 0.8em;
   vertical-align: middle;
   box-shadow: 0 2px 6px rgba(0,0,0,0.4);
 }
@@ -98,10 +98,31 @@
 }
 
 .team-box.winner {
-  background: linear-gradient(145deg, rgba(0, 255, 120, 0.25), rgba(255, 255, 255, 0.1));
+  background: linear-gradient(
+    145deg,
+    rgba(0, 255, 120, 0.25),
+    rgba(255, 255, 255, 0.1)
+  );
   border: 1.5px solid rgba(0, 255, 120, 0.6);
   box-shadow: 0 0 12px rgba(0, 255, 120, 0.5);
+  position: relative;
+  transition: transform .2s ease, box-shadow .2s ease;
+
+  /* 👇 pulsing glow */
+  animation: winnerPulse 2.1s infinite;
 }
+
+@keyframes winnerPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(0, 255, 120, 0.6); }
+  50%  { box-shadow: 0 0 20px 8px rgba(0, 255, 120, 0.25); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 255, 120, 0); }
+}
+
+/* optional hover lift (keeps pulsing) */
+.team-box.winner:hover {
+  transform: translateY(-3px) scale(1.02);
+}
+
 
 /* ======== Team Content ======== */
 .team-box img {
@@ -1102,7 +1123,7 @@ section[data-testid="stSidebar"] button:active {
 /* winner cards: solid, punchy */
 .winner-card {
   flex: 0 0 auto;
-  width: 150px;                         /* 220–300 works; tweak if needed */
+  width: 170px;                         /* 220–300 works; tweak if needed */
   border-radius: 16px;
   background: linear-gradient(145deg, #111a2e 0%, #0d1628 100%); /* dark, opaque */
   border: 1px solid #22304f;
@@ -1111,6 +1132,7 @@ section[data-testid="stSidebar"] button:active {
   scroll-snap-align: start;
   position: relative;
   transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  text-align: center; 
 }
 
 /* thin gold accent bar */
@@ -1142,6 +1164,7 @@ section[data-testid="stSidebar"] button:active {
   font-size: 19px;
   font-weight: 900;
   color: #ffffff;
+  
   line-height: 1.25;
 }
 

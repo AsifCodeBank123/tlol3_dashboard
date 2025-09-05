@@ -207,7 +207,7 @@ def render():
 
                             card_chunks.append(
                                 f'<div class="winner-card">'
-                                f'  <div class="winner-topline">♟️ {sport} • {match}</div>'
+                                f'  <div class="winner-topline">🏆 {sport} • {match}</div>'
                                 f'  <div class="winner-name">{winner}</div>'
                                 f'  <div class="badge-team">{team}</div>'
                                 f'</div>'

@@ -11,8 +11,7 @@ def encode_image(path):
 
 def build_card_html(title, team1, players1, team2, players2,
                     team1_logo, team2_logo,
-                    result1="", result2="",
-                    has_voted=False, voted_abbr=None):
+                    result1="", result2=""):
 
     # Team abbreviations
     abbr1 = TEAM_ABBR.get(team1.strip().replace(" 🏆", ""), team1[:2].upper())

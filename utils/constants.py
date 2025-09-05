@@ -42,6 +42,8 @@ winners_by_sport_stage = {
             {"match": "Match 7", "winner": "Rachita", "team": "Dabangg Dynamos"},
             {"match": "Match 1", "winner": "Amit", "team": "Dabangg Dynamos"},
             {"match": "Match 5", "winner": "Lalit", "team": "Dabangg Dynamos"},
+            {"match": "Match 6", "winner": "Johnson", "team": "Rockstar Rebels"},
+            {"match": "Match 13", "winner": "Saurabh", "team": "Badshah Blasters"},
             
             # add more...
         ],

@@ -1399,3 +1399,101 @@ section[data-testid="stSidebar"] button:active {
   text-shadow: 0 1px 2px rgba(0,0,0,0.45);
 }
 
+/* Player grid: 7 per row */
+.player-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin: 8px 0 16px;
+  align-items: stretch;
+}
+
+/* responsive breakpoints */
+@media (max-width: 1200px) { .player-grid { grid-template-columns: repeat(5, 1fr); } }
+@media (max-width: 900px)  { .player-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 600px)  { .player-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* player box base */
+.player-box {
+  border-radius: 8px;
+  padding: 8px 10px;
+  min-height: 72px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: transform .14s ease, box-shadow .14s ease;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* Alive: strong green card */
+.player-box.alive {
+  background: linear-gradient(135deg, #00c853 0%, #00e676 100%);
+  border: 1px solid rgba(0,200,83,0.9);
+  box-shadow: 0 8px 18px rgba(0,200,83,0.12);
+  color: #04220b;
+}
+.player-box.alive:hover { transform: translateY(-6px); box-shadow: 0 16px 36px rgba(0,200,83,0.18); }
+
+/* Eliminated: black / dark */
+.player-box.eliminated {
+  background: #0a0a0a;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: none;
+  color: #ffffff;
+}
+
+/* Not Played: muted dark grey */
+.player-box.not_played {
+  background: #121212;
+  border: 1px solid rgba(255,255,255,0.03);
+  color: rgba(255,255,255,0.7);
+}
+
+/* Strike & lighter for eliminated name */
+.player-box.not_played .player-name {
+  color: rgba(247, 244, 244, 0.7);
+}
+
+/* Player text */
+.player-name {
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.1;
+  margin-bottom: 4px;
+  word-break: break-word;
+}
+
+/* Strike & lighter for eliminated name */
+.player-box.eliminated .player-name {
+  color: rgba(247, 244, 244, 0.7);
+  text-decoration: line-through;
+  opacity: 0.95;
+}
+
+/* Team smaller */
+.player-team {
+  font-size: 11px;
+  opacity: 0.95;
+}
+
+/* status pill */
+.player-status {
+  margin-top: 6px;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-weight: 800;
+}
+
+/* status styles */
+.player-status.alive { background: rgba(255,255,255,0.06); color: #eafff0; border: 1px solid rgba(255,255,255,0.03); }
+.player-status.eliminated { background: rgba(255,0,0,0.06); color: #ff8888; border: 1px solid rgba(255,0,0,0.12); }
+.player-status.not_played { background: rgba(255,255,255,0.02); color: #cfcfcf; border: 1px solid rgba(255,255,255,0.02); }
+
+/* ensure text fits */
+.player-box .player-name, .player-box .player-team { max-width: 100%; }
+
+
+

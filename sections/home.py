@@ -2,8 +2,9 @@ import streamlit as st
 import os
 import pandas as pd
 import base64
-from utils.constants import ticker_messages, winners_by_sport_stage, wall_of_fame
+from utils.constants import ticker_messages, winners_by_sport_stage, wall_of_fame, players_by_sport
 from fixtures_modules.constants import sports_schedule
+import random
 
 def load_global_styles():
     style_path = "assets/style.css"
@@ -188,6 +189,39 @@ def render():
         tabs = st.tabs([f"💪 {name}" for name in sport_names])
         for tab, sport in zip(tabs, sport_names):
             with tab:
+
+                players = players_by_sport.get(sport, [])
+
+                with st.expander(f"👥 {sport} Players ({len(players)})", expanded=False):
+                    # randomize order every time page refreshes
+                    players_random = random.sample(players, len(players))  # returns shuffled copy
+
+                    box_chunks = []
+                    for p in players_random:
+                        name = (p.get("name") or "").strip()
+                        team = (p.get("team") or "").strip()
+                        raw_status = (p.get("status") or "not_played").strip().lower()
+
+                        # normalize to three classes
+                        if raw_status == "alive":
+                            status_class = "alive"; status_text = "Alive ✅"
+                        elif raw_status in ("eliminated", "elimination", "out"):
+                            status_class = "eliminated"; status_text = "Eliminated ❌"
+                        else:
+                            status_class = "not_played"; status_text = "Not Played"
+
+                        # no leading spaces/newlines to avoid markdown code blocks
+                        box_chunks.append(
+                            f'<div class="player-box {status_class}">'
+                            f'  <div class="player-name">{name}</div>'
+                            f'  <div class="player-team">{team}</div>'
+                            f'  <div class="player-status {status_class}">{status_text}</div>'
+                            f'</div>'
+                        )
+
+                    grid_html = '<div class="player-grid">' + "".join(box_chunks) + '</div>'
+                    st.markdown(grid_html, unsafe_allow_html=True)
+
                 stages = winners_by_sport_stage.get(sport, {})
                 for stage_name, results in stages.items():
                     if not results:

@@ -51,6 +51,7 @@ winners_by_sport_stage = {
             {"match": "Match 14", "winner": "Nilesh M", "team": "Dabangg Dynamos"},
             {"match": "Match 16", "winner": "Nilesh S", "team": "Dabangg Dynamos"},
             {"match": "Match 2", "winner": "Esakki", "team": "Rockstar Rebels"},
+            {"match": "Match 19", "winner": "Bhagyashree", "team": "Gully Gang"},
             
             # add more...
         ],
@@ -172,8 +173,8 @@ players_by_sport = {
         {"name": "Hitesh", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Jay", "team": "Gully Gang", "status": "not_played"},
         {"name": "Wilfred", "team": "Badshah Blasters", "status": "not_played"},
-        {"name": "Samiksha", "team": "Badshah Blasters", "status": "not_played"},
-        {"name": "Bhagyashree", "team": "Gully Gang", "status": "not_played"},
+        {"name": "Samiksha", "team": "Badshah Blasters", "status": "eliminated"},
+        {"name": "Bhagyashree", "team": "Gully Gang", "status": "alive"},
         {"name": "Umesh G", "team": "Badshah Blasters", "status": "not_played"},
         {"name": "Somansh", "team": "Badshah Blasters", "status": "not_played"},
         {"name": "Gayatri", "team": "Badshah Blasters", "status": "not_played"},

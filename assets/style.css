@@ -1536,6 +1536,7 @@ section[data-testid="stSidebar"] button:active {
 }
 
 .team-summary-grid .team-pill {
+  position: relative;   /* so we can place the % box inside */
   background: rgba(255,255,255,0.05);
   padding: 10px 12px;
   border-radius: 12px;
@@ -1546,16 +1547,15 @@ section[data-testid="stSidebar"] button:active {
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
-/* team name centered, stronger */
 .team-summary-grid .team-pill b {
   display: block;
   font-size: 15px;
   font-weight: 800;
   margin-bottom: 6px;
-  color: #ffcc00; /* gold accent */
+  color: #ffcc00; /* gold */
 }
 
-/* compartments (inline pills) */
+/* compartments */
 .team-summary-grid .count-pill {
   display: inline-block;
   min-width: 70px;
@@ -1567,16 +1567,26 @@ section[data-testid="stSidebar"] button:active {
   color: #fff;
 }
 
-/* specific colors */
-.count-alive {
-  background: #00c853;
+.count-alive      { background: #00c853; }
+.count-eliminated { background: #e53935; }
+.count-notplayed  { background: #1e88e5; }
+
+/* Winning % square */
+.team-summary-grid .win-box {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #fff;
+  color: #000;
+  font-weight: 800;
+  font-size: 12px;
+  border-radius: 6px;
+  padding: 4px 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  min-width: 36px;
+  text-align: center;
 }
-.count-eliminated {
-  background: #e53935;
-}
-.count-notplayed {
-  background: #1e88e5; /* stronger blue */
-}
+
 
 
 

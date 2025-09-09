@@ -213,16 +213,24 @@ def render():
                     # render summary in a 2-column grid
                     summary_html = "<div class='team-summary-grid'>"
                     for team, counts in summary_counts.items():
+                        total = sum(counts.values())
+                        # simple winning % = alive / (alive+eliminated) * 100
+                        denom = counts['alive'] + counts['eliminated']
+                        win_pct = round((counts['alive'] / denom) * 100, 1) if denom > 0 else 0
+
                         summary_html += (
                             f"<div class='team-pill'>"
                             f"<b>{team}</b>"
                             f"<span class='count-pill count-alive'>Alive: {counts['alive']}</span>"
                             f"<span class='count-pill count-eliminated'>Out: {counts['eliminated']}</span>"
                             f"<span class='count-pill count-notplayed'>Not Played: {counts['not_played']}</span>"
+                            f"<div class='win-box'><span class='label'>Win Rate: </span><span class='value'>{win_pct}%</span></div>"
+
                             f"</div>"
                         )
                     summary_html += "</div>"
                     st.markdown(summary_html, unsafe_allow_html=True)
+
 
                     st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
 

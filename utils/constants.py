@@ -188,10 +188,34 @@ players_by_sport = {
         {"name": "Blessen", "team": "Rockstar Rebels", "status": "not_played"},
         {"name": "Ravi C", "team": "Rockstar Rebels", "status": "not_played"},
     ],
-    "Carrom": [
+    "Foosball": [
+        {"name": "Bishal & Sanskar", "team": "Dabangg Dynamos", "status": "not_played"},
+        {"name": "Umesh T & Rahul A", "team": "Gully Gang", "status": "not_played"},
+        {"name": "Amit & Ravi", "team": "Dabangg Dynamos", "status": "not_played"},
+        {"name": "Dhananjay & Sanket", "team": "Rockstar Rebels", "status": "not_played"},
+        {"name": "Rahul P & Jay", "team": "Gully Gang", "status": "not_played"},
+        {"name": "Wilfred & Hitesh", "team": "Badshah Blasters", "status": "not_played"},
+        {"name": "Saurabh & Kiran", "team": "Badshah Blasters", "status": "not_played"},
+        {"name": "Esakki & Ravi Chavan", "team": "Rockstar Rebels", "status": "not_played"},
+        {"name": "Bijal & Rachita", "team": "Dabangg Dynamos", "status": "not_played"},
+        {"name": "Ankit & Johnson", "team": "Rockstar Rebels", "status": "not_played"},
+        {"name": "Nilesh M & Nilesh S", "team": "Dabangg Dynamos", "status": "not_played"},
+        {"name": "Pritesh & Umesh G", "team": "Badshah Blasters", "status": "not_played"},
+        {"name": "Irshad & Suraj", "team": "Rockstar Rebels", "status": "not_played"},
+        {"name": "Vijay S & Bhaskar P", "team": "Gully Gang", "status": "not_played"},
+        {"name": "Vishal S & Samiksha", "team": "Badshah Blasters", "status": "not_played"},
+        {"name": "Vibhuti & Jincy", "team": "Rockstar Rebels", "status": "not_played"},
+        {"name": "Pramod & Bhagyashree", "team": "Gully Gang", "status": "not_played"},
+        {"name": "Vijay C & Somansh", "team": "Badshah Blasters", "status": "not_played"},
+        {"name": "Lalit & Mayur", "team": "Dabangg Dynamos", "status": "not_played"},
+        {"name": "Blessen & Asif", "team": "Rockstar Rebels", "status": "not_played"},
+        {"name": "Adnan & Arijit", "team": "Dabangg Dynamos", "status": "not_played"},
+        {"name": "Arvind & Kishan", "team": "Rockstar Rebels", "status": "not_played"},
+        {"name": "Komal & Avinash G", "team": "Gully Gang", "status": "not_played"},
+        {"name": "Gayatri & Pooja", "team": "Badshah Blasters", "status": "not_played"},
        
     ],
-    "Foosball": [
+    "Carrom": [
        
     ],
     "Badminton": [

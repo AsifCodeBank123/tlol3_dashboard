@@ -41,21 +41,19 @@ def render_points_info():
     # Detailed info inside an Expander
     with st.expander("ℹ️ How Points Are Calculated (Click to Expand)"):
         st.markdown("""
-        **Participation:**  
-        - Every Star playing the event earns **50 points**.  
-        - In doubles, if one partner is absent, the attending player still earns **50 points**.
+        -Every Star Participating (Playing the event) will earn 50 points, in case of doubles event if a partner not attending the event, the attending player will earn 50 points
 
-        **Progression Points:**  
-        - Quarter Finals: **+100 points total** (50 each if doubles).  
-        - Semi Finals: **+250 points total**.  
-        - Runner Up: **+500 points** (250 each if doubles).  
-        - Winner: **+1000 points** (500 each if doubles).  
+-As the Star/s (Singles/Doubles Event) progresses through the event, He would earn 100 points in total(50 each if doubles) if he reached Quarters and if he loses (4th)
 
-        **These points contribute to:**  
-        - Individual rankings  
-        - Team rankings for Final Prizes  
+-As the Star/s (Singles/Doubles Event) progresses through the event, He would earn 250 points if he reached semi-Finals and if he loses (3rd )
 
-        **Participation points** are awarded **only for Singles & Doubles formats**.
+-Winners and Runners up (Singles/Doubles Event) would earn 1000 and 500 points
+
+-Winners and Runners up (Doubles Event) would earn 1000 (500 each if doubles) and 500 points (250 each if doubles)
+
+-These points are important for the Star as well as the Team of Stars for the Final Prizes (End Game)
+
+-Participation points are only awarded for Singles and Doubles event formats.
 
         **Note:**  
         Tournament events follow this system. One-time events may give smaller points (e.g., <500 for winners).

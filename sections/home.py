@@ -192,7 +192,7 @@ def render():
 
                 players = players_by_sport.get(sport, [])
 
-                with st.expander(f"👥 {sport} Players ({len(players)})", expanded=False):
+                with st.expander(f"👥 {sport} Players/Pairs ({len(players)})", expanded=False):
                     # randomize order every time page refreshes
                     players_random = random.sample(players, len(players))  # returns shuffled copy
 

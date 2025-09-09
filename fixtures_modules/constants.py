@@ -345,7 +345,15 @@ BONUS_CARDS = {
             "Description": "Dodge a foul (Due) penalty once in 3 sets (1 match) - This is applicable when only stricker goes into the pocket.",
             "When it should be called": "During the match",
             "When it cannot be active": "",
-            "Team Restrictions": "Once in a Match"
+            "Team Restrictions": "Once in 3 sets"
+        },
+        {
+            "Event": "Carrom",
+            "Card": "Ye Hath Muje Dede Thakur",
+            "Description": "Ask the user to swap their natural playing hand for 1 turn in the match.",
+            "When it should be called": "During the match",
+            "When it cannot be active": "",
+            "Team Restrictions": "Once in 3 sets"
         },
     ],
 

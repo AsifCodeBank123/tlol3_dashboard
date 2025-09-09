@@ -194,15 +194,45 @@ def render():
 
                 with st.expander(f"👥 {sport} Players/Pairs ({len(players)})", expanded=False):
                     # randomize order every time page refreshes
-                    players_random = random.sample(players, len(players))  # returns shuffled copy
+                    players_random = random.sample(players, len(players))
 
+                    # --- Build team-wise summary ---
+                    summary_counts = {}
+                    for p in players_random:
+                        team = (p.get("team") or "").strip()
+                        raw_status = (p.get("status") or "not_played").strip().lower()
+                        if team not in summary_counts:
+                            summary_counts[team] = {"alive": 0, "eliminated": 0, "not_played": 0}
+                        if raw_status == "alive":
+                            summary_counts[team]["alive"] += 1
+                        elif raw_status in ("eliminated", "elimination", "out"):
+                            summary_counts[team]["eliminated"] += 1
+                        else:
+                            summary_counts[team]["not_played"] += 1
+
+                    # render summary in a 2-column grid
+                    summary_html = "<div class='team-summary-grid'>"
+                    for team, counts in summary_counts.items():
+                        summary_html += (
+                            f"<div class='team-pill'>"
+                            f"<b>{team}</b>"
+                            f"<span class='count-pill count-alive'>Alive: {counts['alive']}</span>"
+                            f"<span class='count-pill count-eliminated'>Out: {counts['eliminated']}</span>"
+                            f"<span class='count-pill count-notplayed'>Not Played: {counts['not_played']}</span>"
+                            f"</div>"
+                        )
+                    summary_html += "</div>"
+                    st.markdown(summary_html, unsafe_allow_html=True)
+
+                    st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
+
+                    # --- Build player boxes ---
                     box_chunks = []
                     for p in players_random:
                         name = (p.get("name") or "").strip()
                         team = (p.get("team") or "").strip()
                         raw_status = (p.get("status") or "not_played").strip().lower()
 
-                        # normalize to three classes
                         if raw_status == "alive":
                             status_class = "alive"; status_text = "Alive ✅"
                         elif raw_status in ("eliminated", "elimination", "out"):
@@ -210,7 +240,6 @@ def render():
                         else:
                             status_class = "not_played"; status_text = "Not Played"
 
-                        # no leading spaces/newlines to avoid markdown code blocks
                         box_chunks.append(
                             f'<div class="player-box {status_class}">'
                             f'  <div class="player-name">{name}</div>'
@@ -221,6 +250,7 @@ def render():
 
                     grid_html = '<div class="player-grid">' + "".join(box_chunks) + '</div>'
                     st.markdown(grid_html, unsafe_allow_html=True)
+
 
                 stages = winners_by_sport_stage.get(sport, {})
                 for stage_name, results in stages.items():

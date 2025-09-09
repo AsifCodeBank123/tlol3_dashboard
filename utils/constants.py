@@ -181,7 +181,7 @@ players_by_sport = {
         {"name": "Gayatri", "team": "Badshah Blasters", "status": "not_played"},
         {"name": "Pritesh", "team": "Badshah Blasters", "status": "not_played"},
         {"name": "Adnan", "team": "Dabangg Dynamos", "status": "not_played"},
-        {"name": "Sanket Patil", "team": "Dabangg Dynamos", "status": "not_played"},
+        {"name": "Sanket Patil", "team": "Rockstar Rebels", "status": "not_played"},
         {"name": "Sanskar", "team": "Gully Gang", "status": "not_played"},
         {"name": "Arijit", "team": "Dabangg Dynamos", "status": "not_played"},
         {"name": "Pramod", "team": "Gully Gang", "status": "not_played"},

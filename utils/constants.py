@@ -50,6 +50,7 @@ winners_by_sport_stage = {
             {"match": "Match 9", "winner": "Irshad", "team": "Rockstar Rebels"},
             {"match": "Match 14", "winner": "Nilesh M", "team": "Dabangg Dynamos"},
             {"match": "Match 16", "winner": "Nilesh S", "team": "Dabangg Dynamos"},
+            {"match": "Match 2", "winner": "Esakki", "team": "Rockstar Rebels"},
             
             # add more...
         ],
@@ -137,8 +138,8 @@ players_by_sport = {
     "Chess": [
         {"name": "Dhananjay", "team": "Rockstar Rebels", "status": "eliminated"},
         {"name": "Amit", "team": "Dabangg Dynamos", "status": "alive"},
-        {"name": "Esakki", "team": "Rockstar Rebels", "status": "not_played"},
-        {"name": "Bishal", "team": "Dabangg Dynamos", "status": "not_played"},
+        {"name": "Esakki", "team": "Rockstar Rebels", "status": "alive"},
+        {"name": "Bishal", "team": "Dabangg Dynamos", "status": "eliminated"},
         {"name": "Rahul P", "team": "Gully Gang", "status": "alive"},
         {"name": "Vibhuti", "team": "Rockstar Rebels", "status": "eliminated"},
         {"name": "Jincy", "team": "Rockstar Rebels", "status": "alive"},
@@ -180,7 +181,7 @@ players_by_sport = {
         {"name": "Adnan", "team": "Dabangg Dynamos", "status": "not_played"},
         {"name": "Sanket Patil", "team": "Dabangg Dynamos", "status": "not_played"},
         {"name": "Sanskar", "team": "Gully Gang", "status": "not_played"},
-        {"name": "Arijit", "team": "Gully Gang", "status": "not_played"},
+        {"name": "Arijit", "team": "Dabangg Dynamos", "status": "not_played"},
         {"name": "Pramod", "team": "Gully Gang", "status": "not_played"},
         {"name": "Umesh T", "team": "Gully Gang", "status": "not_played"},
         {"name": "Komal", "team": "Gully Gang", "status": "not_played"},
@@ -188,26 +189,19 @@ players_by_sport = {
         {"name": "Ravi C", "team": "Rockstar Rebels", "status": "not_played"},
     ],
     "Carrom": [
-        {"name": "Amit", "team": "Gully Gang", "status": "alive"},
-        {"name": "Pooja", "team": "Rockstar Rebels", "status": "eliminated"},
-        # pairs -> combine names such as "Amit & Rohit"
+       
     ],
     "Foosball": [
-        {"name": "Team Alpha (Rohit & Sam)", "team": "Gully Gang", "status": "alive"},
-        {"name": "Team Bravo (Nisha & Tara)", "team": "Badshah Blasters", "status": "eliminated"},
+       
     ],
     "Badminton": [
-        {"name": "Rahul", "team": "Dabangg Dynamos", "status": "alive"},
-        {"name": "Sana", "team": "Rockstar Rebels", "status": "alive"},
+       
     ],
     "Table Tennis": [
-        {"name": "Vikram", "team": "Gully Gang", "status": "alive"},
-        {"name": "Nina", "team": "Badshah Blasters", "status": "eliminated"},
+       
     ],
     "Cricket": [
-        # show team names for Cricket winners scenario; but here players/pairs format kept same
-        {"name": "Gully Gang", "team": "Gully Gang", "status": "alive"},
-        {"name": "Rockstar Rebels", "team": "Rockstar Rebels", "status": "eliminated"},
+      
     ],
 }
 

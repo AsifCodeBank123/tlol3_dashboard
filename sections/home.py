@@ -232,9 +232,19 @@ def render():
                         st.markdown("<div class='stage-block'>", unsafe_allow_html=True)
                         #st.markdown(f"<div class='stage-title'>🎯 {stage_name}</div>", unsafe_allow_html=True)
                         
-                        # Build clean, non-indented HTML (no leading spaces/newlines)
+                        # Clean results and sort by match number if present
+                        def extract_match_no(match_str):
+                            try:
+                                # get digits from string like "Match 12"
+                                return int("".join(ch for ch in match_str if ch.isdigit()))
+                            except Exception:
+                                return 9999  # push non-numeric matches to end
+
+                        # sort results by match number
+                        sorted_results = sorted(results, key=lambda r: extract_match_no(r.get("match", "")))
+
                         card_chunks = []
-                        for rec in results:
+                        for rec in sorted_results:
                             match = rec.get("match", "")
                             winner = rec.get("winner", "")
                             team = rec.get("team", "")

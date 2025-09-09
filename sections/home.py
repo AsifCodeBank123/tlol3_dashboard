@@ -232,7 +232,7 @@ def render():
                             f"<span class='count-pill count-alive'>Alive: {counts['alive']}</span>"
                             f"<span class='count-pill count-eliminated'>Out: {counts['eliminated']}</span>"
                             f"<span class='count-pill count-notplayed'>Not Played: {counts['not_played']}</span>"
-                            f"<div class='win-box'><span class='label'>Winning Chances</span>"
+                            f"<div class='win-box'><span class='label'>Winning Chances: </span>"
                             f"<span class='value'>{win_chances}%</span></div>"
 
                             f"</div>"

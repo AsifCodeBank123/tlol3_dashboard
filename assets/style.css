@@ -1587,6 +1587,19 @@ section[data-testid="stSidebar"] button:active {
   text-align: center;
 }
 
+.win-box .label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.win-box .value {
+  font-size: 13px;
+  font-weight: 800;
+}
+
 
 
 

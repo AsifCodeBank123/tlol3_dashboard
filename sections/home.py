@@ -210,13 +210,21 @@ def render():
                         else:
                             summary_counts[team]["not_played"] += 1
 
+                    # totals across all teams
+                    total_alive_all = sum(t["alive"] for t in summary_counts.values())
+
                     # render summary in a 2-column grid
                     summary_html = "<div class='team-summary-grid'>"
                     for team, counts in summary_counts.items():
-                        total = sum(counts.values())
+                        #total = sum(counts.values())
                         # simple winning % = alive / (alive+eliminated) * 100
-                        denom = counts['alive'] + counts['eliminated']
-                        win_pct = round((counts['alive'] / denom) * 100, 1) if denom > 0 else 0
+                        # denom = counts['alive'] + counts['eliminated']
+                        # win_pct = round((counts['alive'] / denom) * 100, 1) if denom > 0 else 0
+
+                        if total_alive_all > 0:
+                            win_chances = round((counts['alive'] / total_alive_all) * 100, 1)
+                        else:
+                            win_chances = 0
 
                         summary_html += (
                             f"<div class='team-pill'>"
@@ -224,7 +232,8 @@ def render():
                             f"<span class='count-pill count-alive'>Alive: {counts['alive']}</span>"
                             f"<span class='count-pill count-eliminated'>Out: {counts['eliminated']}</span>"
                             f"<span class='count-pill count-notplayed'>Not Played: {counts['not_played']}</span>"
-                            f"<div class='win-box'><span class='label'>Win Rate: </span><span class='value'>{win_pct}%</span></div>"
+                            f"<div class='win-box'><span class='label'>Winning Chances</span>"
+                            f"<span class='value'>{win_chances}%</span></div>"
 
                             f"</div>"
                         )

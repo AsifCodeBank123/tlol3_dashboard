@@ -283,7 +283,6 @@ SPORT_RULES = {
 BONUS_CARDS = {
     "Badminton": [
         {
-            "Sr": 1,
             "Event": "Badminton",
             "Card": "Tumse Na Ho Payega",
             "Description": "Replay Point – Force a replay of one point (must be called instantly).",
@@ -292,7 +291,6 @@ BONUS_CARDS = {
             "Team Restrictions": "Once in a Match"
         },
         {
-            "Sr": 2,
             "Event": "Badminton",
             "Card": "Phir Hera Pheri: Switch Server",
             "Description": "Force a server change even if the point wasn’t lost – use to unsettle rhythm.",
@@ -301,7 +299,6 @@ BONUS_CARDS = {
             "Team Restrictions": "Once in a Match"
         },
         {
-            "Sr": 3,
             "Event": "Badminton",
             "Card": "Dhinka Chika Serve",
             "Description": "Opponent must do a silly move or 5-second dance before every serve (for 3 rallies).",
@@ -313,7 +310,7 @@ BONUS_CARDS = {
 
     "Table tennis": [
         {
-            "Sr": 1,
+         
             "Event": "Table Tennis",
             "Card": "Ek Doni Do",
             "Description": "Team using the card gets a chance to double the point.",
@@ -322,7 +319,7 @@ BONUS_CARDS = {
             "Team Restrictions": "Once in a Match"
         },
         {
-            "Sr": 2,
+        
             "Event": "Table Tennis",
             "Card": "Freeze Feet",
             "Description": "One Opponent can't move their feet during the next point (no stepping allowed).",
@@ -331,7 +328,7 @@ BONUS_CARDS = {
             "Team Restrictions": "Once in a Match"
         },
         {
-            "Sr": 3,
+      
             "Event": "Table Tennis",
             "Card": "Net Card",
             "Description": "Allows the player to use this card if a team loses the point on net.",
@@ -343,28 +340,17 @@ BONUS_CARDS = {
 
     "Carrom": [
         {
-            "Sr": 1,
             "Event": "Carrom",
             "Card": "Ek Galti Maaf",
-            "Description": "Dodge a foul (Due) penalty once in 3 sets (1 match).",
+            "Description": "Dodge a foul (Due) penalty once in 3 sets (1 match) - This is applicable when only stricker goes into the pocket.",
             "When it should be called": "During the match",
             "When it cannot be active": "",
             "Team Restrictions": "Once in a Match"
         },
-        {
-            "Sr": 2,
-            "Event": "Carrom",
-            "Card": "Mauka Naa Mila",
-            "Description": "Opponent can ask the player to skip his chance to the other team player.",
-            "When it should be called": "During the match",
-            "When it cannot be active": "",
-            "Team Restrictions": "Once in a Match"
-        }
     ],
 
     "Foosball": [
         {
-            "Sr": 1,
             "Event": "Foosball",
             "Card": "Khamoshhhhhh",
             "Description": "Players are not allowed to talk to each other for 30 seconds. Team loses a point.",
@@ -373,7 +359,7 @@ BONUS_CARDS = {
             "Team Restrictions": "Once in a Match"
         },
         {
-            "Sr": 2,
+         
             "Event": "Foosball",
             "Card": "Yeh Haath Mujhe De De Thakur",
             "Description": "The opponent's goalkeeper cannot touch the rod for 10 seconds.",
@@ -385,7 +371,7 @@ BONUS_CARDS = {
 
     "Chess": [
         {
-            "Sr": 1,
+       
             "Event": "Chess",
             "Card": "Meri Marzi",
             "Description": "Choose the game type from the available options.",
@@ -395,7 +381,7 @@ BONUS_CARDS = {
         },
 
         {
-            "Sr": 2,
+      
             "Event": "Chess",
             "Card": "Galti Se Mistake",
             "Description": "Rewind your own last move and play a different move instead. Can’t be used to undo a checkmate or stalemate.",
@@ -405,7 +391,7 @@ BONUS_CARDS = {
         },
 
         {
-            "Sr": 3,
+        
             "Event": "Chess",
             "Card": "Kal Ho Naa Ho",
             "Description": "Use your team’s 30-minute time budget to add 1–2 (eg)minutes in any game (max 30 mins across rounds). Time can be added just once per game.",

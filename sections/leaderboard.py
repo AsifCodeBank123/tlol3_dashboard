@@ -55,8 +55,8 @@ def render_points_info():
 
 -Participation points are only awarded for Singles and Doubles event formats.
 
-        **Note:**  
-        Tournament events follow this system. One-time events may give smaller points (e.g., <500 for winners).
+**Note:**  
+Tournament events follow this system. One-time events may give smaller points (e.g., <500 for winners).
         """, unsafe_allow_html=True)
 
     # --- Power Cards Section in Expander ---

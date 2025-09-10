@@ -76,7 +76,12 @@ winners_by_sport_stage = {
    
     },
     "Foosball": {
-        "Group Stages": [],
+        "Group Stage Winners": [ 
+            {"match": "Match 1", "winner": "Umesh T & Rahul A", "team": "Gully Gang"},
+            {"match": "Match 6", "winner": "Pritesh & Umesh G", "team": "Badshah Blasters"},
+            {"match": "Match 7", "winner": "Irshad & Suraj", "team": "Rockstar Rebels"},
+            {"match": "Match 8", "winner": "Vibhuti & Jincy", "team": "Rockstar Rebels"},
+            ],
         "Quarterfinals": [],
         "Semifinals": [],
         "Final": []
@@ -182,7 +187,7 @@ players_by_sport = {
         {"name": "Pritesh", "team": "Badshah Blasters", "status": "not_played"},
         {"name": "Adnan", "team": "Dabangg Dynamos", "status": "not_played"},
         {"name": "Sanket Patil", "team": "Rockstar Rebels", "status": "not_played"},
-        {"name": "Sanskar", "team": "Gully Gang", "status": "not_played"},
+        {"name": "Sanskar", "team": "Dabangg Dynamos", "status": "not_played"},
         {"name": "Arijit", "team": "Dabangg Dynamos", "status": "not_played"},
         {"name": "Pramod", "team": "Gully Gang", "status": "not_played"},
         {"name": "Umesh T", "team": "Gully Gang", "status": "not_played"},
@@ -191,8 +196,8 @@ players_by_sport = {
         {"name": "Ravi C", "team": "Rockstar Rebels", "status": "not_played"},
     ],
     "Foosball": [
-        {"name": "Bishal & Sanskar", "team": "Dabangg Dynamos", "status": "not_played"},
-        {"name": "Umesh T & Rahul A", "team": "Gully Gang", "status": "not_played"},
+        {"name": "Bishal & Sanskar", "team": "Dabangg Dynamos", "status": "eliminated"},
+        {"name": "Umesh T & Rahul A", "team": "Gully Gang", "status": "alive"},
         {"name": "Amit & Ravi", "team": "Dabangg Dynamos", "status": "not_played"},
         {"name": "Dhananjay & Sanket", "team": "Rockstar Rebels", "status": "not_played"},
         {"name": "Rahul P & Jay", "team": "Gully Gang", "status": "not_played"},
@@ -201,12 +206,12 @@ players_by_sport = {
         {"name": "Esakki & Ravi Chavan", "team": "Rockstar Rebels", "status": "not_played"},
         {"name": "Bijal & Rachita", "team": "Dabangg Dynamos", "status": "not_played"},
         {"name": "Ankit & Johnson", "team": "Rockstar Rebels", "status": "not_played"},
-        {"name": "Nilesh M & Nilesh S", "team": "Dabangg Dynamos", "status": "not_played"},
-        {"name": "Pritesh & Umesh G", "team": "Badshah Blasters", "status": "not_played"},
-        {"name": "Irshad & Suraj", "team": "Rockstar Rebels", "status": "not_played"},
-        {"name": "Vijay S & Bhaskar P", "team": "Gully Gang", "status": "not_played"},
-        {"name": "Vishal S & Samiksha", "team": "Badshah Blasters", "status": "not_played"},
-        {"name": "Vibhuti & Jincy", "team": "Rockstar Rebels", "status": "not_played"},
+        {"name": "Nilesh M & Nilesh S", "team": "Dabangg Dynamos", "status": "eliminated"},
+        {"name": "Pritesh & Umesh G", "team": "Badshah Blasters", "status": "alive"},
+        {"name": "Irshad & Suraj", "team": "Rockstar Rebels", "status": "alive"},
+        {"name": "Vijay S & Bhaskar P", "team": "Gully Gang", "status": "eliminated"},
+        {"name": "Vishal S & Samiksha", "team": "Badshah Blasters", "status": "eliminated"},
+        {"name": "Vibhuti & Jincy", "team": "Rockstar Rebels", "status": "alive"},
         {"name": "Pramod & Bhagyashree", "team": "Gully Gang", "status": "not_played"},
         {"name": "Vijay C & Somansh", "team": "Badshah Blasters", "status": "not_played"},
         {"name": "Lalit & Mayur", "team": "Dabangg Dynamos", "status": "not_played"},
@@ -218,6 +223,11 @@ players_by_sport = {
        
     ],
     "Carrom": [
+        {"name": "Blessen & Arvind", "team": "Rockstar Rebels", "status": "eliminated"},
+        {"name": "Amit & Arijit", "team": "Dabangg Dynamos", "status": "alive"},
+        {"name": "Rahul P & Vijay S", "team": "Gully Gang", "status": "not_played"},
+        {"name": "Bijal & Rachita", "team": "Dabangg Dynamos", "status": "not_played"},
+        
        
     ],
     "Badminton": [

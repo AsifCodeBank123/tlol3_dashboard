@@ -254,14 +254,14 @@ players_by_sport = {
         {"name": "Vijay S & Bhaskar P", "team": "Gully Gang", "status": "eliminated"},
         {"name": "Vishal S & Samiksha", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Vibhuti & Jincy", "team": "Rockstar Rebels", "status": "eliminated"},
-        {"name": "Pramod & Bhagyashree", "team": "Gully Gang", "status": "not_played"},
-        {"name": "Vijay C & Somansh", "team": "Badshah Blasters", "status": "not_played"},
+        {"name": "Pramod & Bhagyashree", "team": "Gully Gang", "status": "eliminated"},
+        {"name": "Vijay C & Somansh", "team": "Badshah Blasters", "status": "alive"},
         {"name": "Lalit & Mayur", "team": "Dabangg Dynamos", "status": "not_played"},
         {"name": "Blessen & Asif", "team": "Rockstar Rebels", "status": "alive"},
         {"name": "Adnan & Arijit", "team": "Dabangg Dynamos", "status": "not_played"},
         {"name": "Arvind & Kishan", "team": "Rockstar Rebels", "status": "not_played"},
-        {"name": "Komal & Avinash G", "team": "Gully Gang", "status": "not_played"},
-        {"name": "Gayatri & Pooja", "team": "Badshah Blasters", "status": "not_played"},
+        {"name": "Komal & Avinash G", "team": "Gully Gang", "status": "alive"},
+        {"name": "Gayatri & Pooja", "team": "Badshah Blasters", "status": "alive"},
        
     ],
     "Carrom": [

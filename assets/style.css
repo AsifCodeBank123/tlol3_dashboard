@@ -1161,8 +1161,8 @@ section[data-testid="stSidebar"] button:active {
 }
 
 .winner-name {
-  font-size: 19px;
-  font-weight: 900;
+  font-size: 15px;
+  font-weight: 700;
   color: #ffffff;
   
   line-height: 1.25;
@@ -1528,6 +1528,11 @@ section[data-testid="stSidebar"] button:active {
 /* ensure text fits */
 .player-box .player-name, .player-box .player-team { max-width: 100%; }
 
+/* ==============================
+   Team summary grid & win-box
+   ============================== */
+
+/* grid: two team pills per row */
 .team-summary-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1535,58 +1540,82 @@ section[data-testid="stSidebar"] button:active {
   margin: 12px 0 18px;
 }
 
+/* team pill: flex row so win-box sits at right naturally */
 .team-summary-grid .team-pill {
-  position: relative;   /* so we can place the % box inside */
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* left content and win-box */
+  gap: 12px;
+  position: relative;
   background: rgba(255,255,255,0.05);
   padding: 10px 12px;
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.08);
   font-size: 13px;
   font-weight: 500;
-  text-align: center;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
-.team-summary-grid .team-pill b {
+/* left column groups team name + count pills */
+.team-summary-grid .team-pill .left-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  flex: 1 1 auto;
+}
+
+/* team name centered within the left-col block visually */
+.team-summary-grid .team-pill .left-col b {
   display: block;
   font-size: 15px;
   font-weight: 800;
-  margin-bottom: 6px;
   color: #ffcc00; /* gold */
+  margin: 0;
+  text-align: left;
 }
 
-/* compartments */
+/* compartments / count pills */
+.team-summary-grid .count-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 .team-summary-grid .count-pill {
   display: inline-block;
-  min-width: 70px;
-  margin: 2px 4px;
+  min-width: 66px;
   padding: 4px 8px;
   border-radius: 999px;
   font-size: 12px;
   font-weight: 700;
   color: #fff;
+  text-align: center;
 }
 
-.count-alive      { background: #00c853; }
-.count-eliminated { background: #e53935; }
-.count-notplayed  { background: #1e88e5; }
+/* count pill colors */
+.team-summary-grid .count-pill.count-alive      { background: #00c853; }
+.team-summary-grid .count-pill.count-eliminated { background: #e53935; }
+.team-summary-grid .count-pill.count-notplayed  { background: #1e88e5; }
 
-/* Winning % square */
+/* Winning box: non-overlapping, sits in flow at right */
 .team-summary-grid .win-box {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  position: relative;       /* no absolute overlap */
+  margin-left: 12px;
   background: #fff;
   color: #000;
   font-weight: 800;
   font-size: 12px;
   border-radius: 6px;
-  padding: 4px 6px;
+  padding: 6px 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  min-width: 36px;
+  min-width: 56px;
   text-align: center;
+  line-height: 1.1;
 }
 
+/* label + value inside win-box */
 .win-box .label {
   display: block;
   font-size: 10px;
@@ -1594,15 +1623,49 @@ section[data-testid="stSidebar"] button:active {
   color: #333;
   margin-bottom: 2px;
 }
-
 .win-box .value {
   font-size: 13px;
   font-weight: 800;
 }
 
+/* small screens: stack team-pill content vertically and push win-box to right end */
+@media (max-width: 480px) {
+  .team-summary-grid {
+    grid-template-columns: 1fr; /* single column on tiny screens */
+  }
 
+  .team-summary-grid .team-pill {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
 
+  .team-summary-grid .team-pill .left-col {
+    align-items: flex-start;
+  }
 
+  .team-summary-grid .win-box {
+    align-self: flex-end;  /* keep it visually at the right edge of the pill */
+    margin-left: 0;
+    margin-top: 6px;
+    min-width: 48px;
+    padding: 5px 6px;
+  }
 
+  .team-summary-grid .count-pill {
+    min-width: 60px;
+    padding: 3px 6px;
+    font-size: 11px;
+  }
+}
 
+/* small visual tweak for hover (optional) */
+.team-summary-grid .team-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
 
+.win-good { border: 1px solid #00a852; }
+.win-mid  { border: 1px solid #f0a500; }
+.win-low  { border: 1px solid #d32f2f; }

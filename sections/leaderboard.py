@@ -35,8 +35,8 @@ def render_points_info():
             "Points": ["50 Points", "250 Points", "500 Points", "750 Points", "1000 Points"]
         }
         points_df = pd.DataFrame(points_data)
-        
-        st.table(points_df)  # hides index by default
+    
+        st.dataframe(points_df, use_container_width=True, hide_index=True)
 
     # Detailed info inside an Expander
     with st.expander("ℹ️ How Points Are Calculated (Click to Expand)"):
@@ -61,50 +61,39 @@ Tournament events follow this system. One-time events may give smaller points (e
 
     # --- Power Cards Section in Expander ---
     with st.expander("🎴 Power Cards Details", expanded=False):
-        power_cards_html = """
-        <table style='width:100%; border-collapse: collapse; margin: 15px 0; font-size: 16px; border: 1px solid #ddd;'>
-            <thead>
-                <tr style='background-color: #f4b400; color: white; text-align: left;'>
-                    <th style='padding: 10px;'>Sr</th>
-                    <th style='padding: 10px;'>Event</th>
-                    <th style='padding: 10px;'>Card</th>
-                    <th style='padding: 10px;'>Description</th>
-                    <th style='padding: 10px;'>When it should be called</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style='padding: 10px;'>1</td>
-                    <td style='padding: 10px;'>Overall</td>
-                    <td style='padding: 10px;'>Underdog Uprising</td>
-                    <td style='padding: 10px;'>Underdogs (unsold players) will win 2x points if reached quarterfinal and above. Player Points will be 2x.</td>
-                    <td style='padding: 10px;'>Automatically after the Auction</td>
-                </tr>
-                <tr>
-                    <td style='padding: 10px;'>2</td>
-                    <td style='padding: 10px;'>Overall</td>
-                    <td style='padding: 10px;'>Double-e-Risk</td>
-                    <td style='padding: 10px;'>Doubles the points of a selected event. The event points are multiplied by a factor (2x). If the event is lost then it will be -500.</td>
-                    <td style='padding: 10px;'>Before the Event Starts</td>
-                </tr>
-                <tr>
-                    <td style='padding: 10px;'>3</td>
-                    <td style='padding: 10px;'>Overall</td>
-                    <td style='padding: 10px;'>Jodi Breakers</td>
-                    <td style='padding: 10px;'>Swap two members between teams for one event (Before Rosters when Participation list is finalized). If the swapped player helps the new team win, the playing team gets 200 points and the team who has used the card gets -200 Points. If the swapped player underperforms, the Team who has used the card gets 200 points.</td>
-                    <td style='padding: 10px;'>After the rosters are done</td>
-                </tr>
-                <tr>
-                    <td style='padding: 10px;'>4</td>
-                    <td style='padding: 10px;'>Overall</td>
-                    <td style='padding: 10px;'>Shakti Bonus</td>
-                    <td style='padding: 10px;'>Female Pairing (Excluding chess) reaching Quarters and Above would get 2x points.</td>
-                    <td style='padding: 10px;'>Automatically after the Auction</td>
-                </tr>
-            </tbody>
-        </table>
-        """
-        st.markdown(power_cards_html, unsafe_allow_html=True)
+        power_cards_data = [
+            {
+                "Sr": 1,
+                "Event": "Overall",
+                "Card": "Underdog Uprising",
+                "Description": "Underdogs (unsold players) will win 2x points if reached quarterfinal and above. Player Points will be 2x.",
+                "When it should be called": "Automatically after the Auction",
+            },
+            {
+                "Sr": 2,
+                "Event": "Overall",
+                "Card": "Double-e-Risk",
+                "Description": "Doubles the points of a selected event. The event points are multiplied by a factor (2x). If the event is lost then it will be -500.",
+                "When it should be called": "Before the Event Starts",
+            },
+            {
+                "Sr": 3,
+                "Event": "Overall",
+                "Card": "Jodi Breakers",
+                "Description": "Swap two members between teams for one event (Before Rosters when Participation list is finalized). If the swapped player helps the new team win, the playing team gets 200 points and the team who has used the card gets -200 Points. If the swapped player underperforms, the Team who has used the card gets 200 points.",
+                "When it should be called": "After the rosters are done",
+            },
+            {
+                "Sr": 4,
+                "Event": "Overall",
+                "Card": "Shakti Bonus",
+                "Description": "Female Pairing (Excluding chess) reaching Quarters and Above would get 2x points.",
+                "When it should be called": "Automatically after the Auction",
+            },
+        ]
+
+        df_power_cards = pd.DataFrame(power_cards_data)
+        st.dataframe(df_power_cards, use_container_width=True, hide_index=True)
 
 
 def render_leaderboard():

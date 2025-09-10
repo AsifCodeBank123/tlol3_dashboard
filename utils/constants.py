@@ -275,7 +275,7 @@ players_by_sport = {
         {"name": "Ravi C & Irshad", "team": "Rockstar Rebels", "status": "eliminated"},
         {"name": "Somansh & Gayatri", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Avinash G & Bhaskar", "team": "Gully Gang", "status": "eliminated"},
-        {"name": "Samiksha & Pooja", "team": "Badshah Blasters", "status": "not played"},
+        {"name": "Samiksha & Pooja", "team": "Badshah Blasters", "status": "alive"},
         {"name": "Bhagyashree & Komal", "team": "Gully Gang", "status": "eliminated"},
         {"name": "Nilesh M & Lalit", "team": "Dabangg Dynamos", "status": "eliminated"},
         {"name": "Dhananjay & Sanket", "team": "Rockstar Rebels", "status": "eliminated"},

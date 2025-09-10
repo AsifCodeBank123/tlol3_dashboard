@@ -53,14 +53,56 @@ winners_by_sport_stage = {
             {"match": "Match 2", "winner": "Esakki", "team": "Rockstar Rebels"},
             {"match": "Match 19", "winner": "Bhagyashree", "team": "Gully Gang"},
             {"match": "Match 8", "winner": "Suraj", "team": "Rockstar Rebels"},
+            {"match": "Match 10", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 15", "winner": "TBD", "team": "TBD"},
+             {"match": "Match 18", "winner": "TBD", "team": "TBD"},
             
             # add more...
         ],
-        "Quarterfinal Winners": [
-            
+        "Super 32 Winners": [
+            {"match": "Match 1", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 2", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 3", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 4", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 5", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 6", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 7", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 8", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 9", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 10", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 11", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 12", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 13", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 14", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 15", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 16", "winner": "TBD", "team": "TBD"},
+
         ],
-        "Semifinals": [],
-        "Final": []
+        "Super 16 Winners": [
+            {"match": "Match 1", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 2", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 3", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 4", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 5", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 6", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 7", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 8", "winner": "TBD", "team": "TBD"},
+
+        ],
+        "Quarter Final Winners": [
+            {"match": "Match 1", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 2", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 3", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 4", "winner": "TBD", "team": "TBD"},
+            ],
+        "Semi Final Winners": [
+            {"match": "Match 1", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 2", "winner": "TBD", "team": "TBD"},
+        ],
+       
+        "Champion": [
+             {"match": "Match 1", "winner": "TBD", "team": "TBD"},
+        ]
     },
     "Carrom": {
         "Group Stage Winners": [ 
@@ -90,13 +132,48 @@ winners_by_sport_stage = {
             {"match": "Match 3", "winner": "TBD", "team": "TBD"},
             {"match": "Match 4", "winner": "Johnson & Jincy", "team": "Rockstar Rebels"},
             ],
-        "Final": []
+        "Semi Final Winners": [
+            {"match": "Match 1", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 2", "winner": "TBD", "team": "TBD"},
+        ],
+       
+        "Champion": [
+             {"match": "Match 1", "winner": "TBD", "team": "TBD"},
+        ]
     },
     "Badminton": {
-        "Group Stages": [],
-        "Quarterfinals": [],
-        "Semifinals": [],
-        "Final": []
+        "Group Stage Winners": [ 
+            {"match": "Match 1", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 2", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 3", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 4", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 5", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 6", "winner": "TBD", "team": "TBD"},
+            ],
+        "Super 16 Winners": [
+            {"match": "Match 1", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 2", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 3", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 4", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 5", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 6", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 7", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 8", "winner": "TBD", "team": "TBD"},
+            ],
+        "Quarter Final Winners": [
+            {"match": "Match 1", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 2", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 3", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 4", "winner": "TBD", "team": "TBD"},
+            ],
+        "Semi Final Winners": [
+            {"match": "Match 1", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 2", "winner": "TBD", "team": "TBD"},
+        ],
+       
+        "Champion": [
+             {"match": "Match 1", "winner": "TBD", "team": "TBD"},
+        ]
    
     },
     "Foosball": {
@@ -126,7 +203,14 @@ winners_by_sport_stage = {
             {"match": "Match 3", "winner": "TBD", "team": "TBD"},
             {"match": "Match 4", "winner": "TBD", "team": "TBD"},
             ],
-        "Final": []
+        "Semi Final Winners": [
+            {"match": "Match 1", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 2", "winner": "TBD", "team": "TBD"},
+        ],
+       
+        "Champion": [
+             {"match": "Match 1", "winner": "TBD", "team": "TBD"},
+        ]
     },
     "Table Tennis": {
         "Group Stages": [],
@@ -293,6 +377,29 @@ players_by_sport = {
        
     ],
     "Badminton": [
+        {"name": "Vijay C & Umesh", "team": "Badshah Blasters", "status": "not played"},
+        {"name": "Suraj & Asif", "team": "Rockstar Rebels", "status": "not played"},
+        {"name": "Pooja & Samiksha", "team": "Badshah Blasters", "status": "not played"},
+        {"name": "Esakki & Irshad", "team": "Rockstar Rebels", "status": "not played"},
+        {"name": "Arijit & Bijal", "team": "Dabangg Dynamos", "status": "not played"},
+        {"name": "Komal & Rahul P", "team": "Gully Gang", "status": "not played"},
+        {"name": "Amit & Bishal", "team": "Dabangg Dynamos", "status": "not played"},
+        {"name": "Bhagyashree & Pramod", "team": "Gully Gang", "status": "not played"},
+        {"name": "Kiran & Gayatri", "team": "Badshah Blasters", "status": "not played"},
+        {"name": "Sanket & Dhananjay", "team": "Rockstar Rebels", "status": "eliminated"},
+        {"name": "Johnson & Ravi C", "team": "Rockstar Rebels", "status": "not played"},
+        {"name": "Vijay S & Bhaskar P", "team": "Gully Gang", "status": "not played"},
+        {"name": "Jay & Umesh", "team": "Gully Gang", "status": "not played"},
+        {"name": "Lalit & Sanskar", "team": "Dabangg Dynamos", "status": "not played"},
+        {"name": "Wilfred & Hitesh", "team": "Badshah Blasters", "status": "not played"},
+        {"name": "Jincy & Vibhuti", "team": "Rockstar Rebels", "status": "not played"},
+        {"name": "Ankit & Kishan", "team": "Rockstar Rebels", "status": "not played"},
+        {"name": "Adnan & Mayur", "team": "Dabangg Dynamos", "status": "not played"},
+        {"name": "Saurabh & Pritesh", "team": "Badshah Blasters", "status": "not played"},
+        {"name": "Rahul A & Avinash G", "team": "Gully Gang", "status": "not played"},
+        {"name": "Arvind & Blessen", "team": "Rockstar Rebels", "status": "not played"},
+        {"name": "Somansh & Vishal S", "team": "Badshah Blasters", "status": "not played"},
+        
        
     ],
     "Table Tennis": [

@@ -200,7 +200,7 @@ winners_by_sport_stage = {
         "Quarter Final Winners": [
             {"match": "Match 1", "winner": "Vijay C & Somansh", "team": "Badshah Blasters"},
             {"match": "Match 2", "winner": "Blessen & Asif", "team": "Rockstar Rebels"},
-            {"match": "Match 3", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 3", "winner": "Arvind & Kishan", "team": "Rockstar Rebels"},
             {"match": "Match 4", "winner": "Komal & Avinash G", "team": "Gully Gang"},
             ],
         "Semi Final Winners": [

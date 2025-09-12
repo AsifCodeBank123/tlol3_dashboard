@@ -162,6 +162,7 @@ def render():
             f'<div class="wof-card">'
             f'  <div class="wof-bg" {bg_style}></div>'
             f'  <div class="wof-overlay"></div>'
+            f'  <div class="wof-crown">👑</div>'
             f'  <div class="wof-content">'
             f'    <div class="wof-sport-label">{sport}</div>'
             f'    <div class="wof-title">{wof.get("title","🏅 Champion")}</div>'

@@ -539,6 +539,21 @@ section[data-testid="stSidebar"] button:active {
 
 
 /* Leaderboard Page - Cards Design */
+
+.leaderboard-avatar {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.leaderboard-avatar img {
+  width: 90px;
+  height: 90px;
+  border-radius: 30%;   /* makes it circular */
+  border: 2px solid #ffd700;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+  object-fit: cover;
+}
+
 /* Compact Card for Top 3 */
 .compact-leaderboard-card {
   background: linear-gradient(135deg, #4b2c5e, #0f2027);

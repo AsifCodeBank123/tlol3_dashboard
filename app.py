@@ -1,5 +1,5 @@
 import streamlit as st
-st.set_page_config(page_title="TLOL3 Arena", layout="wide")
+st.set_page_config(page_title="TLOL3 Arena", layout="wide",initial_sidebar_state="expanded")
 from sections import players_stats
 from sections.fixtures import render_fixtures_for_sport, render_sport_banner_and_rules ,render_bonus_cards
 from fixtures_modules.database_handler import load_sheet_as_df, sheet_exists

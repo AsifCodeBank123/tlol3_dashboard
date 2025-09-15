@@ -5,6 +5,7 @@ import base64
 
 from fixtures_modules.database_handler import load_sheet_as_df
 from fixtures_modules.constants import SPREADSHEET_ID2
+from utils.constants import player_avatars
 
 
 def encode_image_to_base64(path):
@@ -98,6 +99,23 @@ Tournament events follow this system. One-time events may give smaller points (e
 
 def render_leaderboard():
     load_global_styles()
+
+    # Background
+    image_path = "assets/lead_bg.jpg"
+    if os.path.exists(image_path):
+        with open(image_path, "rb") as img_file:
+            bg_img = base64.b64encode(img_file.read()).decode()
+        st.markdown(
+            f"""<style>
+            .stApp {{
+                background-image: url("data:image/jpg;base64,{bg_img}");
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+            }}
+            </style>""",
+            unsafe_allow_html=True,
+        )
 
     # Load team data
     df_teams = load_sheet_as_df("points", spreadsheet_id=SPREADSHEET_ID2)
@@ -194,6 +212,8 @@ def render_leaderboard():
                 team = row['team_name']
                 points = int(row['total_points']) if pd.notna(row['total_points']) else 0
 
+                avatar_url = player_avatars.get(player, "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+
                 
                 delta = top_player_points - points
                 delta_text = "Top!" if delta == 0 else f"▲ {delta}"
@@ -217,6 +237,9 @@ def render_leaderboard():
                     progress_percentage = int((points / top_player_points) * 100)
 
                 card += f"""
+                    <div class="leaderboard-avatar">
+                        <img src="{avatar_url}" alt="{player} avatar"/>
+                    </div>
                     <div class="compact-player-name">{player}</div>
                     <div class="compact-team-name">{team}</div>
                     <div class="compact-points">Total Points: {points}</div>

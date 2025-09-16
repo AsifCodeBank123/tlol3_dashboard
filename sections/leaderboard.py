@@ -5,7 +5,7 @@ import base64
 
 from fixtures_modules.database_handler import load_sheet_as_df
 from fixtures_modules.constants import SPREADSHEET_ID2
-from utils.constants import player_avatars
+from utils.constants import player_avatars, player_stats
 
 
 def encode_image_to_base64(path):
@@ -236,6 +236,21 @@ def render_leaderboard():
                 if pd.notna(points) and pd.notna(top_player_points) and top_player_points > 0:
                     progress_percentage = int((points / top_player_points) * 100)
 
+                # get stage counts safely
+                counts = player_stats.get(player, {})
+                final_ct = int(counts.get("final", 0))
+                sf_ct    = int(counts.get("sf", 0))
+                qf_ct    = int(counts.get("qf", 0))
+
+                # Stage stats HTML: gold / silver / bronze trophies with numbers
+                stage_html = (
+                    "<div class='stage-stats'>"
+                    f"  <span class='stage-pill stage-final'>🏆 F <span class='stage-num'>{final_ct}</span></span>"
+                    f"  <span class='stage-pill stage-sf'>🥈 SF <span class='stage-num'>{sf_ct}</span></span>"
+                    f"  <span class='stage-pill stage-qf'>🥉 QF <span class='stage-num'>{qf_ct}</span></span>"
+                    "</div>"
+                )
+
                 card += f"""
                     <div class="leaderboard-avatar">
                         <img src="{avatar_url}" alt="{player} avatar"/>
@@ -243,6 +258,7 @@ def render_leaderboard():
                     <div class="compact-player-name">{player}</div>
                     <div class="compact-team-name">{team}</div>
                     <div class="compact-points">Total Points: {points}</div>
+                    {stage_html}
                     <div class="progress-bar-container">
                         <div class="progress-bar-fill" style="width: {progress_percentage}%"></div>
                     </div>

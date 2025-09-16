@@ -554,6 +554,57 @@ section[data-testid="stSidebar"] button:active {
   object-fit: cover;
 }
 
+/* Stage stats (Final / SF / QF) */
+.stage-stats {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  align-items: center;
+  margin: 8px 0 6px;
+}
+
+/* individual pill */
+.stage-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 13px;
+  color: #111;
+}
+
+/* trophy colors */
+.stage-final {
+  background: linear-gradient(90deg,#fff4c2,#ffdd57); /* gold */
+  border: 1px solid rgba(170,130,0,0.18);
+}
+.stage-sf {
+  background: linear-gradient(90deg,#e6eef8,#c8d8f6); /* silver-ish */
+  border: 1px solid rgba(110,125,150,0.12);
+}
+.stage-qf {
+  background: linear-gradient(90deg,#f3e7df,#e7cbb0); /* bronze-ish */
+  border: 1px solid rgba(140,90,50,0.12);
+}
+
+/* number inside pill */
+.stage-num {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 900;
+  color: #000;
+  padding-left: 2px;
+}
+
+/* compact on tiny screens */
+@media (max-width: 520px) {
+  .stage-pill { padding: 5px 6px; font-size: 12px; gap: 4px; }
+  .leaderboard-avatar { width: 48px; height: 48px; }
+}
+
+
 /* Compact Card for Top 3 */
 .compact-leaderboard-card {
   background: linear-gradient(135deg, #4b2c5e, #0f2027);

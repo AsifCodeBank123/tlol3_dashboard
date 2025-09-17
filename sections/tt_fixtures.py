@@ -90,14 +90,15 @@ def build_knockout_fixtures():
     return pd.DataFrame(data)
 
 def build_group_standings(fixtures_df):
-    """Create pair-wise standings table from group stage fixtures."""
-    standings = []
+    """Create pair-wise standings table from group stage fixtures only."""
+    # ✅ filter only group-stage matches
+    group_stage_df = fixtures_df[fixtures_df["round"] == "Group Stage"].copy()
 
-    # fallback if group not available
-    groups = fixtures_df["group"].unique() if "group" in fixtures_df.columns else ["All"]
+    standings = []
+    groups = group_stage_df["group"].unique() if "group" in group_stage_df.columns else ["All"]
 
     for group in groups:
-        group_df = fixtures_df if group == "All" else fixtures_df[fixtures_df["group"] == group]
+        group_df = group_stage_df[group_stage_df["group"] == group]
 
         # collect unique pairs
         pairs = pd.concat([
@@ -108,36 +109,34 @@ def build_group_standings(fixtures_df):
         for _, row in pairs.iterrows():
             pair, team = row["pair"], row["team"]
 
-            # matches this pair actually played (with results filled)
             matches = group_df[
                 ((group_df["pair1"] == pair) | (group_df["pair2"] == pair))
                 & (group_df["result"].notna()) & (group_df["result"] != "")
             ]
 
             mp = len(matches)
-
-            # wins
-            w = (
-                ((matches["pair1"] == pair) & (matches["result"] == "w")) |
-                ((matches["pair2"] == pair) & (matches["result"] == "l"))
-            ).sum()
-
-            # losses
-            l = (
-                ((matches["pair1"] == pair) & (matches["result"] == "l")) |
-                ((matches["pair2"] == pair) & (matches["result"] == "w"))
-            ).sum()
+            w = (((matches["pair1"] == pair) & (matches["result"] == "w")) |
+                 ((matches["pair2"] == pair) & (matches["result"] == "l"))).sum()
+            l = (((matches["pair1"] == pair) & (matches["result"] == "l")) |
+                 ((matches["pair2"] == pair) & (matches["result"] == "w"))).sum()
 
             standings.append({
+                "Group": group,
                 "Pair": pair,
                 "Team": team,
-                "MP": mp,
-                "W": w,
-                "L": l,
-                "PTS": w * 3
+                "MP": int(mp),
+                "W": int(w),
+                "L": int(l),
+                "PTS": int(w) * 3
             })
 
-    return pd.DataFrame(standings).sort_values(["PTS", "W"], ascending=[False, False])
+    return (
+        pd.DataFrame(standings)
+        .drop_duplicates(subset=["Group", "Pair"])   # avoid dup rows
+        .sort_values(["Group", "PTS", "W"], ascending=[True, False, False])
+        .reset_index(drop=True)
+    )
+
 
 # ----------------------
 # Render in Streamlit

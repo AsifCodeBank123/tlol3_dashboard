@@ -64,7 +64,7 @@ try:
             st.session_state.fixture_cache = {}
 
         # === Public Fixture Tabs ===
-        sport_tabs = ["Foosball", "Carrom", "Table tennis", "Badminton", "Chess"]
+        sport_tabs = ["Foosball", "Carrom", "Table tennis", "Badminton", "Chess", "Olympics"]
         tab_objects = st.tabs(sport_tabs)
 
         for tab, sport in zip(tab_objects, sport_tabs):

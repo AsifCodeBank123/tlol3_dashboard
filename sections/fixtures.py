@@ -23,75 +23,116 @@ def load_global_styles():
         with open(style_path) as f:
             st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
+@st.cache_data(show_spinner=False)
+def get_base64_image_cached(image_path: str):
+    """Return base64 string for an image path. Cached across reruns."""
+    if not image_path or not os.path.exists(image_path):
+        return None
+    return base64.b64encode(Path(image_path).read_bytes()).decode()
+
+def build_rules_html(section) -> str:
+    """Return HTML string for rules structure (list / dict)."""
+    def _render_section(s):
+        if isinstance(s, list):
+            items = "".join(f"<li>{item}</li>" for item in s)
+            return f"<ul class='rules-list'>{items}</ul>"
+        elif isinstance(s, dict):
+            out = ""
+            for key, value in s.items():
+                out += f"<div class='rule-section-title'>{key}</div>"
+                out += _render_section(value)
+            return out
+        else:
+            return f"<div>{str(s)}</div>"
+    return _render_section(section)
+
+def clear_fixtures_ui_cache(sport_name: str = None):
+    """
+    Developer helper to clear cached HTML/DF in session state.
+    If sport_name is None, clears all fixtures UI cached keys.
+    """
+    keys = list(st.session_state.keys())
+    for k in keys:
+        if k.startswith("banner_html_") or k.startswith("rules_html_") or k.startswith("bonus_df_"):
+            if sport_name:
+                if k.endswith(f"_{sport_name.lower()}"):
+                    del st.session_state[k]
+            else:
+                del st.session_state[k]
+
 def render_sport_banner_and_rules(sport_name):
+    """Render banner + rules, but generate HTML once and reuse via st.session_state cache."""
 
-    load_global_styles()
+    load_global_styles()  # keep your global css loader
 
-    # image_path = "assets/fixtures_bg.png"
-    # if os.path.exists(image_path):
-    #     with open(image_path, "rb") as img_file:
-    #         bg_img = base64.b64encode(img_file.read()).decode()
+    banner_key = f"banner_html_{sport_name.lower()}"
+    rules_key = f"rules_html_{sport_name.lower()}"
 
-    #     st.markdown(
-    #         f"""
-    #         <style>
-    #         .stApp {{
-    #             background: url("data:image/jpg;base64,{bg_img}") no-repeat center center fixed !important;
-    #             background-size: cover !important;
-    #         }}
-    #         </style>
-    #         """,
-    #         unsafe_allow_html=True,
-    #     )
+    # If both banner+rules are cached, render quickly and return
+    if banner_key in st.session_state and rules_key in st.session_state:
+        st.markdown(st.session_state[banner_key], unsafe_allow_html=True)
+        # keep using st.expander for collapsible UI (cheap to call)
+        with st.expander(f"📜 {sport_name} Rules"):
+            st.markdown(st.session_state[rules_key], unsafe_allow_html=True)
+        return
 
-    """Render the banner, rules, and bonus cards for a sport."""
-
-    # --- Banner ---
+    # --- build banner HTML (cached base64 fetch) ---
     logo_path = SPORT_LOGOS.get(sport_name)
-    img_base64 = get_base64_image(logo_path) if logo_path else None
+    img_base64 = get_base64_image_cached(logo_path) if logo_path else None
 
     if img_base64:
-        st.markdown(
+        banner_html = (
             f"""
             <div class="sport-banner">
-                <img src="data:image/jpg;base64,{img_base64}" alt="{sport_name} banner">
+                <img src="data:image/jpg;base64,{img_base64}" alt="{sport_name} banner" style="max-width:100%; border-radius:8px;">
             </div>
-            """,
-            unsafe_allow_html=True
+            """
         )
     else:
-        st.warning(f"No banner image found for {sport_name}.")
+        banner_html = f"<div style='padding:8px;color:#ffc107;font-weight:700;'>No banner image found for {sport_name}.</div>"
 
-    # --- Recursive Rules Renderer ---
-    def render_rules_section(section, level=0):
-        if isinstance(section, list):
-            st.markdown(
-                "<ul class='rules-list'>" + "".join([f"<li>{item}</li>" for item in section]) + "</ul>",
-                unsafe_allow_html=True
-            )
-        elif isinstance(section, dict):
-            for key, value in section.items():
-                st.markdown(f"<div class='rule-section-title'>{key}</div>", unsafe_allow_html=True)
-                render_rules_section(value, level + 1)
-
-    # --- Rules Expander ---
+    # --- build rules HTML (string) ---
     rules = SPORT_RULES.get(sport_name)
     if rules:
-        with st.expander(f"📜 {sport_name} Rules"):
-            st.markdown("<div class='rules-card'>", unsafe_allow_html=True)
-            render_rules_section(rules)
-            st.markdown("</div>", unsafe_allow_html=True)
+        rules_html = "<div class='rules-card'>" + build_rules_html(rules) + "</div>"
     else:
-        st.info("No rules available for this sport.")
+        rules_html = "<div class='rules-card'><em>No rules available for this sport.</em></div>"
+
+    # persist in session_state so future reruns are instant
+    st.session_state[banner_key] = banner_html
+    st.session_state[rules_key] = rules_html
+
+    # render once
+    st.markdown(banner_html, unsafe_allow_html=True)
+    with st.expander(f"📜 {sport_name} Rules"):
+        st.markdown(rules_html, unsafe_allow_html=True)
 
 
 def render_bonus_cards(sport_name):
-    """Render bonus cards for the given sport."""
+    """Render bonus cards table; cache the DataFrame in session_state to avoid rebuilds."""
     cards = BONUS_CARDS.get(sport_name, [])
-    if cards:
-        st.markdown("### 🎯 Bonus Cards")
+
+    if not cards:
+        # keep behavior consistent
+        return
+
+    st.markdown("### 🎯 Bonus Cards")
+    df_key = f"bonus_df_{sport_name.lower()}"
+
+    # If cached df exists, use it (avoids reconstructing / expensive conversions)
+    if df_key in st.session_state:
+        st.dataframe(st.session_state[df_key], use_container_width=True, hide_index=True)
+        return
+
+    # Build DataFrame and cache it
+    try:
         df = pd.DataFrame(cards)
-        st.dataframe(df, use_container_width=True, hide_index=True)
+    except Exception:
+        # fallback — small safe render
+        df = pd.DataFrame.from_records(cards)
+
+    st.session_state[df_key] = df
+    st.dataframe(df, use_container_width=True, hide_index=True)
 
 # ---------- helpers ----------
 

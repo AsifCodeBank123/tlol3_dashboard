@@ -77,6 +77,7 @@ SPORT_LOGOS = {
     "Table tennis": "assets/tt.jpg",
     "Cricket": "assets/cricket.jpg",
     "Foosball": "assets/foosball.jpg",
+    "Olympics": "assets/olympics1.jpg",
     # add all other sports you have
 }
 
@@ -275,6 +276,25 @@ SPORT_RULES = {
             "At 16-all, the side scoring the 17th point wins the set.",
             "The side winning a set serves first in the next set."
         ]
+    },
+
+    "Olympics": {
+
+        "Overview": [
+            "Each team consists of 9 players, each participating in one of 8 Olympic Events.",
+            "The race is a relay where each player completes their event and tags the next player until the 9th player finishes the final event.",
+            "The team with the fastest overall time (after bonuses and penalties) wins.",
+            "Good sportsmanship is expected at all times.",
+            "Each team may use one Bonus Card to affect another team’s performance in a specific event."
+        ],
+       
+        "Notes": [
+            "Each player completes their event and tags the next player in the relay sequence.",
+            "Time reductions (e.g., from Football Kick the Multiplier, Ring It, etc.) are applied to the team’s total time at the end.",
+            "Bonus Cards are applied before the race begins, with only one card per team",
+            "Good sportsmanship is expected at all times.",
+            "Ensure all teams use the same set of events for fairness."
+        ]
     }
 
 
@@ -407,6 +427,39 @@ BONUS_CARDS = {
             "When it cannot be active": "Before 1 min mark (Pending 1 Min)",
             "Team Restrictions": "Once in a Match"
         },
+    ],
+
+    "Olympics": [
+        {
+       
+            "Event": "Olympic Games",
+            "Card": "Lunge Drama",
+            "Description": "Target team’s Player must complete 20 lunges (each leg)",
+            "When it should be called": "Before the Match",
+            "When it cannot be active": "",
+            "Team Restrictions": "Once in Tournament"
+        },
+
+        {
+       
+            "Event": "Olympic Games",
+            "Card": "Golmaal Blunder",
+            "Description": "Target team’s events have their time reduction halved (e.g., 1x = 2.5 seconds, 2x = 5 seconds, 3x = 7.5 seconds).",
+            "When it should be called": "Before the Match",
+            "When it cannot be active": "",
+            "Team Restrictions": "Once in Tournament"
+        },
+
+        {
+       
+            "Event": "Olympic Games",
+            "Card": "Khota Sikka",
+            "Description": "Target team’s coin flip event is increased to 25 flips.",
+            "When it should be called": "Before the Match",
+            "When it cannot be active": "",
+            "Team Restrictions": "Once in Tournament"
+        },
+
     ]
 }
 

@@ -75,7 +75,7 @@ winners_by_sport_stage = {
             {"match": "Match 13", "winner": "TBD", "team": "TBD"},
             {"match": "Match 14", "winner": "TBD", "team": "TBD"},
             {"match": "Match 15", "winner": "TBD", "team": "TBD"},
-            {"match": "Match 16", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 16", "winner": "Pritesh", "team": "Badshah Blasters"},
 
         ],
         "Super 16 Winners": [
@@ -216,12 +216,12 @@ winners_by_sport_stage = {
         "Group Stage Winners": [ 
             {"match": "Group A1",  "winner": "Wilfred & Pritesh", "team": "Badshah Blasters"},
             {"match": "Group A2",  "winner": "Suraj & Blessen", "team": "Rockstar Rebels"},
-            {"match": "Group B1",  "winner": "TBD", "team": "TBD"},
-            {"match": "Group B2",  "winner": "TBD", "team": "TBD"},
+            {"match": "Group B1",  "winner": "Nilesh M & Lalit", "team": "Dabangg Dynamos"},
+            {"match": "Group B2",  "winner": "Somansh & Saurabh", "team": "Badshah Blasters"},
             {"match": "Group C1",  "winner": "Nilesh S & Adnan", "team": "Dabangg Dynamos"},
             {"match": "Group C2",  "winner": "Vibhuti & Ravi C", "team": "Rockstar Rebels"},
-            {"match": "Group D1",  "winner": "TBD", "team": "TBD"},
-            {"match": "Group D2",  "winner": "TBD", "team": "TBD"},
+            {"match": "Group D1",  "winner": "Johnson & Kishan", "team": "Rockstar Rebels"},
+            {"match": "Group D2",  "winner": "Hitesh & Umesh G", "team": "Badshah Blasters"},
             ],
        
         "Quarter Final Winners": [
@@ -327,11 +327,11 @@ players_by_sport = {
         {"name": "Jay", "team": "Gully Gang", "status": "eliminated"},
         {"name": "Wilfred", "team": "Badshah Blasters", "status": "alive"},
         {"name": "Samiksha", "team": "Badshah Blasters", "status": "eliminated"},
-        {"name": "Bhagyashree", "team": "Gully Gang", "status": "alive"},
+        {"name": "Bhagyashree", "team": "Gully Gang", "status": "eliminated"},
         {"name": "Umesh G", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Somansh", "team": "Badshah Blasters", "status": "alive"},
         {"name": "Gayatri", "team": "Badshah Blasters", "status": "not_played"},
-        {"name": "Pritesh", "team": "Badshah Blasters", "status": "not_played"},
+        {"name": "Pritesh", "team": "Badshah Blasters", "status": "alive"},
         {"name": "Adnan", "team": "Dabangg Dynamos", "status": "alive"},
         {"name": "Sanket Patil", "team": "Rockstar Rebels", "status": "alive"},
         {"name": "Sanskar", "team": "Dabangg Dynamos", "status": "alive"},

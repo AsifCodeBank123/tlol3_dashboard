@@ -101,7 +101,7 @@ def render_leaderboard():
     load_global_styles()
 
     # Background
-    image_path = "assets/fight.jpg"
+    image_path = "assets/tiger_fight.jpg"
     if os.path.exists(image_path):
         with open(image_path, "rb") as img_file:
             bg_img = base64.b64encode(img_file.read()).decode()

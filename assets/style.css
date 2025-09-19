@@ -441,7 +441,7 @@ section[data-testid="stSidebar"] button:active {
   margin-bottom: 14px;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.25);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
   transition: all 0.25s ease-in-out;
@@ -553,6 +553,26 @@ section[data-testid="stSidebar"] button:active {
   box-shadow: 0 3px 6px rgba(0,0,0,0.4);
   object-fit: cover;
 }
+
+/* -----------------------
+   Avatar Effects (players + team logos)
+   ----------------------- */
+
+/* -----------------------
+   Continuous zoom-in/out effect for avatars
+   ----------------------- */
+.leaderboard-avatar img,
+.team-logo {
+  animation: zoomPulse 6s ease-in-out infinite;
+  transform-origin: center center;
+}
+
+/* Keyframes for smooth breathing effect */
+@keyframes zoomPulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.26); } /* subtle zoom */
+}
+
 
 /* Stage stats (Final / SF / QF) */
 .stage-stats {
@@ -707,18 +727,77 @@ section[data-testid="stSidebar"] button:active {
   margin-bottom: 8px;
 }
 
-/* Glowing rank styles */
+/* -----------------------
+   Subtle but premium Rank 1 card
+   ----------------------- */
 .rank-glow-gold {
-  background: linear-gradient(to right, #b8860b, #daa520); /* Gold */
-  border-left: 6px solid gold;
-  box-shadow: 0 0 18px rgba(255, 215, 0, 0.6);
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 12px;
+  position: relative;
+  background: linear-gradient(135deg, #2c2c2c, #1a1a1a); /* dark base */
+  border-left: 6px solid #ffd966; /* golden edge */
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin: 12px 0;
+  color: #f8f8f8;
+  box-shadow: 0 0 15px rgba(255, 217, 102, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+.rank-glow-gold:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 22px rgba(255, 217, 102, 0.45);
+}
+
+/* soft golden underline accent */
+.rank-glow-gold::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 8px;
+  width: 40%;
+  height: 3px;
+  background: linear-gradient(90deg, #ffd966, transparent);
+  border-radius: 2px;
+}
+
+/* rank badge */
+.rank-glow-gold .compact-rank-badge {
+  background: #ffd966;
+  color: #222;
+  font-weight: 800;
+  box-shadow: 0 2px 6px rgba(255, 217, 102, 0.4);
+}
+
+/* points pill */
+.rank-glow-gold .compact-points {
+  background: rgba(255, 217, 102, 0.15);
+  color: #ffd966;
+  border: 1px solid rgba(255, 217, 102, 0.4);
+  text-shadow: none;
+}
+
+/* sport blocks subtle highlight */
+.rank-glow-gold .mini-sport-block {
+  background: #333;
+  border: 1px solid #444;
+  color: #ffd966;
+  font-weight: 600;
+}
+
+/* progress bar fill golden */
+.rank-glow-gold .progress-bar-fill {
+  background: linear-gradient(90deg, #ffd966, #e6b800);
+}
+
+/* delta badge */
+.rank-glow-gold .delta-badge {
+  background: rgba(255, 217, 102, 0.2);
+  color: #ffd966;
+  border: 1px solid rgba(255, 217, 102, 0.4);
+}
+
 .rank-glow-silver {
   background: linear-gradient(to right, #c0c0c0, #d3d3d3); /* Silver */
-  border-left: 6px solid silver;
+  border-left: 6px solid rgb(72, 69, 69);
   box-shadow: 0 0 18px rgba(192,192,192, 0.5);
   padding: 12px;
   margin: 10px 0;
@@ -726,7 +805,7 @@ section[data-testid="stSidebar"] button:active {
 }
 .rank-glow-bronze {
   background: linear-gradient(to right, #cd7f32, #deaa88); /* Bronze */
-  border-left: 6px solid #cd7f32;
+  border-left: 6px solid #523c26;
   box-shadow: 0 0 18px rgba(205, 127, 50, 0.5);
   padding: 12px;
   margin: 10px 0;
@@ -974,12 +1053,12 @@ section[data-testid="stSidebar"] button:active {
 
 /* Leaderboard expander container */
 [data-testid="stExpander"] {
-    background: rgba(255, 255, 255, 0.05) !important; /* faint glass effect */
+    background: rgba(254, 221, 5, 0.536) !important; /* faint glass effect */
     border-radius: 14px;
-    border: 1px solid rgba(255, 215, 0, 0.4); /* subtle gold border */
+    border: 1px solid rgba(255, 217, 0, 0.818); /* subtle gold border */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
     overflow: hidden;
-    backdrop-filter: blur(8px) saturate(140%);
+    backdrop-filter: blur(60px) saturate(140%);
 }
 
 /* Expander header (title row) */

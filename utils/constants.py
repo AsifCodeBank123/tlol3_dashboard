@@ -498,7 +498,7 @@ player_avatars = {
     "Bhagyashree Dhotre": "https://cdn.pixabay.com/photo/2023/12/22/10/45/ai-generated-8463567_1280.png",
     "Pramod Patel": "https://cdn.pixabay.com/photo/2024/02/28/07/05/ai-generated-8601418_1280.png",
     "Komal Panjwani": "https://cdn.pixabay.com/photo/2024/05/09/20/20/ai-generated-8751751_1280.jpg",
-    "Pritam Paparkar": "",
+    "Pritam Paparkar": "https://cdn.pixabay.com/photo/2019/09/22/05/06/tiger-4495107_1280.png",
     "Dhananjay Kulkarni": "https://cdn.pixabay.com/photo/2024/04/21/09/13/ai-generated-8710159_1280.jpg",
     "Suraj Kamerkar": "https://cdn.pixabay.com/photo/2024/03/11/15/48/ai-generated-8627010_1280.jpg",
     "Kishansingh Devda": "https://cdn.pixabay.com/photo/2024/01/25/21/36/ai-generated-8532716_1280.png",

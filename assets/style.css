@@ -1053,12 +1053,12 @@ section[data-testid="stSidebar"] button:active {
 
 /* Leaderboard expander container */
 [data-testid="stExpander"] {
-    background: rgba(254, 221, 5, 0.536) !important; /* faint glass effect */
+    background: rgba(212, 254, 5, 0.312) !important; /* faint glass effect */
     border-radius: 14px;
-    border: 1px solid rgba(255, 217, 0, 0.818); /* subtle gold border */
+    border: 1px solid rgba(157, 43, 33, 0.818); /* subtle gold border */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
     overflow: hidden;
-    backdrop-filter: blur(60px) saturate(140%);
+    backdrop-filter: blur(40px) saturate(140%);
 }
 
 /* Expander header (title row) */

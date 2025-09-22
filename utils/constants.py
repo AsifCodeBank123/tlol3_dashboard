@@ -79,8 +79,8 @@ winners_by_sport_stage = {
 
         ],
         "Super 16 Winners": [
-            {"match": "Match 1", "winner": "TBD", "team": "TBD"},
-            {"match": "Match 2", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 1", "winner": "Adnan", "team": "Dabangg Dynamos"},
+            {"match": "Match 2", "winner": "Sanskar", "team": "Dabangg Dynamos"},
             {"match": "Match 3", "winner": "TBD", "team": "TBD"},
             {"match": "Match 4", "winner": "TBD", "team": "TBD"},
             {"match": "Match 5", "winner": "TBD", "team": "TBD"},
@@ -333,13 +333,13 @@ players_by_sport = {
         {"name": "Gayatri", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Pritesh", "team": "Badshah Blasters", "status": "alive"},
         {"name": "Adnan", "team": "Dabangg Dynamos", "status": "alive"},
-        {"name": "Sanket Patil", "team": "Rockstar Rebels", "status": "alive"},
+        {"name": "Sanket Patil", "team": "Rockstar Rebels", "status": "eliminated"},
         {"name": "Sanskar", "team": "Dabangg Dynamos", "status": "alive"},
         {"name": "Arijit", "team": "Dabangg Dynamos", "status": "alive"},
         {"name": "Pramod", "team": "Gully Gang", "status": "eliminated"},
         {"name": "Umesh T", "team": "Gully Gang", "status": "eliminated"},
         {"name": "Komal", "team": "Gully Gang", "status": "eliminated"},
-        {"name": "Blessen", "team": "Rockstar Rebels", "status": "alive"},
+        {"name": "Blessen", "team": "Rockstar Rebels", "status": "eliminated"},
         {"name": "Ravi C", "team": "Rockstar Rebels", "status": "eliminated"},
        
     ],

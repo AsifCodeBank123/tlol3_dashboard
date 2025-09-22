@@ -16,6 +16,7 @@ def get_base64_image(image_path):
     with open(image_path, "rb") as img_file:
         encoded = base64.b64encode(img_file.read()).decode()
     return f"data:image/jpg;base64,{encoded}"
+    
 
 def render():
     load_global_styles()
@@ -61,6 +62,7 @@ def render():
             if st.session_state.get("active_section") != "Kismein Kitna Hai Dum (Leaderboard)":
                 st.session_state.active_section = "Kismein Kitna Hai Dum (Leaderboard)"
                 st.rerun()
+
 
         # inline style override
     st.markdown("""
@@ -120,6 +122,20 @@ def render():
             </p>
         </div>
     """, unsafe_allow_html=True)
+    st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
+
+    # ---- inject webagent right below the button (in-column) ----
+    st.markdown(
+        """
+        <iframe
+            src="https://webagent.ai/chatbot/embed/edf0decc-06db-407a-afac-46c608560866/classic"
+            style="width:100%; height:500px; border:none; border-radius:12px; margin-top:8px;"
+            frameborder="0"
+        ></iframe>
+        """,
+        unsafe_allow_html=True
+    )
+
     st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
 
     st.markdown("<div class='winners-title'>🌟 Wall of Fame</div>", unsafe_allow_html=True)

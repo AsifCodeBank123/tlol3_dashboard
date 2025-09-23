@@ -124,19 +124,19 @@ def render():
     """, unsafe_allow_html=True)
     st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
 
-    # ---- inject webagent right below the button (in-column) ----
-    st.markdown(
-        """
-        <iframe
-            src="https://webagent.ai/chatbot/embed/edf0decc-06db-407a-afac-46c608560866/classic"
-            style="width:100%; height:500px; border:none; border-radius:12px; margin-top:8px;"
-            frameborder="0"
-        ></iframe>
-        """,
-        unsafe_allow_html=True
-    )
+    # # ---- inject webagent right below the button (in-column) ----
+    # st.markdown(
+    #     """
+    #     <iframe
+    #         src="https://webagent.ai/chatbot/embed/edf0decc-06db-407a-afac-46c608560866/classic"
+    #         style="width:100%; height:500px; border:none; border-radius:12px; margin-top:8px;"
+    #         frameborder="0"
+    #     ></iframe>
+    #     """,
+    #     unsafe_allow_html=True
+    # )
 
-    st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
+    # st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
 
     st.markdown("<div class='winners-title'>🌟 Wall of Fame</div>", unsafe_allow_html=True)
     st.markdown(

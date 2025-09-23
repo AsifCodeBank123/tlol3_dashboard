@@ -84,7 +84,7 @@ winners_by_sport_stage = {
             {"match": "Match 3", "winner": "Rachita", "team": "Dabangg Dynamos"},
             {"match": "Match 4", "winner": "Arijit", "team": "Dabangg Dynamos"},
             {"match": "Match 5", "winner": "Arvind", "team": "Rockstar Rebels"},
-            {"match": "Match 6", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 6", "winner": "Saurabh", "team": "Badshah Blasters"},
             {"match": "Match 7", "winner": "Nilesh S", "team": "Dabangg Dynamos"},
             {"match": "Match 8", "winner": "TBD", "team": "TBD"},
 
@@ -329,7 +329,7 @@ players_by_sport = {
         {"name": "Samiksha", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Bhagyashree", "team": "Gully Gang", "status": "eliminated"},
         {"name": "Umesh G", "team": "Badshah Blasters", "status": "eliminated"},
-        {"name": "Somansh", "team": "Badshah Blasters", "status": "alive"},
+        {"name": "Somansh", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Gayatri", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Pritesh", "team": "Badshah Blasters", "status": "alive"},
         {"name": "Adnan", "team": "Dabangg Dynamos", "status": "alive"},
@@ -518,7 +518,7 @@ player_avatars = {
 player_stats = {
     "Wilfred Dsilva": {"final": 0, "sf": 2, "qf": 1},
     "Vishal Shinde": {"final": 0, "sf": 1, "qf": 0},
-    "Saurabh Mahadik": {"final": 1, "sf": 0, "qf": 1},
+    "Saurabh Mahadik": {"final": 1, "sf": 0, "qf": 2},
     "Pritesh Menon": {"final": 1, "sf": 1, "qf": 1},
     "Samiksha Prabhu": {"final": 0, "sf": 0, "qf": 1},
     "Umesh Gawade": {"final": 0, "sf": 0, "qf": 1},

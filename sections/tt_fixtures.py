@@ -16,10 +16,9 @@ def safe_val(v):
     return v
 
 def load_global_styles():
-    """Load global CSS from assets."""
     style_path = "assets/style.css"
     if os.path.exists(style_path):
-        with open(style_path) as f:
+        with open(style_path, encoding="utf-8") as f:  # 👈 force UTF-8
             st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 load_global_styles()

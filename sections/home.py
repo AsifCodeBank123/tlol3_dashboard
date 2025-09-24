@@ -154,6 +154,7 @@ def render():
     unsafe_allow_html=True
 )
 
+    # build cards with caption below so bg remains clear
     card_chunks = []
     for sport, wof in wall_of_fame.items():
         # image
@@ -162,7 +163,6 @@ def render():
         if img_path and os.path.exists(img_path):
             wof_img_b64 = get_base64_image(img_path)
 
-        # cricket shows team, others show winner
         is_cricket = sport.lower() == "cricket"
         if is_cricket:
             main_line = (wof.get("team") or "TBD").strip()
@@ -173,25 +173,28 @@ def render():
 
         bg_style = f'style="background-image:url({wof_img_b64});"' if wof_img_b64 else ""
 
-        # ⬇️ no leading spaces/newlines
-        card_chunks.append(
-            f'<div class="wof-card">'
-            f'  <div class="wof-bg" {bg_style}></div>'
-            f'  <div class="wof-overlay"></div>'
-            f'  <div class="wof-crown">👑</div>'
-            f'  <div class="wof-content">'
-            f'    <div class="wof-sport-label">{sport}</div>'
-            f'    <div class="wof-title">{wof.get("title","🏅 Champion")}</div>'
-            f'    <div class="wof-line-main">{main_line}</div>'
-            f'    <div class="wof-line-sub">{sub_line}</div>'
-            f'  </div>'
-            f'</div>'
-        )
+        # Card: image area + caption below (keeps text outside image)
+        card_html = (
+                f'<div class="wof-card-wrapper">'
+                f'  <div class="wof-sport-label">{sport}</div>'   # ⬅️ now above card
+                f'  <div class="wof-card">'
+                f'    <div class="wof-bg" {bg_style}></div>'
+                f'    <div class="wof-overlay"></div>'
+               
+                f'    <div class="wof-footer">'
+                f'      <div class="wof-line-main">{main_line}</div>'
+                f'      <div class="wof-line-sub">{sub_line}</div>'
+                f'    </div>'
+                f'  </div>'
+                f'  <div class="wof-title">{wof.get("title","🏅 Champion")}</div>'  # ⬅️ below card
+                f'</div>'
+            )
+
+        card_chunks.append(card_html)
 
     gallery_html = '<div class="wof-gallery">' + "".join(card_chunks) + '</div>'
     st.markdown(gallery_html, unsafe_allow_html=True)
 
-    st.markdown("</div>", unsafe_allow_html=True)  # close winners-section
 
     #st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
 

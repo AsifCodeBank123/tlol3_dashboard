@@ -86,13 +86,13 @@ winners_by_sport_stage = {
             {"match": "Match 5", "winner": "Arvind", "team": "Rockstar Rebels"},
             {"match": "Match 6", "winner": "Saurabh", "team": "Badshah Blasters"},
             {"match": "Match 7", "winner": "Nilesh S", "team": "Dabangg Dynamos"},
-            {"match": "Match 8", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 8", "winner": "Wilfred", "team": "Badshah Blasters"},
 
         ],
         "Quarter Final Winners": [
             {"match": "Match 1", "winner": "TBD", "team": "TBD"},
-            {"match": "Match 2", "winner": "TBD", "team": "TBD"},
-            {"match": "Match 3", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 2", "winner": "Arijit", "team": "Dabangg Dynamos"},
+            {"match": "Match 3", "winner": "Saurabh", "team": "Badshah Blasters"},
             {"match": "Match 4", "winner": "TBD", "team": "TBD"},
             ],
         "Semi Final Winners": [
@@ -225,18 +225,18 @@ winners_by_sport_stage = {
             ],
        
         "Quarter Final Winners": [
-            {"match": "Match QF1",  "winner": "TBD", "team": "TBD"},
+            {"match": "Match QF1",  "winner": "Wilfred & Pritesh", "team": "Badshah Blasters"},
             {"match": "Match QF2",  "winner": "Somansh & Saurabh", "team": "Badshah Blasters"},
             {"match": "Match QF3", "winner": "Johnson & Kishan", "team": "Rockstar Rebels"},
             {"match": "Match QF4",  "winner": "Nilesh M & Lalit", "team": "Dabangg Dynamos"},
             ],
         "Semi Final Winners": [
-            {"match": "Match SF1", "winner": "TBD", "team": "TBD"},
-            {"match": "Match SF2", "winner": "TBD", "team": "TBD"},
+            {"match": "Match SF1", "winner": "Wilfred & Pritesh", "team": "Badshah Blasters"},
+            {"match": "Match SF2", "winner": "Nilesh M & Lalit", "team": "Dabangg Dynamos"},
         ],
        
         "Champion": [
-             {"match": "Final Match", "winner": "TBD", "team": "TBD"},
+             {"match": "Final Match", "winner": "Wilfred & Pritesh", "team": "Badshah Blasters"},
         ]
     }
 }
@@ -264,15 +264,15 @@ wall_of_fame = {
     },
     "Badminton": {
         "title": "🏸 Smash Legends",
-        "image": "assets/badminton_champion.png",
-        "winner": "Pritesh & Saurabh",
+        "image": "assets/bd_champions.png",
+        "winner": "Saurabh & Pritesh",
         "team": "Badshah Blasters"
     },
     "Table Tennis": {
         "title": "🏓 TT Maestros",
-        "image": "assets/tt.jpg",
-        "winner": "",
-        "team": ""
+        "image": "assets/tt_champions.png",
+        "winner": "Pritesh & Wilfred",
+        "team": "Badshah Blasters"
     },
     "Cricket": {
         "title": "🏏 Cricket Champion",
@@ -303,14 +303,14 @@ players_by_sport = {
         {"name": "Johnson", "team": "Rockstar Rebels", "status": "eliminated"},
         {"name": "Kiran", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Asif", "team": "Rockstar Rebels", "status": "eliminated"},
-        {"name": "Rachita", "team": "Dabangg Dynamos", "status": "alive"},
+        {"name": "Rachita", "team": "Dabangg Dynamos", "status": "eliminated"},
         {"name": "Suraj", "team": "Rockstar Rebels", "status": "eliminated"},
         {"name": "Vijay S", "team": "Gully Gang", "status": "eliminated"},
         {"name": "Irshad", "team": "Rockstar Rebels", "status": "eliminated"},
         {"name": "Mayur", "team": "Dabangg Dynamos", "status": "eliminated"},
         {"name": "Avinash C", "team": "Gully Gang", "status": "eliminated"},
         {"name": "Pooja", "team": "Badshah Blasters", "status": "eliminated"},
-        {"name": "Arvind", "team": "Rockstar Rebels", "status": "alive"},
+        {"name": "Arvind", "team": "Rockstar Rebels", "status": "eliminated"},
         {"name": "Ravi K", "team": "Dabangg Dynamos", "status": "eliminated"},
         {"name": "Avinash G", "team": "Gully Gang", "status": "eliminated"},
         {"name": "Bijal", "team": "Dabangg Dynamos", "status": "eliminated"},
@@ -331,7 +331,7 @@ players_by_sport = {
         {"name": "Umesh G", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Somansh", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Gayatri", "team": "Badshah Blasters", "status": "eliminated"},
-        {"name": "Pritesh", "team": "Badshah Blasters", "status": "alive"},
+        {"name": "Pritesh", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Adnan", "team": "Dabangg Dynamos", "status": "alive"},
         {"name": "Sanket Patil", "team": "Rockstar Rebels", "status": "eliminated"},
         {"name": "Sanskar", "team": "Dabangg Dynamos", "status": "alive"},
@@ -430,8 +430,8 @@ players_by_sport = {
         {"name": "Bijal & Rachita", "team": "Dabangg Dynamos", "status": "eliminated"},
         {"name": "Esakki & Asif", "team": "Rockstar Rebels", "status": "eliminated"},
         {"name": "Suraj & Blessen", "team": "Rockstar Rebels", "status": "eliminated"},
-        {"name": "Saurabh & Somansh", "team": "Badshah Blasters", "status": "alive"},
-        {"name": "Nilesh M & Lalit", "team": "Dabangg Dynamos", "status": "alive"},
+        {"name": "Saurabh & Somansh", "team": "Badshah Blasters", "status": "eliminated"},
+        {"name": "Nilesh M & Lalit", "team": "Dabangg Dynamos", "status": "eliminated"},
         {"name": "Bhagyashree & Jay", "team": "Gully Gang", "status": "eliminated"},
         {"name": "Samiksha & Gayatri", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Ankit & Dhananjay", "team": "Rockstar Rebels", "status": "eliminated"},
@@ -442,7 +442,7 @@ players_by_sport = {
         {"name": "Ravi C & Vibhuti", "team": "Rockstar Rebels", "status": "eliminated"},
         {"name": "Johnson & Kishan", "team": "Rockstar Rebels", "status": "eliminated"},
         {"name": "Adnan & Nilesh S", "team": "Dabangg Dynamos", "status": "eliminated"},
-        {"name": "Hitesh & Umesh G ", "team": "Badshah Blasters", "status": "alive"},
+        {"name": "Hitesh & Umesh G ", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Rahul P & Pramod", "team": "Gully Gang", "status": "eliminated"},
         {"name": "Vijay S & Bhaskar", "team": "Gully Gang", "status": "eliminated"},
         {"name": "Pooja & Vijay C", "team": "Badshah Blasters", "status": "eliminated"},
@@ -516,10 +516,10 @@ player_avatars = {
 }
 
 player_stats = {
-    "Wilfred Dsilva": {"final": 0, "sf": 2, "qf": 1},
+    "Wilfred Dsilva": {"final": 1, "sf": 2, "qf": 0},
     "Vishal Shinde": {"final": 0, "sf": 1, "qf": 0},
     "Saurabh Mahadik": {"final": 1, "sf": 1, "qf": 1},
-    "Pritesh Menon": {"final": 1, "sf": 1, "qf": 1},
+    "Pritesh Menon": {"final": 2, "sf": 1, "qf": 0},
     "Samiksha Prabhu": {"final": 0, "sf": 0, "qf": 1},
     "Umesh Gawade": {"final": 0, "sf": 0, "qf": 1},
     "N Pratap Kumar": {"final": 0, "sf": 0, "qf": 0},
@@ -532,11 +532,11 @@ player_stats = {
     "Adnan Shaikh": {"final": 0, "sf": 1, "qf": 4},
     "Nilesh Sansare": {"final": 0, "sf": 1, "qf": 2},
     "Rachita Harit": {"final": 0, "sf": 0, "qf": 1},
-    "Nilesh Mulik": {"final": 0, "sf": 1, "qf": 0},
+    "Nilesh Mulik": {"final": 1, "sf": 0, "qf": 0},
     "Mayur Pawar": {"final": 0, "sf": 0, "qf": 3},
     "Bijal Gala":{"final": 0, "sf": 0, "qf": 0},
     "Sanskar Bagwe": {"final": 0, "sf": 0, "qf": 3},
-    "Lalit Chavan": {"final": 0, "sf": 1, "qf": 2},
+    "Lalit Chavan": {"final": 1, "sf": 0, "qf": 2},
     "Ravi Khanra": {"final": 0, "sf": 0, "qf": 0},
     "Bishal Pandit": {"final": 0, "sf": 0, "qf": 0},
     "Arijit Ghosh": {"final": 0, "sf": 0, "qf": 2},

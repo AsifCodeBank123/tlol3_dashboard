@@ -1381,269 +1381,222 @@ section[data-testid="stSidebar"] button:active {
 }
 
 
-/* =========================
-   Wall of Fame Gallery - Enhanced
-   ========================= */
-
-/* Use a more robust variable system for easy theming */
-:root {
-  --wof-color-primary: #ffcc00; /* Gold */
+/* Wall of Fame - image-first cards with external captions */
+:root{
+  --wof-color-primary: #ffcc00;
   --wof-color-secondary: #fff;
   --wof-color-background: #0b1220;
-  --wof-zoom: 1.08;
+  --wof-zoom: 1.06;
   --wof-card-lift: -12px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .wof-card, .wof-bg, .wof-badge, .wof-overlay {
-    transition: none !important;
-    animation: none !important;
+/* Layout */
+.wof-gallery{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap:24px;
+  margin:20px 0 30px;
+}
+
+/* wrapper groups image card + caption */
+.wof-card-wrapper{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  align-items:stretch;
+}
+
+/* image card */
+.wof-card{
+  position:relative;
+  border-radius:16px;
+  overflow:hidden;
+  border:2px solid var(--wof-color-primary);
+  box-shadow:0 10px 22px rgba(0,0,0,0.45);
+  background:var(--wof-color-background);
+  min-height:170px;
+  transition: transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease;
+  isolation:isolate;
+}
+
+/* background image - full cover */
+.wof-bg{
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  filter:brightness(0.96) saturate(1.02);
+  transition: transform 6s linear;
+  will-change:transform;
+}
+
+/* subtle bottom overlay only (keeps most of image clean) */
+.wof-overlay{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:44%;
+  background: linear-gradient(180deg,
+    rgba(11,18,32,0.0) 0%,
+    rgba(11,18,32,0.18) 30%,
+    rgba(11,18,32,0.36) 70%,
+    rgba(11,18,32,0.56) 100%);
+  transition: background .35s ease, opacity .35s ease;
+  pointer-events:none;
+}
+
+/* crown floats above image */
+.wof-crown{
+  position:absolute;
+  top:8px;
+  left:8px;
+  font-size:40px;
+  z-index:6;
+  pointer-events:none;
+  filter:drop-shadow(0 6px 10px rgba(0,0,0,0.45));
+  transform:rotate(-20deg);
+  transition: transform .35s cubic-bezier(.2,.8,.2,1);
+}
+
+/* small sr-only label (optional) */
+.wof-img-sr{
+  position:absolute;
+  left:-9999px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+
+/* caption below the image, where text is kept
+   — lower opacity so it feels separate from the image */
+.wof-caption{
+  padding:10px 12px;
+  background:transparent;
+  text-align:left;
+  color:var(--wof-color-secondary);
+  transform: translateZ(0);
+}
+
+
+.wof-title {
+  font-size: 18px;
+  font-weight: 900;
+  color: #fff;
+  margin: 0;                  /* reset */
+  padding: 4px 10px;          /* a little breathing room */
+  background: rgba(11,18,32,0.85); /* subtle dark backing for clarity */
+  border-radius: 6px;         /* soft corners */
+  display: inline-block;      /* shrink-wrap background to text */
+  text-align: center;
+  letter-spacing: 0.5px;      /* slight tracking for polish */
+  line-height: 1.3;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3); /* lift off background */
+}
+
+
+
+/* Hover interactions */
+.wof-gallery:hover .wof-card{ perspective:1000px; }
+
+.wof-card:hover{
+  transform: translateY(var(--wof-card-lift)) rotateX(2deg) rotateY(2deg) scale(1.02);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.6), 0 0 50px rgba(255,204,0,0.12);
+  border-color:#ffe071;
+}
+
+.wof-card:hover .wof-bg{
+  transform:scale(var(--wof-zoom));
+}
+
+/* overlay darkens on hover slightly for contrast */
+.wof-card:hover .wof-overlay{
+  background: linear-gradient(180deg,
+    rgba(11,18,32,0.06) 0%,
+    rgba(11,18,32,0.28) 30%,
+    rgba(11,18,32,0.48) 70%,
+    rgba(11,18,32,0.68) 100%);
+}
+
+/* subtle shining border pseudo-elements */
+.wof-card::after{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius:18px;
+  background: linear-gradient(120deg, rgba(255,224,113,0) 0%, rgba(255,224,113,0.18) 50%, rgba(255,224,113,0) 100%);
+  z-index:1;
+  opacity:0;
+  transition:opacity .35s ease;
+  pointer-events:none;
+}
+.wof-card:hover::after{
+  opacity:1;
+  animation: shine-border 1.6s linear infinite;
+}
+@keyframes shine-border{
+  0%{ transform: translateX(-100%); }
+  100%{ transform: translateX(100%); }
+}
+
+/* reduced motion respects user setting */
+@media (prefers-reduced-motion: reduce){
+  .wof-card, .wof-bg, .wof-crown, .wof-card::after{
+    transition:none !important;
+    animation:none !important;
   }
 }
 
-.wof-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 24px; /* Slightly larger gap for more breathing room */
-  margin: 20px 0 30px;
-}
-
-.wof-card {
-  position: relative;
-  border-radius: 16px; /* Slightly softer corners */
-  overflow: hidden;
-  border: 2px solid var(--wof-color-primary);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.45);
-  background: var(--wof-color-background);
-  min-height: 180px;
-  /* Add 3D transform properties */
-  transform-style: preserve-3d;
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
-  isolation: isolate;
-}
-
-.wof-bg {
+/* Footer band at bottom of the card */
+.wof-footer {
   position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  filter: brightness(0.92) saturate(1.02); /* keep image visible */
-  transition: transform 6s linear; /* keep subtle ken-burns but linear */
-}
-
-.wof-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg,
-    rgba(11,18,32,0.5) 0%,
-    rgba(11,18,32,0.35) 60%,
-    rgba(11,18,32,0.22) 100%);
-  transition: background 0.4s ease, opacity 0.4s ease;
-}
-
-.wof-content {
-  position: relative;
-  padding: 20px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(11, 18, 32, 0.573); /* dark solid band */
+  padding: 8px 12px;
   text-align: center;
   color: var(--wof-color-secondary);
-  /* Make content a bit elevated in 3D space */
-  transform: translateZ(20px);
-}
-
-/* Text styles remain largely the same, but we can refine a few things */
-.wof-sport-label {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--wof-color-primary);
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.7px;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
-}
-
-.wof-title {
-  font-size: 20px; /* Slightly larger for more impact */
-  font-weight: 900;
-  margin-bottom: 6px;
-  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: 5; /* above overlay */
 }
 
 .wof-line-main {
-  font-size: 18px; /* Slightly larger */
+  font-size: 16px;
   font-weight: 800;
-  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  color: #fff;
+  margin: 0;
 }
 
 .wof-line-sub {
   font-size: 13px;
   color: #c7d2e1;
+  margin: 2px 0 0 0;
 }
 
-/* === Hover Effects - Advanced === */
-
-/* Add perspective to the container for 3D effect on children */
-.wof-gallery:hover .wof-card {
-  perspective: 1000px;
+/* Meta section (sport + title) outside the card */
+.wof-meta {
+  text-align: center;
 }
 
-/* 1) Card lift and 3D tilt on hover */
-.wof-card:hover {
-  transform: translateY(var(--wof-card-lift)) rotateX(4deg) rotateY(4deg) scale(1.02);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6), 0 0 50px rgba(255, 204, 0, 0.4);
-  border-color: #ffe071;
+/* sport label pill ABOVE card */
+.wof-sport-label {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--wof-color-background);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--wof-color-primary);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  margin-bottom: 4px;
+  text-align: center;
 }
 
-/* 2) Slow Ken Burns zoom on bg */
-.wof-card:hover .wof-bg {
-  transform: scale(var(--wof-zoom));
-}
 
-/* 3) Darker overlay on hover for readability */
-.wof-card:hover .wof-overlay {
-  background: linear-gradient(180deg, rgba(11, 18, 32, 0.92) 0%, rgba(11, 18, 32, 0.6) 60%, rgba(11, 18, 32, 0.4) 100%);
-}
 
-/* 4) Sophisticated animated glow effect */
-.wof-card::before {
-  content: "";
-  position: absolute;
-  /* Position the pseudo-element to cover the entire card border */
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  border-radius: 18px; /* Slightly larger than the card's border-radius */
-  z-index: 1; /* Place it above the card's background but below content */
-  pointer-events: none; /* Allows clicks to pass through to the card */
-  background: none;
-  animation: none;
-  opacity: 0;
-
-  /* The magic: a linear gradient that we'll animate */
-  background: linear-gradient(120deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.4) 50%,
-    transparent 100%
-  );
-
-  /* Set initial position for animation */
-  transform: translateX(-100%);
-  animation: border-sheen 3s infinite linear;
-}
-
-/* Keyframes for the border shine animation */
-@keyframes border-sheen {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(100%);
-  }
-}
-.wof-card:hover::before {
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 0.3;
-}
-
-/* 5) Animated border sheen (now a subtle inner glow) */
-.wof-card::after {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: 20px;
-  background: linear-gradient(120deg, rgba(255, 224, 113, 0) 0%, rgba(255, 224, 113, 0.35) 50%, rgba(255, 224, 113, 0) 100%);
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-  animation: none;
-}
-.wof-card:hover::after {
-  opacity: 1;
-  animation: shine-border 2s linear infinite;
-}
-
-@keyframes shine-border {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-/* 6) Badge shine sweep */
-.wof-badge {
-  position: relative;
-  overflow: hidden;
-}
-
-.wof-badge::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  width: 120%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-  transform: skewX(-20deg);
-  filter: blur(2px);
-  opacity: 0.0;
-}
-
-.wof-card:hover .wof-badge::after {
-  animation: badge-sheen 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-}
-
-@keyframes badge-sheen {
-  0% { left: -120%; opacity: 0; }
-  40% { opacity: 0.75; }
-  100% { left: 120%; opacity: 0; }
-}
-
-/* 7) Gentle text rise on hover */
-.wof-card:hover .wof-line-main,
-.wof-card:hover .wof-title {
-  transform: translateZ(30px) translateY(-2px);
-}
-
-/* 8) Subtle sparkle effect (more refined) */
-.wof-card .wof-overlay::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(rgba(255, 255, 255, 0.17) 1px, transparent 1px),
-    radial-gradient(rgba(255, 224, 113, 0.15) 1px, transparent 1px);
-  background-size: 80px 80px, 120px 120px;
-  background-position: 10px 20px, 40px 60px;
-  opacity: 0.15;
-  mix-blend-mode: screen;
-  pointer-events: none;
-}
-
-/* === Crown styling === */
-.wof-crown {
-  position: absolute;
-  top: -12px;
-  left: 12px;
-  font-size: 42px;
-  z-index: 6;
-  pointer-events: none;
-  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.45));
-  will-change: transform;
-  transform: rotate(100deg);
-  animation: crown-bounce 3.2s ease-in-out infinite;
-  opacity: 0.95;
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-@keyframes crown-bounce {
-  0%, 100% { transform: rotate(-20deg) translateY(0); }
-  35% { transform: rotate(-20deg) translateY(-8px) scale(1.04); } /* Deeper bounce */
-  60% { transform: rotate(-20deg) translateY(-4px); }
-}
-
-.wof-card:hover .wof-crown {
-  transform: rotate(-20deg) translateY(-8px) scale(1.08); /* More pronounced on hover */
-}
 
 /* Player grid: 7 per row */
 .player-grid {

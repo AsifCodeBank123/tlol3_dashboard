@@ -138,7 +138,7 @@ winners_by_sport_stage = {
         ],
        
         "Champion": [
-             {"match": "Match 1", "winner": "TBD", "team": "TBD"},
+             {"match": "Match 1", "winner": "Jay & Umesh", "team": "Gully Gang"},
         ]
     },
     "Badminton": {
@@ -252,9 +252,9 @@ wall_of_fame = {
     },
     "Carrom": {
         "title": "🎯 Carrom Kings",
-        "image": "assets/carrom.jpg",
-        "winner": "",
-        "team": ""
+        "image": "assets/carrom_champs.png",
+        "winner": "Jay & Umesh",
+        "team": "Gully Gang"
     },
     "Foosball": {
         "title": "⚽ Foosball Rod Runners",
@@ -391,7 +391,7 @@ players_by_sport = {
         {"name": "Jay & Umesh", "team": "Gully Gang", "status": "alive"},
         {"name": "Adnan & Nilesh", "team": "Dabangg Dynamos", "status": "eliminated"},
         {"name": "Vibhuti & Asif", "team": "Rockstar Rebels", "status": "eliminated"},
-        {"name": "Wilfred & Pritesh", "team": "Badshah Blasters", "status": "alive"},
+        {"name": "Wilfred & Pritesh", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Hitesh & Saurabh", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Mayur & Sanskar", "team": "Dabangg Dynamos", "status": "eliminated"},
         {"name": "Johnson & Jincy", "team": "Rockstar Rebels", "status": "eliminated"},

@@ -257,10 +257,10 @@ wall_of_fame = {
         "team": ""
     },
     "Foosball": {
-        "title": "⚽ Foosball Aces",
-        "image": "assets/foosball.jpg",
-        "winner": "",
-        "team": ""
+        "title": "⚽ Foosball Rod Runners",
+        "image": "assets/foosball_champions.png",
+        "winner": "Blessen & Asif",
+        "team": "Rockstar Rebels"
     },
     "Badminton": {
         "title": "🏸 Smash Legends",

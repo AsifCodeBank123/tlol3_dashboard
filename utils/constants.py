@@ -252,7 +252,7 @@ wall_of_fame = {
     },
     "Carrom": {
         "title": "🎯 Carrom Kings",
-        "image": "assets/carrom_champs.png",
+        "image": "assets/carrom_champions.png",
         "winner": "Jay & Umesh",
         "team": "Gully Gang"
     },

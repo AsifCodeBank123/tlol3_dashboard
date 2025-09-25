@@ -1554,7 +1554,7 @@ section[data-testid="stSidebar"] button:active {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(11, 18, 32, 0.573); /* dark solid band */
+  background: rgba(11, 18, 32, 0.26); /* dark solid band */
   padding: 8px 12px;
   text-align: center;
   color: var(--wof-color-secondary);

@@ -133,8 +133,8 @@ winners_by_sport_stage = {
             {"match": "Match 4", "winner": "Johnson & Jincy", "team": "Rockstar Rebels"},
             ],
         "Semi Final Winners": [
-            {"match": "Match 1", "winner": "TBD", "team": "TBD"},
-            {"match": "Match 2", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 1", "winner": "Wilfred & Pritesh", "team": "Badshah Blasters"},
+            {"match": "Match 2", "winner": "Jay & Umesh", "team": "Gully Gang"},
         ],
        
         "Champion": [
@@ -204,12 +204,12 @@ winners_by_sport_stage = {
             {"match": "Match 4", "winner": "Komal & Avinash G", "team": "Gully Gang"},
             ],
         "Semi Final Winners": [
-            {"match": "Match 1", "winner": "TBD", "team": "TBD"},
-            {"match": "Match 2", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 1", "winner": "Blessen & Asif", "team": "Rockstar Rebels"},
+            {"match": "Match 2", "winner": "Cancelled", "team": "NA"},
         ],
        
         "Champion": [
-             {"match": "Match 1", "winner": "TBD", "team": "TBD"},
+             {"match": "Match 1", "winner": "Blessen & Asif", "team": "Rockstar Rebels"},
         ]
     },
     "Table Tennis": {
@@ -361,12 +361,12 @@ players_by_sport = {
         {"name": "Vishal S & Samiksha", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Vibhuti & Jincy", "team": "Rockstar Rebels", "status": "eliminated"},
         {"name": "Pramod & Bhagyashree", "team": "Gully Gang", "status": "eliminated"},
-        {"name": "Vijay C & Somansh", "team": "Badshah Blasters", "status": "alive"},
+        {"name": "Vijay C & Somansh", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Lalit & Mayur", "team": "Dabangg Dynamos", "status": "eliminated"},
         {"name": "Blessen & Asif", "team": "Rockstar Rebels", "status": "alive"},
         {"name": "Adnan & Arijit", "team": "Dabangg Dynamos", "status": "eliminated"},
-        {"name": "Arvind & Kishan", "team": "Rockstar Rebels", "status": "alive"},
-        {"name": "Komal & Avinash G", "team": "Gully Gang", "status": "alive"},
+        {"name": "Arvind & Kishan", "team": "Rockstar Rebels", "status": "eliminated"},
+        {"name": "Komal & Avinash G", "team": "Gully Gang", "status": "eliminated"},
         {"name": "Gayatri & Pooja", "team": "Badshah Blasters", "status": "eliminated"},
        
     ],
@@ -389,12 +389,12 @@ players_by_sport = {
         {"name": "Bishal & Ravi", "team": "Dabangg Dynamos", "status": "eliminated"},
         {"name": "Rahul A & Pramod", "team": "Gully Gang", "status": "eliminated"},
         {"name": "Jay & Umesh", "team": "Gully Gang", "status": "alive"},
-        {"name": "Adnan & Nilesh", "team": "Dabangg Dynamos", "status": "alive"},
+        {"name": "Adnan & Nilesh", "team": "Dabangg Dynamos", "status": "eliminated"},
         {"name": "Vibhuti & Asif", "team": "Rockstar Rebels", "status": "eliminated"},
         {"name": "Wilfred & Pritesh", "team": "Badshah Blasters", "status": "alive"},
         {"name": "Hitesh & Saurabh", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Mayur & Sanskar", "team": "Dabangg Dynamos", "status": "eliminated"},
-        {"name": "Johnson & Jincy", "team": "Rockstar Rebels", "status": "alive"},
+        {"name": "Johnson & Jincy", "team": "Rockstar Rebels", "status": "eliminated"},
         
        
     ],
@@ -516,10 +516,10 @@ player_avatars = {
 }
 
 player_stats = {
-    "Wilfred Dsilva": {"final": 1, "sf": 2, "qf": 0},
+    "Wilfred Dsilva": {"final": 2, "sf": 1, "qf": 0},
     "Vishal Shinde": {"final": 0, "sf": 1, "qf": 0},
     "Saurabh Mahadik": {"final": 1, "sf": 1, "qf": 1},
-    "Pritesh Menon": {"final": 2, "sf": 1, "qf": 0},
+    "Pritesh Menon": {"final": 3, "sf": 0, "qf": 0},
     "Samiksha Prabhu": {"final": 0, "sf": 0, "qf": 1},
     "Umesh Gawade": {"final": 0, "sf": 0, "qf": 1},
     "N Pratap Kumar": {"final": 0, "sf": 0, "qf": 0},
@@ -542,14 +542,14 @@ player_stats = {
     "Arijit Ghosh": {"final": 0, "sf": 0, "qf": 2},
     "Amit Singh": {"final": 0, "sf": 0, "qf": 0},
     "Amitabh Singh": {"final": 0, "sf": 0, "qf": 0},
-    "Umesh Tank": {"final": 1, "sf": 1, "qf": 0},
+    "Umesh Tank": {"final": 2, "sf": 0, "qf": 0},
     "Bhaskar Patil": {"final": 0, "sf": 0, "qf": 0},
     "Rahul Arjun": {"final": 0, "sf": 0, "qf": 1},
     "Avinash Gowda": {"final": 0, "sf": 0, "qf": 0},
     "Rahul Pokharkar": {"final": 0, "sf": 0, "qf": 0},
     "Avin Chorage": {"final": 0, "sf": 0, "qf": 0},
     "Vijay Sangale": {"final": 0, "sf": 0, "qf": 0},
-    "Jay Jagad": {"final": 1, "sf": 1, "qf": 0},
+    "Jay Jagad": {"final": 2, "sf": 0, "qf": 0},
     "Bhagyashree Dhotre": {"final": 0, "sf": 0, "qf": 1},
     "Pramod Patel": {"final": 0, "sf": 0, "qf": 2},
     "Komal Panjwani": {"final": 0, "sf": 0, "qf": 0},
@@ -565,9 +565,9 @@ player_stats = {
     "Irshad Darji": {"final": 0, "sf": 0, "qf": 0},
     "Ravi Chavan": {"final": 0, "sf": 0, "qf": 1},
     "Sanket Patil": {"final": 0, "sf": 0, "qf": 0},
-    "Asif Khan": {"final": 0, "sf": 1, "qf": 1},
+    "Asif Khan": {"final": 1, "sf": 0, "qf": 1},
     "Esakki Shummugavel": {"final": 0, "sf": 0, "qf": 0},
-    "Blessen Thomas": {"final": 0, "sf": 1, "qf": 2},
+    "Blessen Thomas": {"final": 1, "sf": 0, "qf": 2},
 }
 
 

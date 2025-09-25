@@ -258,7 +258,7 @@ wall_of_fame = {
     },
     "Foosball": {
         "title": "⚽ Foosball Rod Runners",
-        "image": "assets/foosball_champions.png",
+        "image": "assets/fb_champions.png",
         "winner": "Blessen & Asif",
         "team": "Rockstar Rebels"
     },

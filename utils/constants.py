@@ -257,7 +257,7 @@ wall_of_fame = {
         "team": "Gully Gang"
     },
     "Foosball": {
-        "title": "⚽ Foosball Rod Runners",
+        "title": "⚽ Rod Runners",
         "image": "assets/fb_champions.png",
         "winner": "Blessen & Asif",
         "team": "Rockstar Rebels"
@@ -529,8 +529,8 @@ player_stats = {
     "Hitesh Ghadigaonkar": {"final": 0, "sf": 1, "qf": 1},
     "Somansh Datta": {"final": 0, "sf": 3, "qf": 0},
     "Kiran Padwal": {"final": 0, "sf": 0, "qf": 0},
-    "Adnan Shaikh": {"final": 0, "sf": 1, "qf": 4},
-    "Nilesh Sansare": {"final": 0, "sf": 1, "qf": 2},
+    "Adnan Shaikh": {"final": 0, "sf": 2, "qf": 3},
+    "Nilesh Sansare": {"final": 0, "sf": 2, "qf": 1},
     "Rachita Harit": {"final": 0, "sf": 0, "qf": 1},
     "Nilesh Mulik": {"final": 1, "sf": 0, "qf": 0},
     "Mayur Pawar": {"final": 0, "sf": 0, "qf": 3},
@@ -570,4 +570,26 @@ player_stats = {
     "Blessen Thomas": {"final": 1, "sf": 0, "qf": 2},
 }
 
+# ---------- Achievements (user-provided) ----------
+ACHIEVEMENTS = {
+    "Jay Jagad": [
+        "Runner up in Badminton",
+        "Winner in Carrom"
+    ],
+    "Blessen Thomas": [
+        "Winner in Foosball",
+        "Reached Quarter Final in Badminton",
+        "Reached Quarter Final in Table Tennis"
+    ],
+    "Somansh Datta": [
+        "Reached Semi Finals in Table Tennis",
+        "Reached Semi Finals in Foosball",
+        "Reached Semi Finals in Badminton"
+    ],
+    "Lalit Chavan": [
+        "Runner up in Table Tennis",
+        "Reached Quarter Final in Badminton",
+        "Reached Quarter Final in Foosball"
+    ]
+}
 

@@ -1,10 +1,14 @@
 import streamlit as st
 import os
 import pandas as pd
-import base64
-from utils.constants import ticker_messages, winners_by_sport_stage, wall_of_fame, players_by_sport
+import base64, mimetypes
+from utils.constants import ticker_messages, winners_by_sport_stage, wall_of_fame, players_by_sport,player_stats, ACHIEVEMENTS
 from fixtures_modules.constants import sports_schedule
 import random
+from typing import Dict
+from pathlib import Path
+from urllib.parse import quote
+
 
 def load_global_styles():
     style_path = "assets/style.css"
@@ -12,10 +16,150 @@ def load_global_styles():
         with open(style_path) as f:
             st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-def get_base64_image(image_path):
-    with open(image_path, "rb") as img_file:
-        encoded = base64.b64encode(img_file.read()).decode()
-    return f"data:image/jpg;base64,{encoded}"
+@st.cache_data(show_spinner=False)
+def get_base64_image_cached(image_path: str):
+    p = Path(image_path)
+    if not p.exists():
+        return None
+    try:
+        data = p.read_bytes()
+    except Exception:
+        return None
+    mime, _ = mimetypes.guess_type(str(p))
+    if not mime:
+        mime = "application/octet-stream"
+    return f"data:{mime};base64," + base64.b64encode(data).decode()
+
+# small inline SVG placeholder (guaranteed to display)
+SVG_PLACEHOLDER = "data:image/svg+xml;utf8," + quote("""
+<svg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'>
+  <rect width='96' height='96' rx='12' fill='#fffde7'/>
+  <text x='50%' y='54%' dominant-baseline='middle' text-anchor='middle' font-size='12' fill='#c87c00' font-family='Segoe UI, Arial'>No Logo</text>
+</svg>
+""")
+
+def get_player_stat_safe(stats_dict: Dict, key: str):
+    """Return int value for key from stats_dict, tolerant to missing or non-int values."""
+    try:
+        return int(stats_dict.get(key, 0) or 0)
+    except Exception:
+        return 0
+
+def render_captains_section_from_player_stats():
+    st.markdown("<div class='shared-section-title'>👨‍✈ Hamare Kaptaans</div>", unsafe_allow_html=True)
+
+    captains = [
+        {"team": "Gully Gang", "captain": "Jay Jagad", "img": "assets/gg_logo.png"},
+        {"team": "Badshah Blasters", "captain": "Somansh Datta", "img": "assets/bb_logo.png"},
+        {"team": "Rockstar Rebels", "captain": "Blessen Thomas", "img": "assets/rr_logo.png"},
+        {"team": "Dabangg Dynamos", "captain": "Lalit Chavan", "img": "assets/dd_logo.png"},
+    ]
+
+    # Build enriched list using player_stats (which contains ALL players)
+    enriched = []
+    for c in captains:
+        cap_name = c["captain"]
+        stats = player_stats.get(cap_name, {}) if isinstance(player_stats, dict) else {}
+        finals = get_player_stat_safe(stats, "final")
+        sfs = get_player_stat_safe(stats, "sf")
+        qfs = get_player_stat_safe(stats, "qf")
+
+        # Optional: detect final wins key variants
+        final_wins = None
+        for k in ("final_wins", "wins", "titles", "finals_won"):
+            if isinstance(stats.get(k, None), (int, str)):
+                try:
+                    final_wins = int(stats.get(k))
+                    break
+                except Exception:
+                    pass
+
+        enriched.append({
+            "team": c["team"],
+            "captain": cap_name,
+            "img": c.get("img"),
+            "finals": finals,
+            "sfs": sfs,
+            "qfs": qfs,
+            "final_wins": final_wins,
+            "achievements": ACHIEVEMENTS.get(cap_name, [])
+        })
+
+    # Sort & rank
+    enriched.sort(key=lambda x: (-x["finals"], -x["sfs"], -x["qfs"], x["captain"].lower()))
+    for idx, item in enumerate(enriched, start=1):
+        item["rank"] = idx
+
+    # Helper: small achievement -> emoji mapper (keeps pill text)
+    def achievement_icon(text: str) -> str:
+        t = text.lower()
+        if "winner" in t or "won" in t or "champion" in t:
+            return "🏆"
+        if "runner" in t or "runner up" in t or "runner-up" in t:
+            return "🥈"
+        if "semi" in t:
+            return "🎯"
+        if "quarter" in t or "qf" in t:
+            return "⚡"
+        if "reached" in t or "reaches" in t:
+            return "🔹"
+        return "★"
+
+    # Render rows (preserve 4-per-row behavior)
+    per_row = min(len(enriched), 4)
+    for i in range(0, len(enriched), per_row):
+        group = enriched[i:i + per_row]
+        cols = st.columns(len(group))
+        for col, info in zip(cols, group):
+            with col:
+                # image data uri (function returns full data: URI or None)
+                data_uri = get_base64_image_cached(info["img"]) if info.get("img") else None
+                logo_src = data_uri if data_uri else SVG_PLACEHOLDER
+
+                # badge with rank class (rank-1..rank-3 or rank-other)
+                rank_class = f"rank-{info['rank']}" if info["rank"] <= 3 else "rank-other"
+                badge_html = f'<div class="top-badge {rank_class}">#{info["rank"]}</div>'
+
+                # wins line (optional)
+                wins_html = (
+                    f'<div class="final-wins" aria-hidden="true">🏆 Wins: {info["final_wins"]}</div>'
+                    if info["final_wins"] is not None else ""
+                )
+
+                # Stat pills section (separate block)
+                pills_html = (
+                    '<div class="pill-section">'
+                    '  <div class="captain-stats" role="list" aria-label="captain stats">'
+                    f'    <span class="stat-pill final" role="listitem">Finals: {info["finals"]}</span>'
+                    f'    <span class="stat-pill" role="listitem">SF: {info["sfs"]}</span>'
+                    f'    <span class="stat-pill" role="listitem">QF: {info["qfs"]}</span>'
+                    '  </div>'
+                    '</div>'
+                )
+
+                # Achievements section: produce ach-pill with icon
+                ach_html = ""
+                if info.get("achievements"):
+                    pills = "".join(
+                        f'<span class="ach-pill" title="{a}">{achievement_icon(a)} {a}</span>'
+                        for a in info["achievements"]
+                    )
+                    ach_html = f'<div class="achievements-section" aria-label="achievements">{pills}</div>'
+
+                # Final markup — top area (logo/name/team) unchanged
+                st.markdown(f"""
+                    <div class="captain-card" title="Finals:{info['finals']} SF:{info['sfs']} QF:{info['qfs']}">
+                      {badge_html}
+                      <img class="captain-logo" src="{logo_src}" alt="{info['team']} logo" />
+                      <div class="captain-name">{info['captain']}</div>
+                      <div class="captain-team">{info['team']}</div>
+
+                      {pills_html}
+                      {wins_html}
+                      {ach_html}
+                    </div>
+                """, unsafe_allow_html=True)
+
     
 
 def render():
@@ -161,7 +305,7 @@ def render():
         wof_img_b64 = ""
         img_path = wof.get("image")
         if img_path and os.path.exists(img_path):
-            wof_img_b64 = get_base64_image(img_path)
+            wof_img_b64 = get_base64_image_cached(img_path)
 
         is_cricket = sport.lower() == "cricket"
         if is_cricket:
@@ -343,29 +487,7 @@ def render():
     st.markdown("</div>", unsafe_allow_html=True)  # close winners-section
     st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
 
-    # --- Hamare Kaptaans ---
-    st.markdown("<div class='shared-section-title'>👨‍✈ Hamare Kaptaans</div>", unsafe_allow_html=True)
-
-    captains = [
-        {"team": "Gully Gang", "captain": "Jay Jagad", "img": "assets/gg_logo.png"},
-        {"team": "Badshah Blasters", "captain": "Somansh Datta", "img": "assets/bb_logo.png"},
-        {"team": "Rockstar Rebels", "captain": "Blessen Thomas", "img": "assets/rr_logo.png"},
-        {"team": "Dabangg Dynamos", "captain": "Lalit Chavan", "img": "assets/dd_logo.png"},
-    ]
-
-    cols = st.columns(len(captains))
-    for i, cap in enumerate(captains):
-        with cols[i]:
-            img_base64 = get_base64_image(cap["img"])
-            st.markdown(f"""
-            <div class='captain-card'>
-                <img src="{img_base64}" alt="Captain Photo"/>
-                <div class='captain-name'>{cap['captain']}</div>
-                
-          
-            </div>
-            """, unsafe_allow_html=True)
-    
+    render_captains_section_from_player_stats()
 
 
     # --- Section Divider ---

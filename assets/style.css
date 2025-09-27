@@ -480,29 +480,53 @@ section[data-testid="stSidebar"] button:active {
   }
 }
 
-/* --- Responsive --- */
+
+/* 2) Large tablets: 3 per row comfortably */
+@media (max-width: 1200px) {
+  .captain-card { flex: 1 1 40%; max-width: 100%; }
+}
+
+/* 3) Tablets / small laptops: ~2 per row */
+@media (max-width: 900px) {
+  .captain-card { flex: 1 1 55%; max-width: 100%; }
+}
+
 @media (max-width: 560px) {
-  .pill-section { padding: 6px 8px 0 8px; }
-  .achievements-section { padding: 8px 6px; gap: 6px; justify-content: flex-start; }
-  .ach-pill { font-size: 11px; padding: 5px 8px; }
   .captains-grid {
     padding: 0 16px;
-    gap: 16px; /* add more breathing room if needed */
+    gap: 20px;   /* extra gap between stacked cards */
+    flex-direction: column; /* force vertical stacking */
   }
-  .captain-card{
-    width: 310px;
-    height: 370px;
-    margin-bottom: 20px;
+
+  .captain-card {
+    flex: 1 1 100%;
+    width: 450px;
+    height: 380px;
+    display: flex;
+    flex-direction: column; /* go back to vertical layout */
+    align-items: center;
+    text-align: center;
+    padding: 16px;
+    margin-bottom:20px;
   }
-}
 
-/* --- Focus styles for accessibility --- */
-.stat-pill:focus,
-.ach-pill:focus {
-  outline: 3px solid rgba(255, 193, 7, 0.18);
-  outline-offset: 2px;
-}
+  .captain-logo {
+    width: 80px;
+    height: 80px;
+    margin: 0 0 10px 0;
+  }
 
+  .top-badge {
+    top: 10px;
+    right: 10px;
+    font-size: 13px;
+    padding: 5px 10px;
+  }
+
+  .pill-section { padding: 6px 0 0 0; }
+  .achievements-section { padding: 8px 0; gap: 6px; justify-content: center; }
+  .ach-pill { font-size: 12px; padding: 5px 10px; }
+}
 
 
 /* ================= Shared Section Title ================= */

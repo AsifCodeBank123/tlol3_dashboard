@@ -198,15 +198,21 @@ def render_leaderboard():
 
         with st.expander("View", expanded=False):
             # Sort players by total_points (descending) and assign rank with ties
-            df_players['rank'] = (
-                df_players['total_points']
-                .rank(method='min', ascending=False)  # same score gets same rank
+            # Drop any "Bonus" players (case/space-safe)
+            mask = df_players["player_name"].astype(str).str.strip().str.lower() != "bonus"
+            df_view = df_players[mask].copy()
+
+            # Rank on the cleaned frame
+            df_view["rank"] = (
+                pd.to_numeric(df_view["total_points"], errors="coerce")
+                .rank(method="min", ascending=False)
                 .astype(int)
             )
 
             # Then loop
-            top_player_points = pd.to_numeric(df_players['total_points'], errors="coerce").max()
-            for _, row in df_players.sort_values(by=['rank', 'player_name']).iterrows():
+            top_player_points = pd.to_numeric(df_view["total_points"], errors="coerce").max()
+            
+            for _, row in df_view.sort_values(by=['rank', 'player_name']).iterrows():
                 rank = row['rank']
                 player = row['player_name']
                 team = row['team_name']

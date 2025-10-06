@@ -8,6 +8,8 @@ import random
 from typing import Dict
 from pathlib import Path
 from urllib.parse import quote
+import streamlit.components.v1 as components
+
 
 
 def load_global_styles():
@@ -268,19 +270,21 @@ def render():
     """, unsafe_allow_html=True)
     st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
 
-    # # ---- inject webagent right below the button (in-column) ----
-    # st.markdown(
-    #     """
-    #     <iframe
-    #         src="https://webagent.ai/chatbot/embed/edf0decc-06db-407a-afac-46c608560866/classic"
-    #         style="width:100%; height:500px; border:none; border-radius:12px; margin-top:8px;"
-    #         frameborder="0"
-    #     ></iframe>
-    #     """,
-    #     unsafe_allow_html=True
-    # )
+    
 
-    # st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
+    # ---- inject webagent right below the button (in-column) ----
+    st.markdown(
+        """
+        <iframe
+            src="https://cdn.botpress.cloud/webchat/v3.3/shareable.html?configUrl=https://files.bpcontent.cloud/2025/10/06/11/20251006110629-D7XBH5WL.json"
+            style="width:100%; height:500px; border:none; border-radius:12px; margin-top:8px;"
+            frameborder="0"
+        ></iframe>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown("<hr style='border-color:#ffcc00;'>", unsafe_allow_html=True)
 
     st.markdown("<div class='winners-title'>🌟 Wall of Fame</div>", unsafe_allow_html=True)
     st.markdown(
@@ -639,3 +643,4 @@ def render():
 
     # Render second row (remaining cards)
     render_sport_cards(second_row)
+

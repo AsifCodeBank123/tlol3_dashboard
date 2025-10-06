@@ -516,7 +516,7 @@ player_avatars = {
 }
 
 player_stats = {
-    "Wilfred Dsilva": {"final": 2, "sf": 1, "qf": 0},
+    "Wilfred Dsilva": {"final": 2, "sf": 1, "qf": 1},
     "Vishal Shinde": {"final": 0, "sf": 1, "qf": 0},
     "Saurabh Mahadik": {"final": 1, "sf": 2, "qf": 0},
     "Pritesh Menon": {"final": 3, "sf": 0, "qf": 0},
@@ -545,14 +545,14 @@ player_stats = {
     "Umesh Tank": {"final": 2, "sf": 0, "qf": 0},
     "Bhaskar Patil": {"final": 0, "sf": 0, "qf": 0},
     "Rahul Arjun": {"final": 0, "sf": 0, "qf": 1},
-    "Avinash Gowda": {"final": 0, "sf": 0, "qf": 0},
+    "Avinash Gowda": {"final": 0, "sf": 1, "qf": 0},
     "Rahul Pokharkar": {"final": 0, "sf": 0, "qf": 0},
     "Avin Chorage": {"final": 0, "sf": 0, "qf": 0},
     "Vijay Sangale": {"final": 0, "sf": 0, "qf": 0},
     "Jay Jagad": {"final": 2, "sf": 0, "qf": 0},
     "Bhagyashree Dhotre": {"final": 0, "sf": 0, "qf": 1},
     "Pramod Patel": {"final": 0, "sf": 0, "qf": 2},
-    "Komal Panjwani": {"final": 0, "sf": 0, "qf": 0},
+    "Komal Panjwani": {"final": 0, "sf": 1, "qf": 0},
     "Pritam Paparkar": {"final": 0, "sf": 0, "qf": 0},
     "Dhananjay Kulkarni": {"final": 0, "sf": 0, "qf": 0},
     "Suraj Kamerkar": {"final": 0, "sf": 0, "qf": 1},

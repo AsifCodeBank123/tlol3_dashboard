@@ -19,17 +19,16 @@ TEAM_COLORS = {
     "Rockstar Rebels": "#F3E5F5"
 }
 
-# Compact ticker (as you set)
 ticker_messages = [
-    "♟️ Chess battles heating up – Raja ko checkmate karna easy nahi!",
-    "🎯 Carrom striker shots flying – Queen pakadne ki race on!",
-    "⚽ Foosball warriors in full attack – Ab leaderboard hilne wala hai!",
-    "🏸 Badminton smashes everywhere – Rally abhi khatam nahi hui!",
-    "🏓 Table Tennis spins & smashes – Khel mein asli tadka yahin hai!",
-    "🏏 Cricket runs raining hard – Jeet ka maza tabhi jab fight ho josh mein!",
-    "📊 Leaderboard shuffle nonstop – Kabhi tum upar, kabhi main neeche!",
-    "💪 Winners never give up – Haar bhi ek nayi seekh hai!",
-    "🏆 Celebrate every win with grace – Haar ko bhi izzat dena zaroori hai!"
+    "🏓 Table Tennis champs crowned – Pritesh & Wilfred ruled the tables!",
+    "⚽ Foosball finale dhamaka – Blessen & Asif ne kar diya clean sweep!",
+    "🎯 Carrom kings rise – Jay & Umesh ne Queen pakad li style mein!",
+    "🏸 Badminton court pe dhamal – Saurabh & Pritesh ne sabko smash kar diya!",
+    "♟️ Chess ab Dabangg Dynamos ke naam – Arijit pe sabki nazar!",
+    "🏏 Cricket aur Olympics on 10th Oct – Ab asli hungama shuru hone wala hai!",
+    "📊 Leaderboard ab garam hai – Kaun top pe rahega, dekhte hain!",
+    "💪 Winners shine, fighters inspire – Haar bhi ek nayi kahani likhti hai!",
+    "🏆 Cheers to all champs – Energy high, spirits higher!"
 ]
 
 # Winners by sport and stage
@@ -93,7 +92,7 @@ winners_by_sport_stage = {
             {"match": "Match 1", "winner": "Adnan", "team": "Dabangg Dynamos"},
             {"match": "Match 2", "winner": "Arijit", "team": "Dabangg Dynamos"},
             {"match": "Match 3", "winner": "Saurabh", "team": "Badshah Blasters"},
-            {"match": "Match 4", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 4", "winner": "Nilesh S", "team": "Dabangg Dynamos"},
             ],
         "Semi Final Winners": [
             {"match": "Match 1", "winner": "TBD", "team": "TBD"},
@@ -325,7 +324,7 @@ players_by_sport = {
         {"name": "Rahul A", "team": "Gully Gang", "status": "eliminated"},
         {"name": "Hitesh", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Jay", "team": "Gully Gang", "status": "eliminated"},
-        {"name": "Wilfred", "team": "Badshah Blasters", "status": "alive"},
+        {"name": "Wilfred", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Samiksha", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Bhagyashree", "team": "Gully Gang", "status": "eliminated"},
         {"name": "Umesh G", "team": "Badshah Blasters", "status": "eliminated"},
@@ -530,7 +529,7 @@ player_stats = {
     "Somansh Datta": {"final": 0, "sf": 3, "qf": 0},
     "Kiran Padwal": {"final": 0, "sf": 0, "qf": 0},
     "Adnan Shaikh": {"final": 0, "sf": 3, "qf": 2},
-    "Nilesh Sansare": {"final": 0, "sf": 2, "qf": 1},
+    "Nilesh Sansare": {"final": 0, "sf": 3, "qf": 0},
     "Rachita Harit": {"final": 0, "sf": 0, "qf": 1},
     "Nilesh Mulik": {"final": 1, "sf": 0, "qf": 0},
     "Mayur Pawar": {"final": 0, "sf": 0, "qf": 3},

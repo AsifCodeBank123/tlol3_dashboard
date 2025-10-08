@@ -528,7 +528,7 @@ player_stats = {
     "Hitesh Ghadigaonkar": {"final": 0, "sf": 1, "qf": 1},
     "Somansh Datta": {"final": 0, "sf": 3, "qf": 0},
     "Kiran Padwal": {"final": 0, "sf": 0, "qf": 0},
-    "Adnan Shaikh": {"final": 0, "sf": 3, "qf": 2},
+    "Adnan Shaikh": {"final": 1, "sf": 1, "qf": 3},
     "Nilesh Sansare": {"final": 0, "sf": 3, "qf": 0},
     "Rachita Harit": {"final": 0, "sf": 0, "qf": 1},
     "Nilesh Mulik": {"final": 1, "sf": 0, "qf": 0},

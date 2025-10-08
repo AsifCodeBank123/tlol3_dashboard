@@ -581,9 +581,9 @@ ACHIEVEMENTS = {
         "Reached Quarter Final in Table Tennis"
     ],
     "Somansh Datta": [
-        "Reached Semi Finals in Table Tennis",
-        "Reached Semi Finals in Foosball",
-        "Reached Semi Finals in Badminton"
+        "Reached Semi Final in Table Tennis",
+        "Reached Semi Final in Foosball",
+        "Reached Semi Final in Badminton"
     ],
     "Lalit Chavan": [
         "Runner up in Table Tennis",

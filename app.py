@@ -3,14 +3,15 @@ st.set_page_config(page_title="TLOL3 Arena", layout="wide",initial_sidebar_state
 from sections import players_stats
 from sections.fixtures import render_fixtures_for_sport, render_sport_banner_and_rules ,render_bonus_cards
 from fixtures_modules.database_handler import load_sheet_as_df, sheet_exists
-from sections.tt_fixtures import render_table_tennis_fixtures
+# from sections.tt_fixtures import render_table_tennis_fixtures
 from sections.olympics_fixtures import render_olympics_fixtures
+from sections.cricket_fixtures import render_cricket_fixtures
+
 
 from sections import home, auction_live, leaderboard
 from sections.leaderboard import render_points_info
 import os
 import traceback
-
 
 
 def load_global_styles():
@@ -76,29 +77,23 @@ try:
 
                 is_table_tennis = (sport.lower() == "table tennis")
                 is_olympics = (sport.lower() == "olympics")
+                is_cricket = (sport.lower() == "cricket")
                 cache_key = f"fixtures_{sport.lower()}"
                 fixture_flag_key = f"fixtures_ready_{sport.lower()}"
                 regenerate = st.session_state.get(fixture_flag_key, False)
 
-                # ---- Olympics: render purely from function (no sheet checks) ----
+                # handle Olympics purely from function (no sheet checks)
                 if is_olympics:
-                    # if you want lightweight caching to avoid re-rendering heavy UI, you can keep a flag
-                    if cache_key in st.session_state.fixture_cache and not regenerate:
-                        render_olympics_fixtures()
-                    else:
-                        # always render from the function; avoid any sheet access or "sheet missing" messages
-                        render_olympics_fixtures()
-                        st.session_state.fixture_cache[cache_key] = {"source": "function"}
-                        st.session_state[fixture_flag_key] = True
+                    render_olympics_fixtures()
+                    st.session_state.fixture_cache[cache_key] = {"source":"function"}
+                    st.session_state[fixture_flag_key] = True
                     continue
 
-                # ---- Non-Olympics sports: existing sheet-backed flow ----
-                # If cached and not regenerating → just render
-                if cache_key in st.session_state.fixture_cache and not regenerate:
-                    if is_table_tennis:
-                        render_table_tennis_fixtures()
-                    else:
-                        render_fixtures_for_sport(sport)
+                # handle Cricket purely from function (no sheet checks)
+                if is_cricket:
+                    render_cricket_fixtures()
+                    st.session_state.fixture_cache[cache_key] = {"source":"function"}
+                    st.session_state[fixture_flag_key] = True
                     continue
 
                 # Common Google Sheet name for non-Olympics sports
@@ -113,11 +108,11 @@ try:
                             st.session_state.fixture_cache[cache_key] = {"df": df}
                             st.session_state[fixture_flag_key] = True
 
-                            # Render based on sport type
-                            if is_table_tennis:
-                                render_table_tennis_fixtures()
-                            else:
-                                render_fixtures_for_sport(sport)
+                            # # Render based on sport type
+                            # if is_table_tennis:
+                            #     render_table_tennis_fixtures()
+                            # else:
+                            #     render_fixtures_for_sport(sport)
                         else:
                             st.info(f"⚠ Fixtures sheet '{sheet_name}' exists but is empty.")
                     else:

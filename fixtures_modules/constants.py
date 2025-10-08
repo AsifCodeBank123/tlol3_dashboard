@@ -443,8 +443,8 @@ BONUS_CARDS = {
         {
        
             "Event": "Olympic Games",
-            "Card": "Golmaal Blunder",
-            "Description": "Target team’s events have their time reduction halved (e.g., 1x = 2.5 seconds, 2x = 5 seconds, 3x = 7.5 seconds).",
+            "Card": "1 aur 1 Gyarah",
+            "Description": "Reduce 1 chance each in hockey and football",
             "When it should be called": "Before the Match",
             "When it cannot be active": "",
             "Team Restrictions": "Once in Tournament"
@@ -453,8 +453,8 @@ BONUS_CARDS = {
         {
        
             "Event": "Olympic Games",
-            "Card": "Khota Sikka",
-            "Description": "Target team’s coin flip event is increased to 25 flips.",
+            "Card": "Katappa Ne Bahuballi Ko Kyun Maara",
+            "Description": "Reduce rings 5 to 3",
             "When it should be called": "Before the Match",
             "When it cannot be active": "",
             "Team Restrictions": "Once in Tournament"

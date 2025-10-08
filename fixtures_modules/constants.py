@@ -82,62 +82,87 @@ SPORT_LOGOS = {
 }
 
 SPORT_RULES = {
-    "Chess": {
-        "Prerequisites": [
-            "Stable Internet Connection",
-            "Website: www.lichess.org",
-            "WebEx for live moderation"
-        ],
-        "Rules": [
-            "White/Black Side: Randomly assigned by lichess.org.",
-            "Moderator must be present before starting; one player creates the game and shares the link.",
-            "It is forbidden to have cell phones or electronic communication devices during the game.",
-            "Good sportsmanship is expected at all times.",
-            "No distracting or annoying the opponent (e.g., constant talking or repeatedly offering a draw)."
-        ],
-        "Match Settings": {
-            "Qualifying Round": {"Type": "Standard", "Timer": "5 Minutes Per Side"},
-            "Quarter Finals": {"Type": "Standard", "Timer": "8 Minutes Per Side"},
-            "Semi Finals": {"Type": "Standard", "Timer": "10 Minutes Per Side"},
-            "Finals": {"Type": "Standard", "Timer": "20 Minutes Per Side"}
+    "Cricket": {
+        
+        "Match Structure": {
+            "League Stage": {
+                "Matches": "3 per team",
+                "Overs": "4 overs per innings",
+                "Fixture Generation": "Decided via score7.io website"
+            },
+            "Finals & Playoffs": {
+                "Final": "Top 2 teams play 5 overs per innings",
+                "3rd Place Playoff": "Teams ranked 3rd and 4th compete"
+            },
+            "Toss Procedure": [
+                "Each player throws a ball from the batting wicket toward the No Ball line.",
+                "The player whose ball lands closest chooses to Bat or Bowl.",
+                "If unclear (distance/time dispute), a standard coin toss will decide."
+            ]
         },
-        "Elimination Rules": [
-            "Using any other tab/window during the game will result in elimination.",
-            "Using any chess-related application will result in a direct knockout.",
-            "If timer ends, the site determines the winner.",
-            "Disconnection or abandoning the game results in a loss unless rejoined within the time limit.",
-            "Game must not start without a moderator watching."
+        "Points System": {
+            "Win": "3 points",
+            "Loss": "0 points",
+            "Tie/No Result": "1 point each or Super Over (based on time availability)"
+        },
+        "Qualification Criteria": [
+            "Teams ranked by total points after league matches.",
+            "In case of equal points, Net Run Rate (NRR) determines ranking."
         ],
-        "Tournament Rules": {
-            "Won Games": [
-                "By checkmate.",
-                "If the opponent resigns.",
-                "If the opponent runs out of time."
+        "Batting Rules": [
+            "A woman must open the batting and be on strike.",
+            "Innings ends when last wicket falls (no last batter rule).",
+            "Next striker after a wicket depends on match situation (not fixed).",
+            "Non-striker must remain within the crease (Mankad applies).",
+            "Batter is out if the ball directly hits the roof without interference.",
+            "On a wide ball, batter can be dismissed only by stumping; the ball does not count."
+        ],
+        "Bowling Rules": [
+            "Only underarm bowling is allowed.",
+            "Each player may bowl a maximum of 1 over.",
+            "A woman must bowl the first over.",
+            "No Balls (1 run added, NO Free Hit unless front foot violation):",
+            "— Bouncer above waist height (while batter is standing).",
+            "— Second bounce before batting crease (exception for women bowlers).",
+            "— Side-arm bowling.",
+            "— Keeper collecting ahead of stumps without ball contact.",
+            "— Ball not pitching ahead of no-ball line.",
+            "— Full toss behind stumps.",
+            "Free Hit ONLY IF: Front foot crosses the bowling crease.",
+            "— Batter can be dismissed only via Run Out; ball is counted.",
+            "— No field change unless strike changes.",
+            "Wide Ball (1 run added): Passes outside of batsman’s reach or beyond marked wide lines."
+        ],
+        "Fielding & Other Rules": [
+            "4 fielders must stay behind the bowler.",
+            "Maximum 2 fielders allowed on the boundary after the second-last pole.",
+            "Wicketkeeper is compulsory.",
+            "No Overthrows, Byes, or Leg Byes allowed.",
+            "Standard rules apply for Bowled, Caught, Run Out, Stumped, Hit Wicket.",
+            "Woman who is batting on strike and bowling on strike cannot be the same individual."
+        ],
+        "Strategic Rules": {
+            "Strategic Timeout": [
+                "Each team may take one 1-minute break (max 2 minutes total per match).",
+                "Not mandatory; decided by the Captain.",
+                "Can be taken after 2nd over/before 3rd over or after 3rd over/before 4th over."
             ],
-            "Drawn Games": [
-                "By stalemate.",
-                "By agreement during the game.",
-                "By three-fold repetition.",
-                "By fifty-move rule."
-            ],
-            "Three-Fold Repetition": [
-                "Claimable if an identical position appears three times.",
-                "Tournament official may declare a draw if position repeats at least five times.",
-                "Incorrect claims carry no penalty."
-            ],
-            "Fifty-Move Rule": [
-                "Claimable if 50 moves occur without a pawn move or capture.",
-                "Official may declare a draw if 75 moves occur without pawn move or capture."
+            "Double Trouble": [
+                "Must be used once per match by the batting team.",
+                "Played after the bowler is decided.",
+                "The batting team sets a target score for that over.",
+                "For every wicket lost, 3 runs are deducted; a new batter enters.",
+                "If the target is achieved, double the set runs are awarded.",
+                "If not achieved, the over counts as a maiden.",
+                "Runs beyond the set score do not count.",
+                "Not applicable in a woman bowler’s over.",
+                "Example: If target = 12 runs, and achieved, team earns 24 runs; if wicket falls, -3 runs per wicket."
             ]
         },
         "Tournament Progression": [
-            "Winner advances to the next round.",
-            "If drawn, another game is played until there is a winner.",
-            "Later stages may be held offline if both players are in-office.",
-            "Remote players in Quarterfinals or later must have their camera on."
-        ],
-        "Bonus Rule": [
-            "Teams get a 30-minute time budget to add 1-2 minutes per game across multiple rounds."
+            "Teams earn points through league matches.",
+            "Top 2 advance to Final; 3rd and 4th play for 3rd place.",
+            "In case of a tie during knockout stages, a Super Over may decide the winner (time permitting)."
         ]
     },
 

@@ -592,3 +592,14 @@ ACHIEVEMENTS = {
     ]
 }
 
+EVENTS_IMAGES = {
+    "Event 1" : "assets/olympics/lunges.png",
+    "Event 2" : "assets/olympics/band.png",
+    "Event 3" : "assets/olympics/flip.png",
+    "Event 4" : "assets/olympics/target.png",
+    "Event 5" : "assets/olympics/goal.png",
+    "Event 6" : "assets/olympics/cup.png",
+    "Event 7" : "assets/olympics/tongue.png",
+    "Event 8" : "assets/olympics/rings.png",
+}
+

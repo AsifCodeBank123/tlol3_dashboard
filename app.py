@@ -12,6 +12,7 @@ import os
 import traceback
 
 
+
 def load_global_styles():
     style_path = "assets/style.css"
     if os.path.exists(style_path):

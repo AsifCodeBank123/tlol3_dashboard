@@ -460,6 +460,39 @@ BONUS_CARDS = {
             "Team Restrictions": "Once in Tournament"
         },
 
+    ],
+
+    "Cricket": [
+        {
+       
+            "Event": "Cricket",
+            "Card": "Pushpa Fire hai Main",
+            "Description": "The Female batter can’t get out  for one full over and the score she scores would be triple (except run out) till the time she gets out",
+            "When it should be called": "Before the Match",
+            "When it cannot be active": "Cannot be combined with Double Trouble Over",
+            "Team Restrictions": "Once in a Tournament"
+        },
+
+        {
+       
+            "Event": "Cricket",
+            "Card": "Powerplay Over",
+            "Description": "Only 2 fielders allowed behind the bowler. Boundaries scored in this over receive a bonus (Four = 5 runs, Six = 7 runs). Cannot be used in the final over of the innings. ",
+            "When it should be called": "During the match",
+            "When it cannot be active": "Cannot be combined with Double Trouble Over,Cannot be combined with First over ",
+            "Team Restrictions": "Once in a Tournament"
+        },
+
+        {
+       
+            "Event": "Cricket",
+            "Card": "Pressure Over",
+            "Description": "Only dot balls and wickets count. Any runs scored are ignored unless a boundary is hit. If a boundary is hit, the Pressure Over ends immediately and all runs scored and about to be scored will count as normal. Extras will be counted irrespective of the restrictions. ",
+            "When it should be called": "During the match",
+            "When it cannot be active": "Cannot be combined with Double Trouble Over, Cannot be combined with First over",
+            "Team Restrictions": "Once in a Tournament"
+        },
+
     ]
 }
 

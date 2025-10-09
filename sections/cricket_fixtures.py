@@ -1,8 +1,8 @@
 # sections/cricket_fixtures.py
 """
-Cricket fixtures — round-robin matches shown as cards.
-Each card contains a circular team logo that overlaps the top of the card,
-plus a colored footer. Local images under assets/teams/ are embedded as data-URIs.
+Cricket fixtures — shows redesigned info cards with medallion logos.
+Added: LINEUPS data and an inline <details> panel per card to display team lineup.
+Local images under assets/teams/... are embedded as data-URIs.
 """
 
 import streamlit as st
@@ -12,7 +12,7 @@ import mimetypes
 import base64
 import html
 
-# ----- Fixtures -----
+# ----- Fixtures (example) -----------------------------------------------------
 FIXTURES = [
     ("Dabangg Dynamos", "Gully Gang"),
     ("Rockstar Rebels", "Badshah Blasters"),
@@ -22,7 +22,7 @@ FIXTURES = [
     ("Gully Gang", "Badshah Blasters"),
 ]
 
-# ----- Images (relative to assets/) -----
+# ----- Team image mapping (relative to assets/) -------------------------------
 TEAM_IMAGES = {
     "Dabangg Dynamos": "teams/dd_logo.png",
     "Gully Gang": "teams/gg_logo.png",
@@ -30,16 +30,86 @@ TEAM_IMAGES = {
     "Badshah Blasters": "teams/bb_logo.png",
 }
 
-# ----- Team Colors (used for footer and ring) -----
-TEAM_COLORS = {
-    "Rockstar Rebels": ("#000000", "#333333"),     # black -> dark gray
-    "Dabangg Dynamos": ("#6A0DAD", "#8B3DD9"),     # purple gradient
-    "Gully Gang": ("#800000", "#B22222"),          # maroon gradient
-    "Badshah Blasters": ("#0047AB", "#1E90FF"),    # blue gradient
+# ----- Lineups (player list from your pasted data) ----------------------------
+# Each value is a list of (player_name, role)
+LINEUPS = {
+    "Badshah Blasters": [
+        ("Wilfred Dsilva", "All Rounder"),
+        ("Vishal Shinde", "Batsman"),
+        ("Saurabh Mahadik", "Batsman"),
+        ("Pritesh Menon", "All Rounder"),
+        ("Samiksha Prabhu", "Bowler"),
+        ("Umesh Gawade", "All Rounder"),
+        ("N Pratap Kumar", "Not Available"),
+        ("Vijay Chinkate", "Power Hitter"),
+        ("Pooja Nandoskar", "Bowler"),
+        ("Gayatri Zuting", "Batswoman"),
+        ("Hitesh Ghadigaonkar", "Not Available"),
+        ("Somansh Datta", "Power Hitter"),
+        ("Kiran Padwal", "Batsman"),
+    ],
+    "Dabangg Dynamos": [
+        ("Adnan Shaikh", "Power Hitter"),
+        ("Nilesh Sansare", "Tentative"),
+        ("Rachita Harit", "Bowler"),
+        ("Nilesh Mulik", "Tentative"),
+        ("Mayur Pawar", "Power Hitter"),
+        ("Bijal Gala", "Bowler"),
+        ("Sanskar Bagwe", "Batsman"),
+        ("Lalit Chavan", "All Rounder"),
+        ("Ravi Khanra", "Tentative"),
+        ("Bishal Pandit", "Batsman"),
+        ("Arijit Ghosh", "All Rounder"),
+        ("Amit Singh", "Power Hitter"),
+        ("Amitabh Singh", "Tentative"),
+    ],
+    "Gully Gang": [
+        ("Umesh Tank", "All Rounder"),
+        ("Bhaskar Patil", "Batsman"),
+        ("Rahul Arjun", "Batsman"),
+        ("Avinash Gowda", "Batsman"),
+        ("Rahul Pokharkar", "Batsman"),
+        ("Avin Chorage", "Not Available"),
+        ("Vijay Sangale", "Batsman"),
+        ("Jay Jagad", "All Rounder"),
+        ("Bhagyashree Dhotre", "Bowler"),
+        ("Pramod Patel", "Batsman"),
+        ("Komal Panjwani", "Bowler"),
+        ("Pritam Paparkar", "Not Available"),
+    ],
+    "Rockstar Rebels": [
+        ("Dhananjay Kulkarni", "Power Hitter"),
+        ("Suraj Kamerkar", "All Rounder"),
+        ("Kishansingh Devda", "All Rounder"),
+        ("Vibhuti S Dabholkar", "Not Available"),
+        ("Jincy Geevarghese", "Bowler"),
+        ("Arvind Arumuga Nainar", "Batsman"),
+        ("Johnson Thomas", "All Rounder"),
+        ("Ankit Yadav", "Batsman"),
+        ("Irshad Darji", "Batsman"),
+        ("Ravi Chavan", "Tentative"),
+        ("Sanket Patil", "Tentative"),
+        ("Asif Khan", "All Rounder"),
+        ("Esakki Shummugavel", "Batswoman"),
+        ("Blessen Thomas", "All Rounder"),
+    ],
 }
 
+# ----- Team taglines & stats placeholders -------------------------------------
+TEAM_TAGLINES = {
+    "Dabangg Dynamos": "Street smart powerplay",
+    "Gully Gang": "Hustle & heart",
+    "Rockstar Rebels": "Style with strikes",
+    "Badshah Blasters": "Power hitters",
+}
+TEAM_STATS = {
+    "Dabangg Dynamos": (0, 0),
+    "Gully Gang": (0, 0),
+    "Rockstar Rebels": (0, 0),
+    "Badshah Blasters": (0, 0),
+}
 
-# ----- Helpers: robust local-file -> data-uri (tries several candidate locations) -----
+# ----- Helpers: path resolution -> data URI -----------------------------------
 def try_paths_for(local_path: str):
     if not local_path:
         return
@@ -80,204 +150,273 @@ def resolve_team_image(team_name: str):
         return s
     return file_to_data_uri_try(s)
 
+# ----- CSS (keeps the newer design, adds styles for lineup details/table) -----
+CSS = r"""
+:root{
+  --card-width: clamp(240px, 32vw, 420px);
+  --medal-size: clamp(64px, 12vw, 120px);
+  --vs-size: clamp(56px, 8vw, 84px);
+  --glass: rgba(255,255,255,0.6);
+}
 
-# ----- CSS: compact cards + responsive VS -----------------------------------
-CSS = """
-.cricket-root { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; padding: 12px 10px 28px; color:#111; }
-.cricket-container { max-width:1100px; margin: 6px auto; }
-.cricket-title { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
-.matches { display: grid; gap: 12px; }
+/* container */
+.cricket-root { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; padding: 14px; color:#111; }
+.cricket-container { max-width: 1200px; margin: 8px auto; }
+.header-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; gap:12px; }
 
-/* match row: two compact cards with VS badge overlapping horizontally */
+/* matches list */
+.matches { display:flex; flex-direction:column; gap:20px; }
+
+/* each match row: left card | vs column | right card */
 .match-row {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-  align-items: start;
-  position: relative;
-  padding: 6px 0;
-  justify-items: center; /* keep cards narrower and centered in their cells */
-}
-
-/* separator line between matches */
-.match-separator {
-  height: 2px;
-  width: 85%;
-  margin: 24px auto;
-  border-radius: 2px;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 204, 0, 0.15) 0%,
-    rgba(0, 0, 0, 0.05) 50%,
-    rgba(255, 204, 0, 0.15) 100%
-  );
-  opacity: 1.0;
-}
-
-/* tighter spacing for small screens */
-@media (max-width: 880px) {
-  .match-separator {
-    width: 90%;
-    margin: 18px auto;
-    opacity: 0.6;
-  }
-}
-
-
-/* VS badge: absolute on desktop, static between stacked cards on mobile */
-.vs-badge {
-  position: absolute;
-  left: 50%;
-  top: 44%;
-  transform: translate(-50%, -50%);
-  z-index: 8;
-  width: 60px;
-  height: 60px;
-  border-radius: 999px;
-  display:flex; align-items:center; justify-content:center;
-  font-weight:800; color:#fff;
-  background: linear-gradient(135deg,#ff6b00,#ffcc00);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-  border: 3px solid rgba(255,255,255,0.12);
-  font-size: 0.9rem;
-}
-
-/* compact card container */
-/* compact card container */
-.team-card {
-  position: relative;
-  background: linear-gradient(
-    180deg,
-    #fffbea 0%,
-    #fff8e1 40%,
-    #fff4cc 100%
-  ); /* soft goldish gradient */
-  border-radius: 12px;
-  box-shadow:
-    0 10px 24px rgba(12, 20, 30, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  padding: 92px 14px 12px;
-  display: flex;
-  flex-direction: column;
+  display:grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 16px;
   align-items: center;
-  width: 100%;
-  max-width: 420px;
-  min-height: 170px;
-  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.25s ease;
-}
-
-.team-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 44px rgba(12, 20, 30, 0.12);
-  background: linear-gradient(
-    180deg,
-    #fff7d6 0%,
-    #fff2b8 50%,
-    #ffeaa7 100%
-  ); /* slightly richer gold hover */
-}
-
-
-/* circle logo badge (smaller) */
-.team-img-circle {
-  position: absolute;
-  top: 10px;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  display:flex; align-items:center; justify-content:center;
-  background: linear-gradient(135deg, #fff, #f3f3f3);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.12);
-  overflow: hidden;
-  border: 5px solid rgba(255,255,255,0.95);
-  transition: transform .2s ease, box-shadow .2s ease;
-}
-.team-img-circle img { width:72%; height:auto; object-fit:contain; display:block; }
-
-/* colored inner ring using inset shadow */
-.team-card.rockstar_rebels .team-img-circle { box-shadow: 0 10px 22px rgba(0,0,0,0.12), inset 0 0 0 5px rgba(17,17,17,0.88); }
-.team-card.dabangg_dynamos .team-img-circle { box-shadow: 0 10px 22px rgba(0,0,0,0.12), inset 0 0 0 5px rgba(106,13,173,0.88); }
-.team-card.gully_gang .team-img-circle { box-shadow: 0 10px 22px rgba(0,0,0,0.12), inset 0 0 0 5px rgba(128,0,0,0.88); }
-.team-card.badshah_blasters .team-img-circle { box-shadow: 0 10px 22px rgba(0,0,0,0.12), inset 0 0 0 5px rgba(0,71,171,0.88); }
-
-/* footer area */
-.team-footer {
-  margin-top: 140px;
-  padding: 14px 16px;
-  width: 400px;
-  border-radius: 12px;
-  color: #fff;
-  font-weight: 800;
-  text-align: center;
-  font-size: 1.05rem;
-  letter-spacing: 0.6px;
-  box-shadow:
-    inset 0 1px 3px rgba(255, 255, 255, 0.25),  /* soft inner shine */
-    0 6px 18px rgba(0, 0, 0, 0.15);             /* outer depth */
-  background-image:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 40%), /* light streak */
-    var(--team-gradient, linear-gradient(135deg, #222, #111)); /* fallback gradient */
+  padding: 8px 6px;
   position: relative;
-  overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.25s ease;
 }
 
-.team-footer::before {
+/* subtle connector line behind vs */
+.match-row::before {
   content: "";
   position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), transparent 70%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  left: 8%;
+  right: 8%;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0,0,0,0.04), rgba(0,0,0,0.0), rgba(0,0,0,0.04));
+  z-index: 1;
 }
 
-.team-card:hover .team-footer::before {
-  opacity: 1; /* gentle light glow on hover */
-}
+/* VS column */
+.vs-column { width: var(--vs-size); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; z-index: 6; }
+.vs-badge { width: var(--vs-size); height: var(--vs-size); border-radius: 999px; display:flex; align-items:center; justify-content:center; color: #fff; font-weight:800; background: linear-gradient(135deg,#ff7a1a,#ffcf4d); box-shadow: 0 8px 20px rgba(0,0,0,0.14); border: 3px solid rgba(255,255,255,0.14); font-size: clamp(0.72rem, 1.6vw, 0.98rem); z-index: 6; }
+.vs-meta { font-size: 0.82rem; color: #666; text-align:center; max-width: 120px; }
 
-.team-footer:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 10px 24px rgba(0, 0, 0, 0.25),
-    inset 0 2px 4px rgba(255, 255, 255, 0.25);
-}
+/* card: info tile */
+.info-card { display:flex; gap:14px; align-items:center; background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(250,250,250,0.95)); border-radius: 12px; box-shadow: 0 12px 30px rgba(12,20,30,0.07); padding: 12px; min-height: 96px; transition: transform .18s ease, box-shadow .18s ease; position: relative; overflow: visible; }
+.info-left { width: calc(var(--medal-size) + 12px); display:flex; align-items:center; justify-content:center; position: relative; }
+.medallion { width: var(--medal-size); height: var(--medal-size); border-radius: 50%; background: radial-gradient(circle at 30% 25%, #fff 0%, #f3f3f3 60%, #eaeaea 100%); border: 4px solid rgba(255,255,255,0.96); display:flex; align-items:center; justify-content:center; box-shadow: 0 10px 28px rgba(0,0,0,0.12), inset 0 2px 6px rgba(255,255,255,0.7); overflow:hidden; }
+.medallion img { width: 70%; height: auto; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.12)); transition: transform .18s ease; }
+.info-right { display:flex; flex-direction:column; gap:6px; flex:1; min-width: 0; }
+.team-name { font-weight:800; font-size:1.02rem; display:flex; align-items:center; gap:8px; white-space:nowrap; text-overflow: ellipsis; overflow: hidden; }
+.team-tag { color:#666; font-size:0.85rem; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.stats-row { display:flex; gap:10px; align-items:center; margin-top:6px; }
+.stat { display:flex; flex-direction:column; align-items:center; justify-content:center; min-width:54px; padding:6px 8px; border-radius:8px; background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,250,250,0.9)); box-shadow: inset 0 1px 0 rgba(255,255,255,0.6); }
+.stat .num { font-weight:800; font-size:0.95rem; }
+.stat .label { font-size:0.72rem; color:#666; }
+.cta-row { margin-left:auto; display:flex; align-items:center; gap:8px; }
+.btn { padding:8px 12px; border-radius:10px; cursor:pointer; border: none; background: linear-gradient(135deg,#0b74ff,#2bb0ff); color:#fff; font-weight:700; font-size:0.85rem; box-shadow: 0 8px 20px rgba(11,116,255,0.16); }
+.btn.secondary { background: linear-gradient(135deg,#6b7280,#9aa0a6); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
 
-.team-card.rockstar_rebels .team-footer { background: linear-gradient(135deg,#000,#2b2b2b); }
-.team-card.dabangg_dynamos .team-footer { background: linear-gradient(135deg,#6A0DAD,#8B3DD9); }
-.team-card.gully_gang .team-footer { background: linear-gradient(135deg,#800000,#B22222); }
-.team-card.badshah_blasters .team-footer { background: linear-gradient(135deg,#0047AB,#1E90FF); }
+/* details / lineup table */
+.details-wrap { width: 100%; margin-top: 8px; }
+.details-wrap details { width:100%; border-radius:8px; overflow:hidden; background: rgba(250,250,250,0.98); border: 1px solid rgba(0,0,0,0.04); }
+.details-wrap summary { padding:8px 12px; cursor:pointer; font-weight:700; background: linear-gradient(180deg, #fff, #fbfbfb); }
+.lineup-table { width:100%; border-collapse: collapse; font-size:0.92rem; }
+.lineup-table th, .lineup-table td { padding:8px 10px; text-align:left; border-bottom: 1px solid rgba(0,0,0,0.04); }
+.lineup-table th { font-size:0.82rem; color:#444; font-weight:800; background: rgba(255,255,255,0.6); }
+.lineup-role { color:#666; font-weight:600; font-size:0.88rem; }
 
-/* small subtitle (optional) */
-.team-sub { margin-top:6px; color: rgba(255,255,255,0.88); font-weight:600; font-size:0.85rem; }
+/* small metadata row under footer if needed */
+.match-meta { margin-top:8px; color:#666; font-size:0.85rem; text-align:center; }
 
-/* responsive: stacked matches, VS badge static and centered between cards */
+/* separator between matches */
+.match-separator { height:1px; width:92%; margin: 8px auto; border-radius:2px; background: linear-gradient(90deg, rgba(0,0,0,0.05), rgba(0,0,0,0.02)); }
+
+/* ---------- Tight mobile compacting: force 2 cards + VS into single view ---------- */
+/* Put this after your existing mobile CSS so it overrides sizes where needed */
+
+/* ---------- Small-screen reorder: Team name, tag, icon, stats, lineup ---------- */
+/* ---------- Small-screen reorder: Name → Tag → Icon → Stats → Lineup ---------- */
 @media (max-width:880px) {
-  .match-row { grid-template-columns: 1fr; gap: 12px; padding: 8px 0; }
-  .vs-badge { position: static; transform: none; margin: 6px auto; width:58px; height:58px; }
-  .team-card { padding: 80px 12px 10px; min-height: 150px; max-width: 640px; }
-  .team-img-circle { width: 86px; height: 86px; top: 6px; border-width:4px; }
+
+  /* stack elements vertically inside each card */
+  .info-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px;
+  }
+
+  /* text content first */
+  .info-right {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+    order: 1; /* first in card */
+  }
+
+  .team-name { order: 1; font-size: 1.02rem; line-height: 1.1; font-weight: 800; }
+  .team-tag  { order: 2; font-size: 0.90rem; color: #666; margin-bottom: 4px; }
+
+  /* icon (medallion) next, centered visually under text */
+  .info-left {
+    order: 3;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 4px 0;
+  }
+  .medallion {
+    --med-size: clamp(46px, 13vw, 82px);
+    width: var(--med-size);
+    height: var(--med-size);
+    border-width: 3px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  }
+  .medallion img { width: 66%; height: auto; }
+
+  /* stats come below icon */
+  .stats-row {
+    order: 3;
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+    width: 100%;
+    justify-content: center; /* center stats row for neat balance */
+  }
+  .stat {
+    min-width: 40px;
+    padding: 6px 6px;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #fff, #fafafa);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+  }
+  .stat .num { font-size: 0.86rem; font-weight: 700; }
+  .stat .label { font-size: 0.68rem; color: #666; }
+
+  /* lineup details last */
+  .details-wrap {
+    order: 5;
+    width: 100%;
+    margin-top: 8px;
+  }
+  .details-wrap summary {
+    padding: 8px 10px;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+  .lineup-scroll {
+    max-height: 180px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding: 6px 2px;
+  }
+  .lineup-table {
+    width: 100%;
+    min-width: 0;
+    border-collapse: collapse;
+  }
+  .lineup-table th, .lineup-table td {
+    padding: 8px 8px;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  /* hide CTAs for compact view */
+  .cta-row { display: none !important; }
+
+  /* match row tightened so both cards + VS fit on screen */
+  .match-row {
+    grid-template-columns: minmax(90px,1fr) minmax(44px,64px) minmax(90px,1fr);
+    gap: 8px;
+    padding: 6px;
+  }
+
+  /* smaller separator */
+  .match-separator { margin: 8px auto; width: 94%; }
 }
 
-/* very small screens - scale down slightly */
+/* extra small screen fine-tune */
 @media (max-width:480px) {
-  .team-card { padding: 72px 10px 10px; min-height: 140px; }
-  .team-img-circle { width: 76px; height: 76px; top: 4px; }
-  .vs-badge { width:52px; height:52px; font-size:0.85rem; }
+  .team-name { font-size: 0.70rem; margin-top:8px; }
+  .team-tag  { font-size: 0.60rem; margin-top:8px;}
+  .medallion { width: clamp(70px, 16vw, 40px); height: clamp(30px, 16vw, 72px); }
+  /* shrink lineup table fonts and paddings */
+  .lineup-scroll {
+    max-height: 140px;                /* shorter block to fit screen */
+    padding: 4px 2px 6px 2px;
+  }
+
+  .lineup-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.66rem;
+  }
+
+  .lineup-table th,
+  .lineup-table td {
+    padding: 6px 6px;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  /* visually simplify: hide header, use stacked row style */
+  .lineup-table thead { display: none; }
+
+  .lineup-table tbody tr {
+    display: block;
+    margin-bottom: 6px;
+    padding: 4px 6px;
+    background: linear-gradient(180deg, #fff, #fafafa);
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  }
+
+  .lineup-table tbody tr td {
+    display: block;
+    border: none;
+    padding: 3px 4px;
+  }
+
+  /* player name bold, role lighter below */
+  .lineup-table tbody tr td:first-child {
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 2px;
+  }
+  .lineup-table tbody tr td.lineup-role {
+    font-weight: 500;
+    font-size: 0.70rem;
+    color: #555;
+  }
+
+  /* smooth scroll and spacing */
+  .details-wrap summary {
+    padding: 10px 8px;
+    font-size: 0.65rem;
+    border-radius: 6px;
+  }
+
+  /* tighten card for small viewports */
+  .info-card {
+    padding: 2px;
+    gap: 2px;
+    min-height: auto;
+  }
 }
+}
+
+
 """
 
 
-# ----- Render function -----
+# ----- Renderer --------------------------------------------------------------
 def render_cricket_fixtures():
-    st.title("🏏 Round Robin Fixtures")
-   
+    st.title("🏏 Cricket — Round Robin Fixtures (Lineups Included)")
+    st.caption("Click 'View Lineup' in Details to expand the player list for each team.")
 
-    # build HTML
     parts = [
-        "<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'/>",
-        "<style>", CSS, "</style></head><body style='margin:0;padding:0;'>",
+        "<!doctype html>",
+        "<html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'/>",
+        "<style>", CSS, "</style></head><body style='margin:0;padding:0;background:transparent;'>",
         "<div class='cricket-root'><div class='cricket-container'>",
-        
+        "<div class='header-row'><h3 style='margin:0'>Round Robin Fixtures</h3><div style='color:#666;font-size:0.9rem'>Lineups available</div></div>",
         "<div class='matches'>"
     ]
 
@@ -285,42 +424,92 @@ def render_cricket_fixtures():
         img_a = resolve_team_image(team_a)
         img_b = resolve_team_image(team_b)
 
-        def make_card(team, img_src):
-            cls = team.lower().replace(" ", "_")
-            img_html = (
-                f'<img src="{html.escape(img_src, quote=True)}" alt="{html.escape(team)}"/>'
-                if img_src
-                else '<div style="width:70%;height:70%;border-radius:50%;background:linear-gradient(180deg,#eee,#ddd)"></div>'
+        def build_lineup_html(team):
+            rows = LINEUPS.get(team, [])
+            if not rows:
+                return "<div style='padding:10px;color:#666'>No lineup available.</div>"
+            # table header + rows
+            tr_rows = []
+            for name, role in rows:
+                tr_rows.append(f"<tr><td>{html.escape(name)}</td><td class='lineup-role'>{html.escape(role)}</td></tr>")
+            table_html = (
+                "<div class='details-wrap'>"
+                "<details>"
+                "<summary>View Lineup</summary>"
+                "<div style='padding:8px 12px'>"
+                "<table class='lineup-table'>"
+                "<thead><tr><th>Player</th><th>Role</th></tr></thead>"
+                "<tbody>"
+                + "\n".join(tr_rows) +
+                "</tbody></table>"
+                "</div>"
+                "</details>"
+                "</div>"
             )
-            footer_text = html.escape(team)
+            return table_html
+
+        def card_html(team, img_src):
+            cls = team.lower().replace(" ", "_")
+            tagline = html.escape(TEAM_TAGLINES.get(team, "Team"))
+            wins, losses = TEAM_STATS.get(team, (0, 0))
+            lineup_block = build_lineup_html(team)
+            if img_src:
+                img_tag = f'<img src="{html.escape(img_src, quote=True)}" alt="{html.escape(team)}" />'
+            else:
+                img_tag = '<div style="width:64%;height:64%;border-radius:50%;background:linear-gradient(180deg,#eee,#ddd)"></div>'
             return f"""
-            <div class="team-card {cls}">
-              <div class="team-img-circle">{img_html}</div>
-              <div class="team-plate">
-                <div class="team-footer">{footer_text}</div>
+            <div class="info-card {cls}">
+              <div class="info-left">
+                <div class="medallion">{img_tag}</div>
+              </div>
+
+              <div class="info-right">
+                <div class="team-name">{html.escape(team)}</div>
+                <div class="team-tag">{tagline}</div>
+
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;">
+                  <div style="display:flex;gap:8px;align-items:center">
+                    <div class="stat"><div class="num">{wins}</div><div class="label">W</div></div>
+                    <div class="stat"><div class="num">{losses}</div><div class="label">L</div></div>
+                  </div>
+                  <div class="cta-row">
+                    <button class="btn">Details</button>
+                    <button class="btn secondary">Lineup</button>
+                  </div>
+                </div>
+
+                <!-- lineup details -->
+                {lineup_block}
               </div>
             </div>
             """
 
+        # VS meta placeholders
+        match_time = "3:00 PM"
+        venue = "Airoli Turf (2P)"
+
         parts.append(f"<div class='match-row' data-match='{idx}'>")
-        parts.append(make_card(team_a, img_a))
-        parts.append(make_card(team_b, img_b))
-        parts.append('<div class="vs-badge" role="img" aria-label="versus">VS</div>')
-        parts.append("</div>")
+        parts.append(card_html(team_a, img_a))
+        parts.append(f"""
+          <div class="vs-column" role="group" aria-label="versus">
+            <div class="vs-badge">VS</div>
+            <div class="vs-meta">{html.escape(match_time)}<br/>{html.escape(venue)}</div>
+          </div>
+        """)
+        parts.append(card_html(team_b, img_b))
+        parts.append("</div>")  # end match-row
 
-        # 🔹 Separator line after each match except last
         if idx < len(FIXTURES):
-            parts.append('<div class="match-separator"></div>')
-
+            parts.append("<div class='match-separator' aria-hidden='true'></div>")
 
     parts.append("</div></div></div></body></html>")
-    full_html = "\n".join(parts)
+    full = "\n".join(parts)
 
-    approx_h = min(max(700, 400 * len(FIXTURES)), 3000)
-    components.html(full_html, height=approx_h, scrolling=False)
+    approx_height = min(max(520, 320 * len(FIXTURES)), 2600)
+    components.html(full, height=approx_height, scrolling=False)
 
 
-# Optional: debug helper to show resolved paths (uncomment to use)
+# optional debug helper
 def debug_paths():
     st.write("cwd:", Path.cwd())
     for team, path in TEAM_IMAGES.items():

@@ -24,7 +24,7 @@ ticker_messages = [
     "⚽ Foosball finale dhamaka – Blessen & Asif ne kar diya clean sweep!",
     "🎯 Carrom kings rise – Jay & Umesh ne Queen pakad li style mein!",
     "🏸 Badminton court pe dhamal – Saurabh & Pritesh ne sabko smash kar diya!",
-    "♟️ Chess ab Dabangg Dynamos ke naam – Arijit nhi to kaun!",
+    "♟️ Chess ki trophy kiske naam – Arijit nhi to kaun!",
     "🏏 Cricket aur Olympics on 10th Oct – Ab asli hungama shuru hone wala hai!",
     "📊 Leaderboard ab garam hai – Kaun top pe rahega, dekhte hain!",
     "💪 Winners shine, fighters inspire – Haar bhi ek nayi kahani likhti hai!",
@@ -96,7 +96,7 @@ winners_by_sport_stage = {
             ],
         "Semi Final Winners": [
             {"match": "Match 1", "winner": "Adnan", "team": "Dabangg Dynamos"},
-            {"match": "Match 2", "winner": "TBD", "team": "TBD"},
+            {"match": "Match 2", "winner": "Saurabh", "team": "Badshah Blasters"},
         ],
        
         "Champion": [
@@ -320,7 +320,7 @@ players_by_sport = {
         {"name": "Vishal S", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Amitabh", "team": "Dabangg Dynamos", "status": "eliminated"},
         {"name": "Pratap", "team": "Badshah Blasters", "status": "eliminated"},
-        {"name": "Nilesh S", "team": "Dabangg Dynamos", "status": "alive"},
+        {"name": "Nilesh S", "team": "Dabangg Dynamos", "status": "eliminated"},
         {"name": "Rahul A", "team": "Gully Gang", "status": "eliminated"},
         {"name": "Hitesh", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Jay", "team": "Gully Gang", "status": "eliminated"},
@@ -517,7 +517,7 @@ player_avatars = {
 player_stats = {
     "Wilfred Dsilva": {"final": 2, "sf": 1, "qf": 1},
     "Vishal Shinde": {"final": 0, "sf": 1, "qf": 0},
-    "Saurabh Mahadik": {"final": 1, "sf": 2, "qf": 0},
+    "Saurabh Mahadik": {"final": 2, "sf": 1, "qf": 0},
     "Pritesh Menon": {"final": 3, "sf": 0, "qf": 0},
     "Samiksha Prabhu": {"final": 0, "sf": 0, "qf": 1},
     "Umesh Gawade": {"final": 0, "sf": 0, "qf": 1},

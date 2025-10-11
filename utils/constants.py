@@ -20,15 +20,15 @@ TEAM_COLORS = {
 }
 
 ticker_messages = [
-    "🏓 Table Tennis champs crowned – Pritesh & Wilfred ruled the tables!",
-    "⚽ Foosball finale dhamaka – Blessen & Asif ne kar diya clean sweep!",
-    "🎯 Carrom kings rise – Jay & Umesh ne Queen pakad li style mein!",
-    "🏸 Badminton court pe dhamal – Saurabh & Pritesh ne sabko smash kar diya!",
-    "♟️ Chess ki trophy ka faisla ho gaya — Badshah Blasters ne game hi पलट दी! 🏆🔥",
-    "🏏 Cricket aur Olympics on 10th Oct – Ab asli hungama shuru hone wala hai!",
-    "📊 Leaderboard ab garam hai – Kaun top pe rahega, dekhte hain!",
-    "💪 Winners shine, fighters inspire – Haar bhi ek nayi kahani likhti hai!",
-    "🏆 Cheers to all champs – Energy high, spirits higher!"
+    "🏓 Table Tennis champs crowned – Pritesh & Wilfred ruled the tables!"
+"⚽ Foosball finale dhamaka – Blessen & Asif ne kar diya clean sweep!",
+"🎯 Carrom kings rise – Jay & Umesh ne Queen pakad li style mein!",
+"🏸 Badminton court pe dhamal – Saurabh & Pritesh ne sabko smash kar diya!",
+"♟️ Chess ki trophy ka faisla ho gaya — Badshah Blasters ne game hi पलट दी! 🏆🔥",
+"🏏 Cricket ka taaj bhi Badshah Blasters ke naam – pura stadium goonj utha!",
+"🏃‍♂️ Olympics relay race mein Gully Gang ne dikhayi asli team spirit!",
+"💪 Winners shine, fighters inspire – Haar bhi ek nayi kahani likhti hai!",
+"🏁 Tournament concluded – Ya to win hai, ya to learn hai. See you next time! ✨"
 ]
 
 # Winners by sport and stage

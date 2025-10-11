@@ -41,10 +41,10 @@ with st.sidebar:
         st.session_state.active_section = "Ghar Ho To Aisa"
     if st.button("🏋️‍♂️ Kismein Kitna Hai Dum (Leaderboard)"):
         st.session_state.active_section = "Kismein Kitna Hai Dum (Leaderboard)"
-    if st.button("👫 Rab Ne Bana Di Jodi (Fixtures)"):
-        st.session_state.active_section = "Rab Ne Bana Di Jodi"
-    if st.button("🎯 Khatron Ke Khiladi (Player Stats)"):
-        st.session_state.active_section = "Khatron Ke Khiladi (Player Stats)"
+    # if st.button("👫 Rab Ne Bana Di Jodi (Fixtures)"):
+    #     st.session_state.active_section = "Rab Ne Bana Di Jodi"
+    # if st.button("🎯 Khatron Ke Khiladi (Player Stats)"):
+    #     st.session_state.active_section = "Khatron Ke Khiladi (Player Stats)"
     # if st.button("💰 Live Auction"):
     #     st.session_state.active_section = "Live Auction"
 

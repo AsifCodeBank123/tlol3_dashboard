@@ -24,7 +24,7 @@ ticker_messages = [
     "⚽ Foosball finale dhamaka – Blessen & Asif ne kar diya clean sweep!",
     "🎯 Carrom kings rise – Jay & Umesh ne Queen pakad li style mein!",
     "🏸 Badminton court pe dhamal – Saurabh & Pritesh ne sabko smash kar diya!",
-    "♟️ Chess ki trophy kiske naam – Arijit nhi to kaun!",
+    "♟️ Chess ki trophy ka faisla ho gaya — Badshah Blasters ne game hi पलट दी! 🏆🔥",
     "🏏 Cricket aur Olympics on 10th Oct – Ab asli hungama shuru hone wala hai!",
     "📊 Leaderboard ab garam hai – Kaun top pe rahega, dekhte hain!",
     "💪 Winners shine, fighters inspire – Haar bhi ek nayi kahani likhti hai!",
@@ -100,7 +100,7 @@ winners_by_sport_stage = {
         ],
        
         "Champion": [
-             {"match": "Match 1", "winner": "TBD", "team": "TBD"},
+             {"match": "Match 1", "winner": "Saurabh", "team": "Badshah Blasters"},
         ]
     },
     "Carrom": {
@@ -245,9 +245,9 @@ winners_by_sport_stage = {
 wall_of_fame = {
     "Chess": {
         "title": "♟️ Chess Master",
-        "image": "assets/chess.jpg",
-        "winner": "",      # e.g., "Bijal"
-        "team": ""  # optional
+        "image": "assets/chess_master.png",
+        "winner": "Saurabh",      # e.g., "Bijal"
+        "team": "Badshah Blasters"  # optional
     },
     "Carrom": {
         "title": "🎯 Carrom Kings",
@@ -275,9 +275,15 @@ wall_of_fame = {
     },
     "Cricket": {
         "title": "🏏 Cricket Champion",
-        "image": "assets/cricket.jpg",
-        "winner": "",
-        "team": ""
+        "image": "assets/BB_champions.png",
+        "winner": "Team Blasters",
+        "team": "Badshah Blasters"
+    },
+     "Olympics": {
+        "title": "🏃 Olympians United",
+        "image": "assets/gg_winners.png",
+        "winner": "Team Gang",
+        "team": "Gully Gang"
     },
     
 }
@@ -331,7 +337,7 @@ players_by_sport = {
         {"name": "Somansh", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Gayatri", "team": "Badshah Blasters", "status": "eliminated"},
         {"name": "Pritesh", "team": "Badshah Blasters", "status": "eliminated"},
-        {"name": "Adnan", "team": "Dabangg Dynamos", "status": "alive"},
+        {"name": "Adnan", "team": "Dabangg Dynamos", "status": "eliminated"},
         {"name": "Sanket Patil", "team": "Rockstar Rebels", "status": "eliminated"},
         {"name": "Sanskar", "team": "Dabangg Dynamos", "status": "eliminated"},
         {"name": "Arijit", "team": "Dabangg Dynamos", "status": "eliminated "},
@@ -526,7 +532,7 @@ player_stats = {
     "Pooja Nandoskar":{"final": 0, "sf": 0, "qf": 2},
     "Gayatri Zuting": {"final": 0, "sf": 0, "qf": 1},
     "Hitesh Ghadigaonkar": {"final": 0, "sf": 1, "qf": 1},
-    "Somansh Datta": {"final": 0, "sf": 3, "qf": 0},
+    "Somansh Datta": {"final": 1, "sf": 3, "qf": 0},
     "Kiran Padwal": {"final": 0, "sf": 0, "qf": 0},
     "Adnan Shaikh": {"final": 1, "sf": 1, "qf": 3},
     "Nilesh Sansare": {"final": 0, "sf": 3, "qf": 0},
@@ -548,7 +554,7 @@ player_stats = {
     "Rahul Pokharkar": {"final": 0, "sf": 0, "qf": 0},
     "Avin Chorage": {"final": 0, "sf": 0, "qf": 0},
     "Vijay Sangale": {"final": 0, "sf": 0, "qf": 0},
-    "Jay Jagad": {"final": 2, "sf": 0, "qf": 0},
+    "Jay Jagad": {"final": 3, "sf": 0, "qf": 0},
     "Bhagyashree Dhotre": {"final": 0, "sf": 0, "qf": 1},
     "Pramod Patel": {"final": 0, "sf": 0, "qf": 2},
     "Komal Panjwani": {"final": 0, "sf": 1, "qf": 0},
@@ -566,21 +572,24 @@ player_stats = {
     "Sanket Patil": {"final": 0, "sf": 0, "qf": 0},
     "Asif Khan": {"final": 1, "sf": 0, "qf": 1},
     "Esakki Shummugavel": {"final": 0, "sf": 0, "qf": 0},
-    "Blessen Thomas": {"final": 1, "sf": 0, "qf": 2},
+    "Blessen Thomas": {"final": 2, "sf": 0, "qf": 2},
 }
 
 # ---------- Achievements (user-provided) ----------
 ACHIEVEMENTS = {
     "Jay Jagad": [
         "Runner up in Badminton",
-        "Winner in Carrom"
+        "Winner in Carrom",
+        "Helped team clinch 1st position in Olympics"
     ],
     "Blessen Thomas": [
         "Winner in Foosball",
+        "Led team to runner-up finish in Cricket",
         "Reached Quarter Final in Badminton",
         "Reached Quarter Final in Table Tennis"
     ],
     "Somansh Datta": [
+        "Helped team secure 1st position in Cricket",
         "Reached Semi Final in Table Tennis",
         "Reached Semi Final in Foosball",
         "Reached Semi Final in Badminton"
@@ -588,7 +597,8 @@ ACHIEVEMENTS = {
     "Lalit Chavan": [
         "Runner up in Table Tennis",
         "Reached Quarter Final in Badminton",
-        "Reached Quarter Final in Foosball"
+        "Reached Quarter Final in Foosball",
+        "Helped team secure 2nd position in Olympics",
     ]
 }
 

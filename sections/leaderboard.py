@@ -197,10 +197,11 @@ def render_leaderboard():
         """, unsafe_allow_html=True)
 
         with st.expander("View", expanded=False):
-            # Sort players by total_points (descending) and assign rank with ties
-            # Drop any "Bonus" players (case/space-safe)
-            mask = df_players["player_name"].astype(str).str.strip().str.lower() != "bonus"
+            # Drop players named 'Bonus', 'Cricket', or 'Olympics' (case/space-insensitive)
+            names = df_players["player_name"].astype(str).str.strip().str.lower()
+            mask = ~names.isin(["bonus", "cricket", "olympics"])
             df_view = df_players[mask].copy()
+
 
             # Rank on the cleaned frame
             df_view["rank"] = (

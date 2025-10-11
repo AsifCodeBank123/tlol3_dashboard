@@ -321,7 +321,7 @@ section[data-testid="stSidebar"] button:active {
 
 /* Card base */
 .captain-card {
-  width: 250px ;
+  width: 310px ;
   height: 420px;
   border-radius: var(--card-radius);
   padding: 16px;
